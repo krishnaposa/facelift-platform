@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../../../apps/web/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id       String    @id @default(uuid())
+  email    String    @unique
+  role     String
+  bids     Bid[]
+  projects Project[]
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  homeownerId String
+  zipCode     String
+  selections  Json
+  status      String   @default("OPEN")
+  createdAt   DateTime @default(now())
+  bids        Bid[]
+  homeowner   User     @relation(fields: [homeownerId], references: [id])
+}
+
+model Bid {
+  id             String  @id @default(uuid())
+  projectId      String
+  contractorId   String
+  amount         Float
+  daysToComplete Int
+  message        String?
+  contractor     User    @relation(fields: [contractorId], references: [id])
+  project        Project @relation(fields: [projectId], references: [id])
+}

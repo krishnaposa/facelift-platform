@@ -1,0 +1,7 @@
+Select a subscription and tenant (Type a number or Enter for no changes):
+
+Tenant: e83477ea-b2de-4a5e-82f3-1a4dc3ca1eaa
+Subscription: Pay-As-You-Go (da1584eb-0846-48ba-8ce5-b695f126b6dc)
+
+
+ DATABASE_URL="postgresql://myadmin:YourComplexPassword123@facelift-db-server.postgres.database.azure.com/postgres?sslmode=require" npx prisma migrate dev --schema=./prisma/schema.prisma
