@@ -52,8 +52,16 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  HomeownerProfile: 'HomeownerProfile',
+  ContractorProfile: 'ContractorProfile',
+  CatalogCategory: 'CatalogCategory',
+  CatalogItem: 'CatalogItem',
   Project: 'Project',
-  Bid: 'Bid'
+  ProjectItem: 'ProjectItem',
+  Bid: 'Bid',
+  BidLineItem: 'BidLineItem',
+  ProjectPhoto: 'ProjectPhoto',
+  GalleryImage: 'GalleryImage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -75,34 +83,148 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  role: 'role'
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const ProjectScalarFieldEnum = {
+export const HomeownerProfileScalarFieldEnum = {
   id: 'id',
-  homeownerId: 'homeownerId',
-  zipCode: 'zipCode',
-  selections: 'selections',
-  status: 'status',
+  userId: 'userId',
+  fullName: 'fullName',
+  phone: 'phone',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HomeownerProfileScalarFieldEnum = (typeof HomeownerProfileScalarFieldEnum)[keyof typeof HomeownerProfileScalarFieldEnum]
+
+
+export const ContractorProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  companyName: 'companyName',
+  phone: 'phone',
+  licenseNumber: 'licenseNumber',
+  insuranceDocUrl: 'insuranceDocUrl',
+  serviceZipCodes: 'serviceZipCodes',
+  approvalStatus: 'approvalStatus',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ContractorProfileScalarFieldEnum = (typeof ContractorProfileScalarFieldEnum)[keyof typeof ContractorProfileScalarFieldEnum]
+
+
+export const CatalogCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
   createdAt: 'createdAt'
 } as const
 
+export type CatalogCategoryScalarFieldEnum = (typeof CatalogCategoryScalarFieldEnum)[keyof typeof CatalogCategoryScalarFieldEnum]
+
+
+export const CatalogItemScalarFieldEnum = {
+  id: 'id',
+  categoryId: 'categoryId',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  unitLabel: 'unitLabel',
+  active: 'active',
+  optionsSchema: 'optionsSchema',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CatalogItemScalarFieldEnum = (typeof CatalogItemScalarFieldEnum)[keyof typeof CatalogItemScalarFieldEnum]
+
+
+export const ProjectScalarFieldEnum = {
+  id: 'id',
+  homeownerId: 'homeownerId',
+  title: 'title',
+  description: 'description',
+  zipCode: 'zipCode',
+  addressLine1: 'addressLine1',
+  city: 'city',
+  state: 'state',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
+
+
+export const ProjectItemScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  catalogItemId: 'catalogItemId',
+  quantity: 'quantity',
+  selectedOptions: 'selectedOptions',
+  notes: 'notes',
+  createdAt: 'createdAt'
+} as const
+
+export type ProjectItemScalarFieldEnum = (typeof ProjectItemScalarFieldEnum)[keyof typeof ProjectItemScalarFieldEnum]
 
 
 export const BidScalarFieldEnum = {
   id: 'id',
   projectId: 'projectId',
   contractorId: 'contractorId',
+  status: 'status',
   amount: 'amount',
   daysToComplete: 'daysToComplete',
-  message: 'message'
+  message: 'message',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type BidScalarFieldEnum = (typeof BidScalarFieldEnum)[keyof typeof BidScalarFieldEnum]
+
+
+export const BidLineItemScalarFieldEnum = {
+  id: 'id',
+  bidId: 'bidId',
+  projectItemId: 'projectItemId',
+  amount: 'amount',
+  note: 'note'
+} as const
+
+export type BidLineItemScalarFieldEnum = (typeof BidLineItemScalarFieldEnum)[keyof typeof BidLineItemScalarFieldEnum]
+
+
+export const ProjectPhotoScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  imageUrl: 'imageUrl',
+  caption: 'caption',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt'
+} as const
+
+export type ProjectPhotoScalarFieldEnum = (typeof ProjectPhotoScalarFieldEnum)[keyof typeof ProjectPhotoScalarFieldEnum]
+
+
+export const GalleryImageScalarFieldEnum = {
+  id: 'id',
+  catalogItemId: 'catalogItemId',
+  imageUrl: 'imageUrl',
+  title: 'title',
+  caption: 'caption',
+  styleTag: 'styleTag',
+  isPublic: 'isPublic',
+  createdAt: 'createdAt'
+} as const
+
+export type GalleryImageScalarFieldEnum = (typeof GalleryImageScalarFieldEnum)[keyof typeof GalleryImageScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -113,11 +235,12 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
-export const JsonNullValueInput = {
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
   JsonNull: JsonNull
 } as const
 
-export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -128,6 +251,14 @@ export const QueryMode = {
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
 export const JsonNullValueFilter = {
   DbNull: DbNull,
   JsonNull: JsonNull,
@@ -135,12 +266,4 @@ export const JsonNullValueFilter = {
 } as const
 
 export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
-
-
-export const NullsOrder = {
-  first: 'first',
-  last: 'last'
-} as const
-
-export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

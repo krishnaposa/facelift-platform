@@ -9,6 +9,14 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User'
+export type * from './models/HomeownerProfile'
+export type * from './models/ContractorProfile'
+export type * from './models/CatalogCategory'
+export type * from './models/CatalogItem'
 export type * from './models/Project'
+export type * from './models/ProjectItem'
 export type * from './models/Bid'
+export type * from './models/BidLineItem'
+export type * from './models/ProjectPhoto'
+export type * from './models/GalleryImage'
 export type * from './commonInputTypes'

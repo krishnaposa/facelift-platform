@@ -9,7 +9,45 @@
 * 🟢 You can import this file directly.
 */
 
+export const UserRole = {
+  HOMEOWNER: 'HOMEOWNER',
+  CONTRACTOR: 'CONTRACTOR',
+  ADMIN: 'ADMIN'
+} as const
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const ProjectStatus = {
+  DRAFT: 'DRAFT',
+  OPEN: 'OPEN',
+  IN_REVIEW: 'IN_REVIEW',
+  AWARDED: 'AWARDED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type ProjectStatus = (typeof ProjectStatus)[keyof typeof ProjectStatus]
+
+
+export const BidStatus = {
+  DRAFT: 'DRAFT',
+  SUBMITTED: 'SUBMITTED',
+  WITHDRAWN: 'WITHDRAWN',
+  SHORTLISTED: 'SHORTLISTED',
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type BidStatus = (typeof BidStatus)[keyof typeof BidStatus]
+
+
+export const ContractorApprovalStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  SUSPENDED: 'SUSPENDED'
+} as const
+
+export type ContractorApprovalStatus = (typeof ContractorApprovalStatus)[keyof typeof ContractorApprovalStatus]

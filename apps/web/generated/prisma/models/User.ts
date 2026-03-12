@@ -27,19 +27,25 @@ export type AggregateUser = {
 export type UserMinAggregateOutputType = {
   id: string | null
   email: string | null
-  role: string | null
+  role: $Enums.UserRole | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type UserMaxAggregateOutputType = {
   id: string | null
   email: string | null
-  role: string | null
+  role: $Enums.UserRole | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
   email: number
   role: number
+  createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -48,18 +54,24 @@ export type UserMinAggregateInputType = {
   id?: true
   email?: true
   role?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
   email?: true
   role?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
   email?: true
   role?: true
+  createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -138,7 +150,9 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type UserGroupByOutputType = {
   id: string
   email: string
-  role: string
+  role: $Enums.UserRole
+  createdAt: Date
+  updatedAt: Date
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -165,7 +179,11 @@ export type UserWhereInput = {
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
-  role?: Prisma.StringFilter<"User"> | string
+  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  homeownerProfile?: Prisma.XOR<Prisma.HomeownerProfileNullableScalarRelationFilter, Prisma.HomeownerProfileWhereInput> | null
+  contractorProfile?: Prisma.XOR<Prisma.ContractorProfileNullableScalarRelationFilter, Prisma.ContractorProfileWhereInput> | null
   projects?: Prisma.ProjectListRelationFilter
   bids?: Prisma.BidListRelationFilter
 }
@@ -174,6 +192,10 @@ export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  homeownerProfile?: Prisma.HomeownerProfileOrderByWithRelationInput
+  contractorProfile?: Prisma.ContractorProfileOrderByWithRelationInput
   projects?: Prisma.ProjectOrderByRelationAggregateInput
   bids?: Prisma.BidOrderByRelationAggregateInput
 }
@@ -184,7 +206,11 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
-  role?: Prisma.StringFilter<"User"> | string
+  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  homeownerProfile?: Prisma.XOR<Prisma.HomeownerProfileNullableScalarRelationFilter, Prisma.HomeownerProfileWhereInput> | null
+  contractorProfile?: Prisma.XOR<Prisma.ContractorProfileNullableScalarRelationFilter, Prisma.ContractorProfileWhereInput> | null
   projects?: Prisma.ProjectListRelationFilter
   bids?: Prisma.BidListRelationFilter
 }, "id" | "email">
@@ -193,6 +219,8 @@ export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -204,13 +232,19 @@ export type UserScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
-  role?: Prisma.StringWithAggregatesFilter<"User"> | string
+  role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
 export type UserCreateInput = {
   id?: string
   email: string
-  role: string
+  role: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  homeownerProfile?: Prisma.HomeownerProfileCreateNestedOneWithoutUserInput
+  contractorProfile?: Prisma.ContractorProfileCreateNestedOneWithoutUserInput
   projects?: Prisma.ProjectCreateNestedManyWithoutHomeownerInput
   bids?: Prisma.BidCreateNestedManyWithoutContractorInput
 }
@@ -218,7 +252,11 @@ export type UserCreateInput = {
 export type UserUncheckedCreateInput = {
   id?: string
   email: string
-  role: string
+  role: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  homeownerProfile?: Prisma.HomeownerProfileUncheckedCreateNestedOneWithoutUserInput
+  contractorProfile?: Prisma.ContractorProfileUncheckedCreateNestedOneWithoutUserInput
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutHomeownerInput
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutContractorInput
 }
@@ -226,7 +264,11 @@ export type UserUncheckedCreateInput = {
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeownerProfile?: Prisma.HomeownerProfileUpdateOneWithoutUserNestedInput
+  contractorProfile?: Prisma.ContractorProfileUpdateOneWithoutUserNestedInput
   projects?: Prisma.ProjectUpdateManyWithoutHomeownerNestedInput
   bids?: Prisma.BidUpdateManyWithoutContractorNestedInput
 }
@@ -234,7 +276,11 @@ export type UserUpdateInput = {
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeownerProfile?: Prisma.HomeownerProfileUncheckedUpdateOneWithoutUserNestedInput
+  contractorProfile?: Prisma.ContractorProfileUncheckedUpdateOneWithoutUserNestedInput
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutHomeownerNestedInput
   bids?: Prisma.BidUncheckedUpdateManyWithoutContractorNestedInput
 }
@@ -242,37 +288,49 @@ export type UserUncheckedUpdateInput = {
 export type UserCreateManyInput = {
   id?: string
   email: string
-  role: string
+  role: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -282,6 +340,42 @@ export type UserScalarRelationFilter = {
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type EnumUserRoleFieldUpdateOperationsInput = {
+  set?: $Enums.UserRole
+}
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
+}
+
+export type UserCreateNestedOneWithoutHomeownerProfileInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutHomeownerProfileInput, Prisma.UserUncheckedCreateWithoutHomeownerProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutHomeownerProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutHomeownerProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutHomeownerProfileInput, Prisma.UserUncheckedCreateWithoutHomeownerProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutHomeownerProfileInput
+  upsert?: Prisma.UserUpsertWithoutHomeownerProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutHomeownerProfileInput, Prisma.UserUpdateWithoutHomeownerProfileInput>, Prisma.UserUncheckedUpdateWithoutHomeownerProfileInput>
+}
+
+export type UserCreateNestedOneWithoutContractorProfileInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutContractorProfileInput, Prisma.UserUncheckedCreateWithoutContractorProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutContractorProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutContractorProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutContractorProfileInput, Prisma.UserUncheckedCreateWithoutContractorProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutContractorProfileInput
+  upsert?: Prisma.UserUpsertWithoutContractorProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutContractorProfileInput, Prisma.UserUpdateWithoutContractorProfileInput>, Prisma.UserUncheckedUpdateWithoutContractorProfileInput>
 }
 
 export type UserCreateNestedOneWithoutProjectsInput = {
@@ -312,17 +406,145 @@ export type UserUpdateOneRequiredWithoutBidsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBidsInput, Prisma.UserUpdateWithoutBidsInput>, Prisma.UserUncheckedUpdateWithoutBidsInput>
 }
 
+export type UserCreateWithoutHomeownerProfileInput = {
+  id?: string
+  email: string
+  role: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  contractorProfile?: Prisma.ContractorProfileCreateNestedOneWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutHomeownerInput
+  bids?: Prisma.BidCreateNestedManyWithoutContractorInput
+}
+
+export type UserUncheckedCreateWithoutHomeownerProfileInput = {
+  id?: string
+  email: string
+  role: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  contractorProfile?: Prisma.ContractorProfileUncheckedCreateNestedOneWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutHomeownerInput
+  bids?: Prisma.BidUncheckedCreateNestedManyWithoutContractorInput
+}
+
+export type UserCreateOrConnectWithoutHomeownerProfileInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutHomeownerProfileInput, Prisma.UserUncheckedCreateWithoutHomeownerProfileInput>
+}
+
+export type UserUpsertWithoutHomeownerProfileInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutHomeownerProfileInput, Prisma.UserUncheckedUpdateWithoutHomeownerProfileInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutHomeownerProfileInput, Prisma.UserUncheckedCreateWithoutHomeownerProfileInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutHomeownerProfileInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutHomeownerProfileInput, Prisma.UserUncheckedUpdateWithoutHomeownerProfileInput>
+}
+
+export type UserUpdateWithoutHomeownerProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contractorProfile?: Prisma.ContractorProfileUpdateOneWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutHomeownerNestedInput
+  bids?: Prisma.BidUpdateManyWithoutContractorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutHomeownerProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contractorProfile?: Prisma.ContractorProfileUncheckedUpdateOneWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutHomeownerNestedInput
+  bids?: Prisma.BidUncheckedUpdateManyWithoutContractorNestedInput
+}
+
+export type UserCreateWithoutContractorProfileInput = {
+  id?: string
+  email: string
+  role: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  homeownerProfile?: Prisma.HomeownerProfileCreateNestedOneWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutHomeownerInput
+  bids?: Prisma.BidCreateNestedManyWithoutContractorInput
+}
+
+export type UserUncheckedCreateWithoutContractorProfileInput = {
+  id?: string
+  email: string
+  role: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  homeownerProfile?: Prisma.HomeownerProfileUncheckedCreateNestedOneWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutHomeownerInput
+  bids?: Prisma.BidUncheckedCreateNestedManyWithoutContractorInput
+}
+
+export type UserCreateOrConnectWithoutContractorProfileInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutContractorProfileInput, Prisma.UserUncheckedCreateWithoutContractorProfileInput>
+}
+
+export type UserUpsertWithoutContractorProfileInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutContractorProfileInput, Prisma.UserUncheckedUpdateWithoutContractorProfileInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutContractorProfileInput, Prisma.UserUncheckedCreateWithoutContractorProfileInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutContractorProfileInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutContractorProfileInput, Prisma.UserUncheckedUpdateWithoutContractorProfileInput>
+}
+
+export type UserUpdateWithoutContractorProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeownerProfile?: Prisma.HomeownerProfileUpdateOneWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutHomeownerNestedInput
+  bids?: Prisma.BidUpdateManyWithoutContractorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutContractorProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeownerProfile?: Prisma.HomeownerProfileUncheckedUpdateOneWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutHomeownerNestedInput
+  bids?: Prisma.BidUncheckedUpdateManyWithoutContractorNestedInput
+}
+
 export type UserCreateWithoutProjectsInput = {
   id?: string
   email: string
-  role: string
+  role: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  homeownerProfile?: Prisma.HomeownerProfileCreateNestedOneWithoutUserInput
+  contractorProfile?: Prisma.ContractorProfileCreateNestedOneWithoutUserInput
   bids?: Prisma.BidCreateNestedManyWithoutContractorInput
 }
 
 export type UserUncheckedCreateWithoutProjectsInput = {
   id?: string
   email: string
-  role: string
+  role: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  homeownerProfile?: Prisma.HomeownerProfileUncheckedCreateNestedOneWithoutUserInput
+  contractorProfile?: Prisma.ContractorProfileUncheckedCreateNestedOneWithoutUserInput
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutContractorInput
 }
 
@@ -345,28 +567,44 @@ export type UserUpdateToOneWithWhereWithoutProjectsInput = {
 export type UserUpdateWithoutProjectsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeownerProfile?: Prisma.HomeownerProfileUpdateOneWithoutUserNestedInput
+  contractorProfile?: Prisma.ContractorProfileUpdateOneWithoutUserNestedInput
   bids?: Prisma.BidUpdateManyWithoutContractorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProjectsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeownerProfile?: Prisma.HomeownerProfileUncheckedUpdateOneWithoutUserNestedInput
+  contractorProfile?: Prisma.ContractorProfileUncheckedUpdateOneWithoutUserNestedInput
   bids?: Prisma.BidUncheckedUpdateManyWithoutContractorNestedInput
 }
 
 export type UserCreateWithoutBidsInput = {
   id?: string
   email: string
-  role: string
+  role: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  homeownerProfile?: Prisma.HomeownerProfileCreateNestedOneWithoutUserInput
+  contractorProfile?: Prisma.ContractorProfileCreateNestedOneWithoutUserInput
   projects?: Prisma.ProjectCreateNestedManyWithoutHomeownerInput
 }
 
 export type UserUncheckedCreateWithoutBidsInput = {
   id?: string
   email: string
-  role: string
+  role: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  homeownerProfile?: Prisma.HomeownerProfileUncheckedCreateNestedOneWithoutUserInput
+  contractorProfile?: Prisma.ContractorProfileUncheckedCreateNestedOneWithoutUserInput
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutHomeownerInput
 }
 
@@ -389,14 +627,22 @@ export type UserUpdateToOneWithWhereWithoutBidsInput = {
 export type UserUpdateWithoutBidsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeownerProfile?: Prisma.HomeownerProfileUpdateOneWithoutUserNestedInput
+  contractorProfile?: Prisma.ContractorProfileUpdateOneWithoutUserNestedInput
   projects?: Prisma.ProjectUpdateManyWithoutHomeownerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBidsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeownerProfile?: Prisma.HomeownerProfileUncheckedUpdateOneWithoutUserNestedInput
+  contractorProfile?: Prisma.ContractorProfileUncheckedUpdateOneWithoutUserNestedInput
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutHomeownerNestedInput
 }
 
@@ -444,6 +690,10 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   email?: boolean
   role?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  homeownerProfile?: boolean | Prisma.User$homeownerProfileArgs<ExtArgs>
+  contractorProfile?: boolean | Prisma.User$contractorProfileArgs<ExtArgs>
   projects?: boolean | Prisma.User$projectsArgs<ExtArgs>
   bids?: boolean | Prisma.User$bidsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -453,22 +703,30 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   email?: boolean
   role?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
   role?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
   email?: boolean
   role?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "role", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  homeownerProfile?: boolean | Prisma.User$homeownerProfileArgs<ExtArgs>
+  contractorProfile?: boolean | Prisma.User$contractorProfileArgs<ExtArgs>
   projects?: boolean | Prisma.User$projectsArgs<ExtArgs>
   bids?: boolean | Prisma.User$bidsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -479,13 +737,17 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
+    homeownerProfile: Prisma.$HomeownerProfilePayload<ExtArgs> | null
+    contractorProfile: Prisma.$ContractorProfilePayload<ExtArgs> | null
     projects: Prisma.$ProjectPayload<ExtArgs>[]
     bids: Prisma.$BidPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     email: string
-    role: string
+    role: $Enums.UserRole
+    createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -880,6 +1142,8 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  homeownerProfile<T extends Prisma.User$homeownerProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$homeownerProfileArgs<ExtArgs>>): Prisma.Prisma__HomeownerProfileClient<runtime.Types.Result.GetResult<Prisma.$HomeownerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  contractorProfile<T extends Prisma.User$contractorProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$contractorProfileArgs<ExtArgs>>): Prisma.Prisma__ContractorProfileClient<runtime.Types.Result.GetResult<Prisma.$ContractorProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   projects<T extends Prisma.User$projectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   bids<T extends Prisma.User$bidsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$bidsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BidPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -913,7 +1177,9 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
-  readonly role: Prisma.FieldRef<"User", 'String'>
+  readonly role: Prisma.FieldRef<"User", 'UserRole'>
+  readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     
 
@@ -1299,6 +1565,44 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Users to delete.
    */
   limit?: number
+}
+
+/**
+ * User.homeownerProfile
+ */
+export type User$homeownerProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HomeownerProfile
+   */
+  select?: Prisma.HomeownerProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HomeownerProfile
+   */
+  omit?: Prisma.HomeownerProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HomeownerProfileInclude<ExtArgs> | null
+  where?: Prisma.HomeownerProfileWhereInput
+}
+
+/**
+ * User.contractorProfile
+ */
+export type User$contractorProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ContractorProfile
+   */
+  select?: Prisma.ContractorProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ContractorProfile
+   */
+  omit?: Prisma.ContractorProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContractorProfileInclude<ExtArgs> | null
+  where?: Prisma.ContractorProfileWhereInput
 }
 
 /**

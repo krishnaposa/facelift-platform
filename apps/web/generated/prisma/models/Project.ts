@@ -27,26 +27,43 @@ export type AggregateProject = {
 export type ProjectMinAggregateOutputType = {
   id: string | null
   homeownerId: string | null
+  title: string | null
+  description: string | null
   zipCode: string | null
-  status: string | null
+  addressLine1: string | null
+  city: string | null
+  state: string | null
+  status: $Enums.ProjectStatus | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type ProjectMaxAggregateOutputType = {
   id: string | null
   homeownerId: string | null
+  title: string | null
+  description: string | null
   zipCode: string | null
-  status: string | null
+  addressLine1: string | null
+  city: string | null
+  state: string | null
+  status: $Enums.ProjectStatus | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type ProjectCountAggregateOutputType = {
   id: number
   homeownerId: number
+  title: number
+  description: number
   zipCode: number
-  selections: number
+  addressLine1: number
+  city: number
+  state: number
   status: number
   createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -54,26 +71,43 @@ export type ProjectCountAggregateOutputType = {
 export type ProjectMinAggregateInputType = {
   id?: true
   homeownerId?: true
+  title?: true
+  description?: true
   zipCode?: true
+  addressLine1?: true
+  city?: true
+  state?: true
   status?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type ProjectMaxAggregateInputType = {
   id?: true
   homeownerId?: true
+  title?: true
+  description?: true
   zipCode?: true
+  addressLine1?: true
+  city?: true
+  state?: true
   status?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type ProjectCountAggregateInputType = {
   id?: true
   homeownerId?: true
+  title?: true
+  description?: true
   zipCode?: true
-  selections?: true
+  addressLine1?: true
+  city?: true
+  state?: true
   status?: true
   createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -152,10 +186,15 @@ export type ProjectGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 export type ProjectGroupByOutputType = {
   id: string
   homeownerId: string
+  title: string
+  description: string | null
   zipCode: string
-  selections: runtime.JsonValue
-  status: string
+  addressLine1: string | null
+  city: string | null
+  state: string | null
+  status: $Enums.ProjectStatus
   createdAt: Date
+  updatedAt: Date
   _count: ProjectCountAggregateOutputType | null
   _min: ProjectMinAggregateOutputType | null
   _max: ProjectMaxAggregateOutputType | null
@@ -182,23 +221,37 @@ export type ProjectWhereInput = {
   NOT?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[]
   id?: Prisma.StringFilter<"Project"> | string
   homeownerId?: Prisma.StringFilter<"Project"> | string
+  title?: Prisma.StringFilter<"Project"> | string
+  description?: Prisma.StringNullableFilter<"Project"> | string | null
   zipCode?: Prisma.StringFilter<"Project"> | string
-  selections?: Prisma.JsonFilter<"Project">
-  status?: Prisma.StringFilter<"Project"> | string
+  addressLine1?: Prisma.StringNullableFilter<"Project"> | string | null
+  city?: Prisma.StringNullableFilter<"Project"> | string | null
+  state?: Prisma.StringNullableFilter<"Project"> | string | null
+  status?: Prisma.EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   homeowner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  items?: Prisma.ProjectItemListRelationFilter
   bids?: Prisma.BidListRelationFilter
+  photos?: Prisma.ProjectPhotoListRelationFilter
 }
 
 export type ProjectOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   homeownerId?: Prisma.SortOrder
+  title?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   zipCode?: Prisma.SortOrder
-  selections?: Prisma.SortOrder
+  addressLine1?: Prisma.SortOrderInput | Prisma.SortOrder
+  city?: Prisma.SortOrderInput | Prisma.SortOrder
+  state?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   homeowner?: Prisma.UserOrderByWithRelationInput
+  items?: Prisma.ProjectItemOrderByRelationAggregateInput
   bids?: Prisma.BidOrderByRelationAggregateInput
+  photos?: Prisma.ProjectPhotoOrderByRelationAggregateInput
 }
 
 export type ProjectWhereUniqueInput = Prisma.AtLeast<{
@@ -207,21 +260,33 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ProjectWhereInput[]
   NOT?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[]
   homeownerId?: Prisma.StringFilter<"Project"> | string
+  title?: Prisma.StringFilter<"Project"> | string
+  description?: Prisma.StringNullableFilter<"Project"> | string | null
   zipCode?: Prisma.StringFilter<"Project"> | string
-  selections?: Prisma.JsonFilter<"Project">
-  status?: Prisma.StringFilter<"Project"> | string
+  addressLine1?: Prisma.StringNullableFilter<"Project"> | string | null
+  city?: Prisma.StringNullableFilter<"Project"> | string | null
+  state?: Prisma.StringNullableFilter<"Project"> | string | null
+  status?: Prisma.EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   homeowner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  items?: Prisma.ProjectItemListRelationFilter
   bids?: Prisma.BidListRelationFilter
+  photos?: Prisma.ProjectPhotoListRelationFilter
 }, "id">
 
 export type ProjectOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   homeownerId?: Prisma.SortOrder
+  title?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   zipCode?: Prisma.SortOrder
-  selections?: Prisma.SortOrder
+  addressLine1?: Prisma.SortOrderInput | Prisma.SortOrder
+  city?: Prisma.SortOrderInput | Prisma.SortOrder
+  state?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.ProjectCountOrderByAggregateInput
   _max?: Prisma.ProjectMaxOrderByAggregateInput
   _min?: Prisma.ProjectMinOrderByAggregateInput
@@ -233,76 +298,124 @@ export type ProjectScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ProjectScalarWhereWithAggregatesInput | Prisma.ProjectScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Project"> | string
   homeownerId?: Prisma.StringWithAggregatesFilter<"Project"> | string
+  title?: Prisma.StringWithAggregatesFilter<"Project"> | string
+  description?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   zipCode?: Prisma.StringWithAggregatesFilter<"Project"> | string
-  selections?: Prisma.JsonWithAggregatesFilter<"Project">
-  status?: Prisma.StringWithAggregatesFilter<"Project"> | string
+  addressLine1?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  city?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  state?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  status?: Prisma.EnumProjectStatusWithAggregatesFilter<"Project"> | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string
 }
 
 export type ProjectCreateInput = {
   id?: string
+  title: string
+  description?: string | null
   zipCode: string
-  selections: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  status?: string
+  addressLine1?: string | null
+  city?: string | null
+  state?: string | null
+  status?: $Enums.ProjectStatus
   createdAt?: Date | string
+  updatedAt?: Date | string
   homeowner: Prisma.UserCreateNestedOneWithoutProjectsInput
+  items?: Prisma.ProjectItemCreateNestedManyWithoutProjectInput
   bids?: Prisma.BidCreateNestedManyWithoutProjectInput
+  photos?: Prisma.ProjectPhotoCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateInput = {
   id?: string
   homeownerId: string
+  title: string
+  description?: string | null
   zipCode: string
-  selections: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  status?: string
+  addressLine1?: string | null
+  city?: string | null
+  state?: string | null
+  status?: $Enums.ProjectStatus
   createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ProjectItemUncheckedCreateNestedManyWithoutProjectInput
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutProjectInput
+  photos?: Prisma.ProjectPhotoUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
-  selections?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   homeowner?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
+  items?: Prisma.ProjectItemUpdateManyWithoutProjectNestedInput
   bids?: Prisma.BidUpdateManyWithoutProjectNestedInput
+  photos?: Prisma.ProjectPhotoUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   homeownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
-  selections?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ProjectItemUncheckedUpdateManyWithoutProjectNestedInput
   bids?: Prisma.BidUncheckedUpdateManyWithoutProjectNestedInput
+  photos?: Prisma.ProjectPhotoUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateManyInput = {
   id?: string
   homeownerId: string
+  title: string
+  description?: string | null
   zipCode: string
-  selections: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  status?: string
+  addressLine1?: string | null
+  city?: string | null
+  state?: string | null
+  status?: $Enums.ProjectStatus
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ProjectUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
-  selections?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ProjectUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   homeownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
-  selections?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ProjectListRelationFilter = {
@@ -318,26 +431,43 @@ export type ProjectOrderByRelationAggregateInput = {
 export type ProjectCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   homeownerId?: Prisma.SortOrder
+  title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   zipCode?: Prisma.SortOrder
-  selections?: Prisma.SortOrder
+  addressLine1?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  state?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type ProjectMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   homeownerId?: Prisma.SortOrder
+  title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   zipCode?: Prisma.SortOrder
+  addressLine1?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  state?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type ProjectMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   homeownerId?: Prisma.SortOrder
+  title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   zipCode?: Prisma.SortOrder
+  addressLine1?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  state?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type ProjectScalarRelationFilter = {
@@ -387,8 +517,22 @@ export type ProjectUncheckedUpdateManyWithoutHomeownerNestedInput = {
   deleteMany?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[]
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
+export type EnumProjectStatusFieldUpdateOperationsInput = {
+  set?: $Enums.ProjectStatus
+}
+
+export type ProjectCreateNestedOneWithoutItemsInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutItemsInput, Prisma.ProjectUncheckedCreateWithoutItemsInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutItemsInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneRequiredWithoutItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutItemsInput, Prisma.ProjectUncheckedCreateWithoutItemsInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutItemsInput
+  upsert?: Prisma.ProjectUpsertWithoutItemsInput
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutItemsInput, Prisma.ProjectUpdateWithoutItemsInput>, Prisma.ProjectUncheckedUpdateWithoutItemsInput>
 }
 
 export type ProjectCreateNestedOneWithoutBidsInput = {
@@ -405,22 +549,50 @@ export type ProjectUpdateOneRequiredWithoutBidsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutBidsInput, Prisma.ProjectUpdateWithoutBidsInput>, Prisma.ProjectUncheckedUpdateWithoutBidsInput>
 }
 
+export type ProjectCreateNestedOneWithoutPhotosInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutPhotosInput, Prisma.ProjectUncheckedCreateWithoutPhotosInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutPhotosInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneRequiredWithoutPhotosNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutPhotosInput, Prisma.ProjectUncheckedCreateWithoutPhotosInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutPhotosInput
+  upsert?: Prisma.ProjectUpsertWithoutPhotosInput
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutPhotosInput, Prisma.ProjectUpdateWithoutPhotosInput>, Prisma.ProjectUncheckedUpdateWithoutPhotosInput>
+}
+
 export type ProjectCreateWithoutHomeownerInput = {
   id?: string
+  title: string
+  description?: string | null
   zipCode: string
-  selections: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  status?: string
+  addressLine1?: string | null
+  city?: string | null
+  state?: string | null
+  status?: $Enums.ProjectStatus
   createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ProjectItemCreateNestedManyWithoutProjectInput
   bids?: Prisma.BidCreateNestedManyWithoutProjectInput
+  photos?: Prisma.ProjectPhotoCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutHomeownerInput = {
   id?: string
+  title: string
+  description?: string | null
   zipCode: string
-  selections: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  status?: string
+  addressLine1?: string | null
+  city?: string | null
+  state?: string | null
+  status?: $Enums.ProjectStatus
   createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ProjectItemUncheckedCreateNestedManyWithoutProjectInput
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutProjectInput
+  photos?: Prisma.ProjectPhotoUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutHomeownerInput = {
@@ -455,28 +627,127 @@ export type ProjectScalarWhereInput = {
   NOT?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[]
   id?: Prisma.StringFilter<"Project"> | string
   homeownerId?: Prisma.StringFilter<"Project"> | string
+  title?: Prisma.StringFilter<"Project"> | string
+  description?: Prisma.StringNullableFilter<"Project"> | string | null
   zipCode?: Prisma.StringFilter<"Project"> | string
-  selections?: Prisma.JsonFilter<"Project">
-  status?: Prisma.StringFilter<"Project"> | string
+  addressLine1?: Prisma.StringNullableFilter<"Project"> | string | null
+  city?: Prisma.StringNullableFilter<"Project"> | string | null
+  state?: Prisma.StringNullableFilter<"Project"> | string | null
+  status?: Prisma.EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
+}
+
+export type ProjectCreateWithoutItemsInput = {
+  id?: string
+  title: string
+  description?: string | null
+  zipCode: string
+  addressLine1?: string | null
+  city?: string | null
+  state?: string | null
+  status?: $Enums.ProjectStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  homeowner: Prisma.UserCreateNestedOneWithoutProjectsInput
+  bids?: Prisma.BidCreateNestedManyWithoutProjectInput
+  photos?: Prisma.ProjectPhotoCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutItemsInput = {
+  id?: string
+  homeownerId: string
+  title: string
+  description?: string | null
+  zipCode: string
+  addressLine1?: string | null
+  city?: string | null
+  state?: string | null
+  status?: $Enums.ProjectStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  bids?: Prisma.BidUncheckedCreateNestedManyWithoutProjectInput
+  photos?: Prisma.ProjectPhotoUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutItemsInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutItemsInput, Prisma.ProjectUncheckedCreateWithoutItemsInput>
+}
+
+export type ProjectUpsertWithoutItemsInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutItemsInput, Prisma.ProjectUncheckedUpdateWithoutItemsInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutItemsInput, Prisma.ProjectUncheckedCreateWithoutItemsInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutItemsInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutItemsInput, Prisma.ProjectUncheckedUpdateWithoutItemsInput>
+}
+
+export type ProjectUpdateWithoutItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeowner?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
+  bids?: Prisma.BidUpdateManyWithoutProjectNestedInput
+  photos?: Prisma.ProjectPhotoUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  homeownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bids?: Prisma.BidUncheckedUpdateManyWithoutProjectNestedInput
+  photos?: Prisma.ProjectPhotoUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutBidsInput = {
   id?: string
+  title: string
+  description?: string | null
   zipCode: string
-  selections: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  status?: string
+  addressLine1?: string | null
+  city?: string | null
+  state?: string | null
+  status?: $Enums.ProjectStatus
   createdAt?: Date | string
+  updatedAt?: Date | string
   homeowner: Prisma.UserCreateNestedOneWithoutProjectsInput
+  items?: Prisma.ProjectItemCreateNestedManyWithoutProjectInput
+  photos?: Prisma.ProjectPhotoCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutBidsInput = {
   id?: string
   homeownerId: string
+  title: string
+  description?: string | null
   zipCode: string
-  selections: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  status?: string
+  addressLine1?: string | null
+  city?: string | null
+  state?: string | null
+  status?: $Enums.ProjectStatus
   createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ProjectItemUncheckedCreateNestedManyWithoutProjectInput
+  photos?: Prisma.ProjectPhotoUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutBidsInput = {
@@ -497,54 +768,172 @@ export type ProjectUpdateToOneWithWhereWithoutBidsInput = {
 
 export type ProjectUpdateWithoutBidsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
-  selections?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   homeowner?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
+  items?: Prisma.ProjectItemUpdateManyWithoutProjectNestedInput
+  photos?: Prisma.ProjectPhotoUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutBidsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   homeownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
-  selections?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ProjectItemUncheckedUpdateManyWithoutProjectNestedInput
+  photos?: Prisma.ProjectPhotoUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutPhotosInput = {
+  id?: string
+  title: string
+  description?: string | null
+  zipCode: string
+  addressLine1?: string | null
+  city?: string | null
+  state?: string | null
+  status?: $Enums.ProjectStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  homeowner: Prisma.UserCreateNestedOneWithoutProjectsInput
+  items?: Prisma.ProjectItemCreateNestedManyWithoutProjectInput
+  bids?: Prisma.BidCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutPhotosInput = {
+  id?: string
+  homeownerId: string
+  title: string
+  description?: string | null
+  zipCode: string
+  addressLine1?: string | null
+  city?: string | null
+  state?: string | null
+  status?: $Enums.ProjectStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ProjectItemUncheckedCreateNestedManyWithoutProjectInput
+  bids?: Prisma.BidUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutPhotosInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutPhotosInput, Prisma.ProjectUncheckedCreateWithoutPhotosInput>
+}
+
+export type ProjectUpsertWithoutPhotosInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutPhotosInput, Prisma.ProjectUncheckedUpdateWithoutPhotosInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutPhotosInput, Prisma.ProjectUncheckedCreateWithoutPhotosInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutPhotosInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutPhotosInput, Prisma.ProjectUncheckedUpdateWithoutPhotosInput>
+}
+
+export type ProjectUpdateWithoutPhotosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeowner?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
+  items?: Prisma.ProjectItemUpdateManyWithoutProjectNestedInput
+  bids?: Prisma.BidUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutPhotosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  homeownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ProjectItemUncheckedUpdateManyWithoutProjectNestedInput
+  bids?: Prisma.BidUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateManyHomeownerInput = {
   id?: string
+  title: string
+  description?: string | null
   zipCode: string
-  selections: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  status?: string
+  addressLine1?: string | null
+  city?: string | null
+  state?: string | null
+  status?: $Enums.ProjectStatus
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ProjectUpdateWithoutHomeownerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
-  selections?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ProjectItemUpdateManyWithoutProjectNestedInput
   bids?: Prisma.BidUpdateManyWithoutProjectNestedInput
+  photos?: Prisma.ProjectPhotoUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutHomeownerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
-  selections?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ProjectItemUncheckedUpdateManyWithoutProjectNestedInput
   bids?: Prisma.BidUncheckedUpdateManyWithoutProjectNestedInput
+  photos?: Prisma.ProjectPhotoUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateManyWithoutHomeownerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
-  selections?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -553,11 +942,15 @@ export type ProjectUncheckedUpdateManyWithoutHomeownerInput = {
  */
 
 export type ProjectCountOutputType = {
+  items: number
   bids: number
+  photos: number
 }
 
 export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  items?: boolean | ProjectCountOutputTypeCountItemsArgs
   bids?: boolean | ProjectCountOutputTypeCountBidsArgs
+  photos?: boolean | ProjectCountOutputTypeCountPhotosArgs
 }
 
 /**
@@ -573,56 +966,94 @@ export type ProjectCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
 /**
  * ProjectCountOutputType without action
  */
+export type ProjectCountOutputTypeCountItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProjectItemWhereInput
+}
+
+/**
+ * ProjectCountOutputType without action
+ */
 export type ProjectCountOutputTypeCountBidsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.BidWhereInput
+}
+
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeCountPhotosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProjectPhotoWhereInput
 }
 
 
 export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   homeownerId?: boolean
+  title?: boolean
+  description?: boolean
   zipCode?: boolean
-  selections?: boolean
+  addressLine1?: boolean
+  city?: boolean
+  state?: boolean
   status?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   homeowner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  items?: boolean | Prisma.Project$itemsArgs<ExtArgs>
   bids?: boolean | Prisma.Project$bidsArgs<ExtArgs>
+  photos?: boolean | Prisma.Project$photosArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["project"]>
 
 export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   homeownerId?: boolean
+  title?: boolean
+  description?: boolean
   zipCode?: boolean
-  selections?: boolean
+  addressLine1?: boolean
+  city?: boolean
+  state?: boolean
   status?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   homeowner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["project"]>
 
 export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   homeownerId?: boolean
+  title?: boolean
+  description?: boolean
   zipCode?: boolean
-  selections?: boolean
+  addressLine1?: boolean
+  city?: boolean
+  state?: boolean
   status?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   homeowner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["project"]>
 
 export type ProjectSelectScalar = {
   id?: boolean
   homeownerId?: boolean
+  title?: boolean
+  description?: boolean
   zipCode?: boolean
-  selections?: boolean
+  addressLine1?: boolean
+  city?: boolean
+  state?: boolean
   status?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "homeownerId" | "zipCode" | "selections" | "status" | "createdAt", ExtArgs["result"]["project"]>
+export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "homeownerId" | "title" | "description" | "zipCode" | "addressLine1" | "city" | "state" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   homeowner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  items?: boolean | Prisma.Project$itemsArgs<ExtArgs>
   bids?: boolean | Prisma.Project$bidsArgs<ExtArgs>
+  photos?: boolean | Prisma.Project$photosArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProjectIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -636,15 +1067,22 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "Project"
   objects: {
     homeowner: Prisma.$UserPayload<ExtArgs>
+    items: Prisma.$ProjectItemPayload<ExtArgs>[]
     bids: Prisma.$BidPayload<ExtArgs>[]
+    photos: Prisma.$ProjectPhotoPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     homeownerId: string
+    title: string
+    description: string | null
     zipCode: string
-    selections: runtime.JsonValue
-    status: string
+    addressLine1: string | null
+    city: string | null
+    state: string | null
+    status: $Enums.ProjectStatus
     createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["project"]>
   composites: {}
 }
@@ -1040,7 +1478,9 @@ readonly fields: ProjectFieldRefs;
 export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   homeowner<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  items<T extends Prisma.Project$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   bids<T extends Prisma.Project$bidsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$bidsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BidPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  photos<T extends Prisma.Project$photosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$photosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPhotoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1072,10 +1512,15 @@ export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.
 export interface ProjectFieldRefs {
   readonly id: Prisma.FieldRef<"Project", 'String'>
   readonly homeownerId: Prisma.FieldRef<"Project", 'String'>
+  readonly title: Prisma.FieldRef<"Project", 'String'>
+  readonly description: Prisma.FieldRef<"Project", 'String'>
   readonly zipCode: Prisma.FieldRef<"Project", 'String'>
-  readonly selections: Prisma.FieldRef<"Project", 'Json'>
-  readonly status: Prisma.FieldRef<"Project", 'String'>
+  readonly addressLine1: Prisma.FieldRef<"Project", 'String'>
+  readonly city: Prisma.FieldRef<"Project", 'String'>
+  readonly state: Prisma.FieldRef<"Project", 'String'>
+  readonly status: Prisma.FieldRef<"Project", 'ProjectStatus'>
   readonly createdAt: Prisma.FieldRef<"Project", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Project", 'DateTime'>
 }
     
 
@@ -1472,6 +1917,30 @@ export type ProjectDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
+ * Project.items
+ */
+export type Project$itemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProjectItem
+   */
+  select?: Prisma.ProjectItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProjectItem
+   */
+  omit?: Prisma.ProjectItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProjectItemInclude<ExtArgs> | null
+  where?: Prisma.ProjectItemWhereInput
+  orderBy?: Prisma.ProjectItemOrderByWithRelationInput | Prisma.ProjectItemOrderByWithRelationInput[]
+  cursor?: Prisma.ProjectItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProjectItemScalarFieldEnum | Prisma.ProjectItemScalarFieldEnum[]
+}
+
+/**
  * Project.bids
  */
 export type Project$bidsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1493,6 +1962,30 @@ export type Project$bidsArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.BidScalarFieldEnum | Prisma.BidScalarFieldEnum[]
+}
+
+/**
+ * Project.photos
+ */
+export type Project$photosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProjectPhoto
+   */
+  select?: Prisma.ProjectPhotoSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProjectPhoto
+   */
+  omit?: Prisma.ProjectPhotoOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProjectPhotoInclude<ExtArgs> | null
+  where?: Prisma.ProjectPhotoWhereInput
+  orderBy?: Prisma.ProjectPhotoOrderByWithRelationInput | Prisma.ProjectPhotoOrderByWithRelationInput[]
+  cursor?: Prisma.ProjectPhotoWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProjectPhotoScalarFieldEnum | Prisma.ProjectPhotoScalarFieldEnum[]
 }
 
 /**

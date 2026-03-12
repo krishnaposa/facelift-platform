@@ -23,12 +23,52 @@ export * from './enums';
  */
 export type User = Prisma.UserModel
 /**
+ * Model HomeownerProfile
+ * 
+ */
+export type HomeownerProfile = Prisma.HomeownerProfileModel
+/**
+ * Model ContractorProfile
+ * 
+ */
+export type ContractorProfile = Prisma.ContractorProfileModel
+/**
+ * Model CatalogCategory
+ * 
+ */
+export type CatalogCategory = Prisma.CatalogCategoryModel
+/**
+ * Model CatalogItem
+ * 
+ */
+export type CatalogItem = Prisma.CatalogItemModel
+/**
  * Model Project
  * 
  */
 export type Project = Prisma.ProjectModel
 /**
+ * Model ProjectItem
+ * 
+ */
+export type ProjectItem = Prisma.ProjectItemModel
+/**
  * Model Bid
  * 
  */
 export type Bid = Prisma.BidModel
+/**
+ * Model BidLineItem
+ * 
+ */
+export type BidLineItem = Prisma.BidLineItemModel
+/**
+ * Model ProjectPhoto
+ * 
+ */
+export type ProjectPhoto = Prisma.ProjectPhotoModel
+/**
+ * Model GalleryImage
+ * 
+ */
+export type GalleryImage = Prisma.GalleryImageModel

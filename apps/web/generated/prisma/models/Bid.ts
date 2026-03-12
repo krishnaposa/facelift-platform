@@ -27,12 +27,12 @@ export type AggregateBid = {
 }
 
 export type BidAvgAggregateOutputType = {
-  amount: number | null
+  amount: runtime.Decimal | null
   daysToComplete: number | null
 }
 
 export type BidSumAggregateOutputType = {
-  amount: number | null
+  amount: runtime.Decimal | null
   daysToComplete: number | null
 }
 
@@ -40,27 +40,36 @@ export type BidMinAggregateOutputType = {
   id: string | null
   projectId: string | null
   contractorId: string | null
-  amount: number | null
+  status: $Enums.BidStatus | null
+  amount: runtime.Decimal | null
   daysToComplete: number | null
   message: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type BidMaxAggregateOutputType = {
   id: string | null
   projectId: string | null
   contractorId: string | null
-  amount: number | null
+  status: $Enums.BidStatus | null
+  amount: runtime.Decimal | null
   daysToComplete: number | null
   message: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type BidCountAggregateOutputType = {
   id: number
   projectId: number
   contractorId: number
+  status: number
   amount: number
   daysToComplete: number
   message: number
+  createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -79,27 +88,36 @@ export type BidMinAggregateInputType = {
   id?: true
   projectId?: true
   contractorId?: true
+  status?: true
   amount?: true
   daysToComplete?: true
   message?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type BidMaxAggregateInputType = {
   id?: true
   projectId?: true
   contractorId?: true
+  status?: true
   amount?: true
   daysToComplete?: true
   message?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type BidCountAggregateInputType = {
   id?: true
   projectId?: true
   contractorId?: true
+  status?: true
   amount?: true
   daysToComplete?: true
   message?: true
+  createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -193,9 +211,12 @@ export type BidGroupByOutputType = {
   id: string
   projectId: string
   contractorId: string
-  amount: number
+  status: $Enums.BidStatus
+  amount: runtime.Decimal
   daysToComplete: number
   message: string | null
+  createdAt: Date
+  updatedAt: Date
   _count: BidCountAggregateOutputType | null
   _avg: BidAvgAggregateOutputType | null
   _sum: BidSumAggregateOutputType | null
@@ -225,45 +246,61 @@ export type BidWhereInput = {
   id?: Prisma.StringFilter<"Bid"> | string
   projectId?: Prisma.StringFilter<"Bid"> | string
   contractorId?: Prisma.StringFilter<"Bid"> | string
-  amount?: Prisma.FloatFilter<"Bid"> | number
+  status?: Prisma.EnumBidStatusFilter<"Bid"> | $Enums.BidStatus
+  amount?: Prisma.DecimalFilter<"Bid"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete?: Prisma.IntFilter<"Bid"> | number
   message?: Prisma.StringNullableFilter<"Bid"> | string | null
-  project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
+  createdAt?: Prisma.DateTimeFilter<"Bid"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Bid"> | Date | string
   contractor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
+  lineItems?: Prisma.BidLineItemListRelationFilter
 }
 
 export type BidOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   contractorId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   daysToComplete?: Prisma.SortOrder
   message?: Prisma.SortOrderInput | Prisma.SortOrder
-  project?: Prisma.ProjectOrderByWithRelationInput
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   contractor?: Prisma.UserOrderByWithRelationInput
+  project?: Prisma.ProjectOrderByWithRelationInput
+  lineItems?: Prisma.BidLineItemOrderByRelationAggregateInput
 }
 
 export type BidWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  projectId_contractorId?: Prisma.BidProjectIdContractorIdCompoundUniqueInput
   AND?: Prisma.BidWhereInput | Prisma.BidWhereInput[]
   OR?: Prisma.BidWhereInput[]
   NOT?: Prisma.BidWhereInput | Prisma.BidWhereInput[]
   projectId?: Prisma.StringFilter<"Bid"> | string
   contractorId?: Prisma.StringFilter<"Bid"> | string
-  amount?: Prisma.FloatFilter<"Bid"> | number
+  status?: Prisma.EnumBidStatusFilter<"Bid"> | $Enums.BidStatus
+  amount?: Prisma.DecimalFilter<"Bid"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete?: Prisma.IntFilter<"Bid"> | number
   message?: Prisma.StringNullableFilter<"Bid"> | string | null
-  project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
+  createdAt?: Prisma.DateTimeFilter<"Bid"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Bid"> | Date | string
   contractor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id">
+  project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
+  lineItems?: Prisma.BidLineItemListRelationFilter
+}, "id" | "projectId_contractorId">
 
 export type BidOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   contractorId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   daysToComplete?: Prisma.SortOrder
   message?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.BidCountOrderByAggregateInput
   _avg?: Prisma.BidAvgOrderByAggregateInput
   _max?: Prisma.BidMaxOrderByAggregateInput
@@ -278,70 +315,98 @@ export type BidScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Bid"> | string
   projectId?: Prisma.StringWithAggregatesFilter<"Bid"> | string
   contractorId?: Prisma.StringWithAggregatesFilter<"Bid"> | string
-  amount?: Prisma.FloatWithAggregatesFilter<"Bid"> | number
+  status?: Prisma.EnumBidStatusWithAggregatesFilter<"Bid"> | $Enums.BidStatus
+  amount?: Prisma.DecimalWithAggregatesFilter<"Bid"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete?: Prisma.IntWithAggregatesFilter<"Bid"> | number
   message?: Prisma.StringNullableWithAggregatesFilter<"Bid"> | string | null
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Bid"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Bid"> | Date | string
 }
 
 export type BidCreateInput = {
   id?: string
-  amount: number
+  status?: $Enums.BidStatus
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete: number
   message?: string | null
-  project: Prisma.ProjectCreateNestedOneWithoutBidsInput
+  createdAt?: Date | string
+  updatedAt?: Date | string
   contractor: Prisma.UserCreateNestedOneWithoutBidsInput
+  project: Prisma.ProjectCreateNestedOneWithoutBidsInput
+  lineItems?: Prisma.BidLineItemCreateNestedManyWithoutBidInput
 }
 
 export type BidUncheckedCreateInput = {
   id?: string
   projectId: string
   contractorId: string
-  amount: number
+  status?: $Enums.BidStatus
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete: number
   message?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lineItems?: Prisma.BidLineItemUncheckedCreateNestedManyWithoutBidInput
 }
 
 export type BidUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumBidStatusFieldUpdateOperationsInput | $Enums.BidStatus
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete?: Prisma.IntFieldUpdateOperationsInput | number
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  project?: Prisma.ProjectUpdateOneRequiredWithoutBidsNestedInput
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contractor?: Prisma.UserUpdateOneRequiredWithoutBidsNestedInput
+  project?: Prisma.ProjectUpdateOneRequiredWithoutBidsNestedInput
+  lineItems?: Prisma.BidLineItemUpdateManyWithoutBidNestedInput
 }
 
 export type BidUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   contractorId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumBidStatusFieldUpdateOperationsInput | $Enums.BidStatus
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete?: Prisma.IntFieldUpdateOperationsInput | number
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lineItems?: Prisma.BidLineItemUncheckedUpdateManyWithoutBidNestedInput
 }
 
 export type BidCreateManyInput = {
   id?: string
   projectId: string
   contractorId: string
-  amount: number
+  status?: $Enums.BidStatus
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete: number
   message?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type BidUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumBidStatusFieldUpdateOperationsInput | $Enums.BidStatus
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete?: Prisma.IntFieldUpdateOperationsInput | number
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type BidUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   contractorId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumBidStatusFieldUpdateOperationsInput | $Enums.BidStatus
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete?: Prisma.IntFieldUpdateOperationsInput | number
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type BidListRelationFilter = {
@@ -354,13 +419,21 @@ export type BidOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type BidProjectIdContractorIdCompoundUniqueInput = {
+  projectId: string
+  contractorId: string
+}
+
 export type BidCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   contractorId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   daysToComplete?: Prisma.SortOrder
   message?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type BidAvgOrderByAggregateInput = {
@@ -372,23 +445,34 @@ export type BidMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   contractorId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   daysToComplete?: Prisma.SortOrder
   message?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type BidMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   contractorId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   daysToComplete?: Prisma.SortOrder
   message?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type BidSumOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   daysToComplete?: Prisma.SortOrder
+}
+
+export type BidScalarRelationFilter = {
+  is?: Prisma.BidWhereInput
+  isNot?: Prisma.BidWhereInput
 }
 
 export type BidCreateNestedManyWithoutContractorInput = {
@@ -475,40 +559,54 @@ export type BidUncheckedUpdateManyWithoutProjectNestedInput = {
   deleteMany?: Prisma.BidScalarWhereInput | Prisma.BidScalarWhereInput[]
 }
 
-export type FloatFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
+export type EnumBidStatusFieldUpdateOperationsInput = {
+  set?: $Enums.BidStatus
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
+export type DecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
+export type BidCreateNestedOneWithoutLineItemsInput = {
+  create?: Prisma.XOR<Prisma.BidCreateWithoutLineItemsInput, Prisma.BidUncheckedCreateWithoutLineItemsInput>
+  connectOrCreate?: Prisma.BidCreateOrConnectWithoutLineItemsInput
+  connect?: Prisma.BidWhereUniqueInput
+}
+
+export type BidUpdateOneRequiredWithoutLineItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.BidCreateWithoutLineItemsInput, Prisma.BidUncheckedCreateWithoutLineItemsInput>
+  connectOrCreate?: Prisma.BidCreateOrConnectWithoutLineItemsInput
+  upsert?: Prisma.BidUpsertWithoutLineItemsInput
+  connect?: Prisma.BidWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BidUpdateToOneWithWhereWithoutLineItemsInput, Prisma.BidUpdateWithoutLineItemsInput>, Prisma.BidUncheckedUpdateWithoutLineItemsInput>
 }
 
 export type BidCreateWithoutContractorInput = {
   id?: string
-  amount: number
+  status?: $Enums.BidStatus
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete: number
   message?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   project: Prisma.ProjectCreateNestedOneWithoutBidsInput
+  lineItems?: Prisma.BidLineItemCreateNestedManyWithoutBidInput
 }
 
 export type BidUncheckedCreateWithoutContractorInput = {
   id?: string
   projectId: string
-  amount: number
+  status?: $Enums.BidStatus
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete: number
   message?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lineItems?: Prisma.BidLineItemUncheckedCreateNestedManyWithoutBidInput
 }
 
 export type BidCreateOrConnectWithoutContractorInput = {
@@ -544,25 +642,36 @@ export type BidScalarWhereInput = {
   id?: Prisma.StringFilter<"Bid"> | string
   projectId?: Prisma.StringFilter<"Bid"> | string
   contractorId?: Prisma.StringFilter<"Bid"> | string
-  amount?: Prisma.FloatFilter<"Bid"> | number
+  status?: Prisma.EnumBidStatusFilter<"Bid"> | $Enums.BidStatus
+  amount?: Prisma.DecimalFilter<"Bid"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete?: Prisma.IntFilter<"Bid"> | number
   message?: Prisma.StringNullableFilter<"Bid"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Bid"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Bid"> | Date | string
 }
 
 export type BidCreateWithoutProjectInput = {
   id?: string
-  amount: number
+  status?: $Enums.BidStatus
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete: number
   message?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   contractor: Prisma.UserCreateNestedOneWithoutBidsInput
+  lineItems?: Prisma.BidLineItemCreateNestedManyWithoutBidInput
 }
 
 export type BidUncheckedCreateWithoutProjectInput = {
   id?: string
   contractorId: string
-  amount: number
+  status?: $Enums.BidStatus
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete: number
   message?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lineItems?: Prisma.BidLineItemUncheckedCreateNestedManyWithoutBidInput
 }
 
 export type BidCreateOrConnectWithoutProjectInput = {
@@ -591,141 +700,282 @@ export type BidUpdateManyWithWhereWithoutProjectInput = {
   data: Prisma.XOR<Prisma.BidUpdateManyMutationInput, Prisma.BidUncheckedUpdateManyWithoutProjectInput>
 }
 
+export type BidCreateWithoutLineItemsInput = {
+  id?: string
+  status?: $Enums.BidStatus
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  daysToComplete: number
+  message?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  contractor: Prisma.UserCreateNestedOneWithoutBidsInput
+  project: Prisma.ProjectCreateNestedOneWithoutBidsInput
+}
+
+export type BidUncheckedCreateWithoutLineItemsInput = {
+  id?: string
+  projectId: string
+  contractorId: string
+  status?: $Enums.BidStatus
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  daysToComplete: number
+  message?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type BidCreateOrConnectWithoutLineItemsInput = {
+  where: Prisma.BidWhereUniqueInput
+  create: Prisma.XOR<Prisma.BidCreateWithoutLineItemsInput, Prisma.BidUncheckedCreateWithoutLineItemsInput>
+}
+
+export type BidUpsertWithoutLineItemsInput = {
+  update: Prisma.XOR<Prisma.BidUpdateWithoutLineItemsInput, Prisma.BidUncheckedUpdateWithoutLineItemsInput>
+  create: Prisma.XOR<Prisma.BidCreateWithoutLineItemsInput, Prisma.BidUncheckedCreateWithoutLineItemsInput>
+  where?: Prisma.BidWhereInput
+}
+
+export type BidUpdateToOneWithWhereWithoutLineItemsInput = {
+  where?: Prisma.BidWhereInput
+  data: Prisma.XOR<Prisma.BidUpdateWithoutLineItemsInput, Prisma.BidUncheckedUpdateWithoutLineItemsInput>
+}
+
+export type BidUpdateWithoutLineItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumBidStatusFieldUpdateOperationsInput | $Enums.BidStatus
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  daysToComplete?: Prisma.IntFieldUpdateOperationsInput | number
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contractor?: Prisma.UserUpdateOneRequiredWithoutBidsNestedInput
+  project?: Prisma.ProjectUpdateOneRequiredWithoutBidsNestedInput
+}
+
+export type BidUncheckedUpdateWithoutLineItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  contractorId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumBidStatusFieldUpdateOperationsInput | $Enums.BidStatus
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  daysToComplete?: Prisma.IntFieldUpdateOperationsInput | number
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type BidCreateManyContractorInput = {
   id?: string
   projectId: string
-  amount: number
+  status?: $Enums.BidStatus
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete: number
   message?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type BidUpdateWithoutContractorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumBidStatusFieldUpdateOperationsInput | $Enums.BidStatus
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete?: Prisma.IntFieldUpdateOperationsInput | number
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutBidsNestedInput
+  lineItems?: Prisma.BidLineItemUpdateManyWithoutBidNestedInput
 }
 
 export type BidUncheckedUpdateWithoutContractorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumBidStatusFieldUpdateOperationsInput | $Enums.BidStatus
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete?: Prisma.IntFieldUpdateOperationsInput | number
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lineItems?: Prisma.BidLineItemUncheckedUpdateManyWithoutBidNestedInput
 }
 
 export type BidUncheckedUpdateManyWithoutContractorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumBidStatusFieldUpdateOperationsInput | $Enums.BidStatus
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete?: Prisma.IntFieldUpdateOperationsInput | number
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type BidCreateManyProjectInput = {
   id?: string
   contractorId: string
-  amount: number
+  status?: $Enums.BidStatus
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete: number
   message?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type BidUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumBidStatusFieldUpdateOperationsInput | $Enums.BidStatus
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete?: Prisma.IntFieldUpdateOperationsInput | number
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contractor?: Prisma.UserUpdateOneRequiredWithoutBidsNestedInput
+  lineItems?: Prisma.BidLineItemUpdateManyWithoutBidNestedInput
 }
 
 export type BidUncheckedUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   contractorId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumBidStatusFieldUpdateOperationsInput | $Enums.BidStatus
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete?: Prisma.IntFieldUpdateOperationsInput | number
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lineItems?: Prisma.BidLineItemUncheckedUpdateManyWithoutBidNestedInput
 }
 
 export type BidUncheckedUpdateManyWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   contractorId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumBidStatusFieldUpdateOperationsInput | $Enums.BidStatus
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   daysToComplete?: Prisma.IntFieldUpdateOperationsInput | number
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type BidCountOutputType
+ */
+
+export type BidCountOutputType = {
+  lineItems: number
+}
+
+export type BidCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  lineItems?: boolean | BidCountOutputTypeCountLineItemsArgs
+}
+
+/**
+ * BidCountOutputType without action
+ */
+export type BidCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BidCountOutputType
+   */
+  select?: Prisma.BidCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * BidCountOutputType without action
+ */
+export type BidCountOutputTypeCountLineItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BidLineItemWhereInput
+}
 
 
 export type BidSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   projectId?: boolean
   contractorId?: boolean
+  status?: boolean
   amount?: boolean
   daysToComplete?: boolean
   message?: boolean
-  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
+  createdAt?: boolean
+  updatedAt?: boolean
   contractor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
+  lineItems?: boolean | Prisma.Bid$lineItemsArgs<ExtArgs>
+  _count?: boolean | Prisma.BidCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["bid"]>
 
 export type BidSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   projectId?: boolean
   contractorId?: boolean
+  status?: boolean
   amount?: boolean
   daysToComplete?: boolean
   message?: boolean
-  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
+  createdAt?: boolean
+  updatedAt?: boolean
   contractor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["bid"]>
 
 export type BidSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   projectId?: boolean
   contractorId?: boolean
+  status?: boolean
   amount?: boolean
   daysToComplete?: boolean
   message?: boolean
-  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
+  createdAt?: boolean
+  updatedAt?: boolean
   contractor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["bid"]>
 
 export type BidSelectScalar = {
   id?: boolean
   projectId?: boolean
   contractorId?: boolean
+  status?: boolean
   amount?: boolean
   daysToComplete?: boolean
   message?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type BidOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectId" | "contractorId" | "amount" | "daysToComplete" | "message", ExtArgs["result"]["bid"]>
+export type BidOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectId" | "contractorId" | "status" | "amount" | "daysToComplete" | "message" | "createdAt" | "updatedAt", ExtArgs["result"]["bid"]>
 export type BidInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   contractor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
+  lineItems?: boolean | Prisma.Bid$lineItemsArgs<ExtArgs>
+  _count?: boolean | Prisma.BidCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BidIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   contractor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
 }
 export type BidIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   contractor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
 }
 
 export type $BidPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Bid"
   objects: {
-    project: Prisma.$ProjectPayload<ExtArgs>
     contractor: Prisma.$UserPayload<ExtArgs>
+    project: Prisma.$ProjectPayload<ExtArgs>
+    lineItems: Prisma.$BidLineItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     projectId: string
     contractorId: string
-    amount: number
+    status: $Enums.BidStatus
+    amount: runtime.Decimal
     daysToComplete: number
     message: string | null
+    createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["bid"]>
   composites: {}
 }
@@ -1120,8 +1370,9 @@ readonly fields: BidFieldRefs;
  */
 export interface Prisma__BidClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  project<T extends Prisma.ProjectDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectDefaultArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   contractor<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  project<T extends Prisma.ProjectDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectDefaultArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  lineItems<T extends Prisma.Bid$lineItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Bid$lineItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BidLineItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1154,9 +1405,12 @@ export interface BidFieldRefs {
   readonly id: Prisma.FieldRef<"Bid", 'String'>
   readonly projectId: Prisma.FieldRef<"Bid", 'String'>
   readonly contractorId: Prisma.FieldRef<"Bid", 'String'>
-  readonly amount: Prisma.FieldRef<"Bid", 'Float'>
+  readonly status: Prisma.FieldRef<"Bid", 'BidStatus'>
+  readonly amount: Prisma.FieldRef<"Bid", 'Decimal'>
   readonly daysToComplete: Prisma.FieldRef<"Bid", 'Int'>
   readonly message: Prisma.FieldRef<"Bid", 'String'>
+  readonly createdAt: Prisma.FieldRef<"Bid", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Bid", 'DateTime'>
 }
     
 
@@ -1550,6 +1804,30 @@ export type BidDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Limit how many Bids to delete.
    */
   limit?: number
+}
+
+/**
+ * Bid.lineItems
+ */
+export type Bid$lineItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BidLineItem
+   */
+  select?: Prisma.BidLineItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BidLineItem
+   */
+  omit?: Prisma.BidLineItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BidLineItemInclude<ExtArgs> | null
+  where?: Prisma.BidLineItemWhereInput
+  orderBy?: Prisma.BidLineItemOrderByWithRelationInput | Prisma.BidLineItemOrderByWithRelationInput[]
+  cursor?: Prisma.BidLineItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BidLineItemScalarFieldEnum | Prisma.BidLineItemScalarFieldEnum[]
 }
 
 /**
