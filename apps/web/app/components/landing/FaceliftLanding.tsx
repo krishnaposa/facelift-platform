@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function FaceliftLanding() {
   const categories = [
     { title: 'Front Doors', desc: 'Single door, double door, sidelights, modern styles' },
@@ -67,9 +69,13 @@ export default function FaceliftLanding() {
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <button className="rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-sm">
+            
+            <Link
+              href="/projects/new"
+              className="rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-sm"
+              >
               Create My Project
-            </button>
+            </Link>
             <button className="rounded-2xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-900">
               Explore Ideas
             </button>
