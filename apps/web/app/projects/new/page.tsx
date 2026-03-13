@@ -12,6 +12,7 @@ type UpgradeKey =
   | 'countertops';
 
 type ProjectSelections = {
+  title: string;
   zipCode: string;
   notes: string;
   photos: string[];
@@ -44,6 +45,7 @@ type ProjectSelections = {
 };
 
 const initialState: ProjectSelections = {
+  title: '',
   zipCode: '',
   notes: '',
   photos: [''],
@@ -123,9 +125,16 @@ export default function NewProjectPage() {
       return false;
     }
 
-    if (currentStep === 3 && !form.zipCode.trim()) {
-      setError('Enter a zip code.');
-      return false;
+    if (currentStep === 3) {
+      if (!form.title.trim()) {
+        setError('Enter a project title.');
+        return false;
+      }
+
+      if (!form.zipCode.trim()) {
+        setError('Enter a zip code.');
+        return false;
+      }
     }
 
     setError('');
@@ -152,6 +161,7 @@ export default function NewProjectPage() {
       const cleanedPhotos = form.photos.map((p) => p.trim()).filter(Boolean);
 
       const payload = {
+        title: form.title.trim(),
         zipCode: form.zipCode.trim(),
         selections: {
           ...form,
@@ -168,11 +178,19 @@ export default function NewProjectPage() {
       });
 
       if (!res.ok) {
-        const data = await res.json().catch(() => null);
-        throw new Error(data?.error || 'Failed to create project.');
+        const text = await res.text();
+        console.error('project create failed status:', res.status);
+        console.error('project create failed raw response:', text);
+        throw new Error(text || 'Failed to create project.');
       }
 
       const data = await res.json();
+      console.log('API response data:', data);
+
+      if (!data?.project?.id) {
+        throw new Error('Project created, but no project id was returned.');
+      }
+
       router.push(`/projects/${data.project.id}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong.');
@@ -214,7 +232,11 @@ export default function NewProjectPage() {
 
         <div className="rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200">
           {step === 1 && (
-            <StepOne form={form} toggleItem={toggleItem} selectedCount={selectedCount} />
+            <StepOne
+              form={form}
+              toggleItem={toggleItem}
+              selectedCount={selectedCount}
+            />
           )}
 
           {step === 2 && <StepTwo form={form} updateItem={updateItem} />}
@@ -314,7 +336,9 @@ function StepOne({
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-slate-900">Choose upgrade items</h2>
+      <h2 className="text-2xl font-semibold text-slate-900">
+        Choose upgrade items
+      </h2>
       <p className="mt-2 text-slate-600">
         Select everything you want contractors to bid on.
       </p>
@@ -335,7 +359,11 @@ function StepOne({
               }`}
             >
               <div className="text-lg font-semibold">{item.title}</div>
-              <div className={`mt-2 text-sm ${selected ? 'text-slate-300' : 'text-slate-600'}`}>
+              <div
+                className={`mt-2 text-sm ${
+                  selected ? 'text-slate-300' : 'text-slate-600'
+                }`}
+              >
                 {item.desc}
               </div>
             </button>
@@ -362,7 +390,9 @@ function StepTwo({
 }) {
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-slate-900">Configure your selections</h2>
+      <h2 className="text-2xl font-semibold text-slate-900">
+        Configure your selections
+      </h2>
       <p className="mt-2 text-slate-600">
         Add simple preferences now. You can collect more detail later.
       </p>
@@ -505,12 +535,20 @@ function StepThree({
 }) {
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-slate-900">Location and photos</h2>
+      <h2 className="text-2xl font-semibold text-slate-900">
+        Project details and photos
+      </h2>
       <p className="mt-2 text-slate-600">
-        For now, use image URLs. Later you can swap this for Azure Blob upload.
+        Add a project title, location, notes, and image URLs for now.
       </p>
 
       <div className="mt-6 space-y-5">
+        <InputRow
+          label="Project Title"
+          value={form.title}
+          onChange={(value) => setForm((prev) => ({ ...prev, title: value }))}
+        />
+
         <InputRow
           label="Zip Code"
           value={form.zipCode}
@@ -518,18 +556,24 @@ function StepThree({
         />
 
         <div>
-          <label className="mb-2 block text-sm font-semibold text-slate-700">Project Notes</label>
+          <label className="mb-2 block text-sm font-semibold text-slate-700">
+            Project Notes
+          </label>
           <textarea
             value={form.notes}
-            onChange={(e) => setForm((prev) => ({ ...prev, notes: e.target.value }))}
+            onChange={(e) =>
+              setForm((prev) => ({ ...prev, notes: e.target.value }))
+            }
             rows={5}
             className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none ring-0 placeholder:text-slate-400 focus:border-slate-900"
-            placeholder="Describe the look you want, any timing preferences, and anything the contractor should know."
+            placeholder="Describe the look you want, timing preferences, budget thoughts, and anything the contractor should know."
           />
         </div>
 
         <div>
-          <div className="mb-2 text-sm font-semibold text-slate-700">Photo Links</div>
+          <div className="mb-2 text-sm font-semibold text-slate-700">
+            Photo Links
+          </div>
           <div className="space-y-3">
             {form.photos.map((photo, index) => (
               <div key={index} className="flex gap-3">
@@ -566,11 +610,15 @@ function StepThree({
 }
 
 function StepFour({ form }: { form: ProjectSelections }) {
-  const selectedItems = Object.entries(form.items).filter(([, value]) => value?.selected);
+  const selectedItems = Object.entries(form.items).filter(
+    ([, value]) => value?.selected
+  );
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-slate-900">Review and submit</h2>
+      <h2 className="text-2xl font-semibold text-slate-900">
+        Review and submit
+      </h2>
       <p className="mt-2 text-slate-600">Make sure everything looks right.</p>
 
       <div className="mt-6 grid gap-6 md:grid-cols-2">
@@ -580,8 +628,13 @@ function StepFour({ form }: { form: ProjectSelections }) {
           </div>
           <div className="mt-4 space-y-3">
             {selectedItems.map(([key, value]) => (
-              <div key={key} className="rounded-2xl bg-white px-4 py-3 ring-1 ring-slate-200">
-                <div className="font-semibold text-slate-900">{prettyLabel(key)}</div>
+              <div
+                key={key}
+                className="rounded-2xl bg-white px-4 py-3 ring-1 ring-slate-200"
+              >
+                <div className="font-semibold text-slate-900">
+                  {prettyLabel(key)}
+                </div>
                 <pre className="mt-2 whitespace-pre-wrap text-xs text-slate-500">
                   {JSON.stringify(value, null, 2)}
                 </pre>
@@ -596,10 +649,16 @@ function StepFour({ form }: { form: ProjectSelections }) {
           </div>
           <div className="mt-4 space-y-3 text-sm text-slate-700">
             <div>
-              <span className="font-semibold">Zip Code:</span> {form.zipCode || 'Not provided'}
+              <span className="font-semibold">Title:</span>{' '}
+              {form.title || 'Not provided'}
             </div>
             <div>
-              <span className="font-semibold">Notes:</span> {form.notes || 'None'}
+              <span className="font-semibold">Zip Code:</span>{' '}
+              {form.zipCode || 'Not provided'}
+            </div>
+            <div>
+              <span className="font-semibold">Notes:</span>{' '}
+              {form.notes || 'None'}
             </div>
             <div>
               <span className="font-semibold">Photo Links:</span>{' '}
@@ -642,7 +701,9 @@ function InputRow({
 }) {
   return (
     <div>
-      <label className="mb-2 block text-sm font-semibold text-slate-700">{label}</label>
+      <label className="mb-2 block text-sm font-semibold text-slate-700">
+        {label}
+      </label>
       <input
         type={type}
         min={min}
@@ -667,7 +728,9 @@ function SelectRow({
 }) {
   return (
     <div>
-      <label className="mb-2 block text-sm font-semibold text-slate-700">{label}</label>
+      <label className="mb-2 block text-sm font-semibold text-slate-700">
+        {label}
+      </label>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}

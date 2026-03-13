@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 export default async function ProjectDetailPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
   const { id } = await params;
 
