@@ -9,7 +9,8 @@ if (!connectionString) {
   throw new Error('DATABASE_URL is not set');
 }
 
-const adapter = new PrismaPg({ connectionString });
+const pool = new pg.Pool({ connectionString });
+const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
@@ -140,11 +141,13 @@ async function main() {
     where: { email: 'testhomeowner@example.com' },
     update: {
       role: 'HOMEOWNER',
+      passwordHash: null,
     },
     create: {
       id: '11111111-1111-1111-1111-111111111111',
       email: 'testhomeowner@example.com',
       role: 'HOMEOWNER',
+      passwordHash: null,
     },
   });
 
@@ -158,4 +161,5 @@ main()
   })
   .finally(async () => {
     await prisma.$disconnect();
+    await pool.end();
   });
