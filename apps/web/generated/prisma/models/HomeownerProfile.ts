@@ -366,10 +366,6 @@ export type HomeownerProfileUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.HomeownerProfileUpdateToOneWithWhereWithoutUserInput, Prisma.HomeownerProfileUpdateWithoutUserInput>, Prisma.HomeownerProfileUncheckedUpdateWithoutUserInput>
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type HomeownerProfileCreateWithoutUserInput = {
   id?: string
   fullName?: string | null

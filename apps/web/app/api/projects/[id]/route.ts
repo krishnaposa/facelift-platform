@@ -13,7 +13,10 @@ const catalogSlugMap = {
 
 type UpgradeKey = keyof typeof catalogSlugMap;
 
-export async function POST(req: NextRequest) {
+export async function PATCH(
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
     const session = await getSessionFromRequest(req);
 
@@ -21,6 +24,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized.' }, { status: 401 });
     }
 
+    const { id } = await context.params;
     const body = await req.json();
 
     const title = String(body?.title || '').trim();
@@ -46,6 +50,17 @@ export async function POST(req: NextRequest) {
         { error: 'Selections are required.' },
         { status: 400 }
       );
+    }
+
+    const existingProject = await prisma.project.findFirst({
+      where: {
+        id,
+        homeownerId: session.userId,
+      },
+    });
+
+    if (!existingProject) {
+      return NextResponse.json({ error: 'Project not found.' }, { status: 404 });
     }
 
     const items = selections?.items ?? {};
@@ -93,50 +108,59 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    const project = await prisma.project.create({
-      data: {
-        homeownerId: session.userId,
-        title,
-        description: notes || null,
-        zipCode,
-        status: 'OPEN',
-      },
-    });
-
-    await prisma.projectItem.createMany({
-      data: selectedEntries.map(([key, value]) => {
-        const slug = catalogSlugMap[key];
-        const catalogItemId = catalogBySlug.get(slug)!;
-
-        const quantity =
-          typeof value.count === 'number' && Number.isFinite(value.count) && value.count > 0
-            ? value.count
-            : 1;
-
-        const { selected, count, ...rest } = value;
-
-        return {
-          projectId: project.id,
-          catalogItemId,
-          quantity,
-          selectedOptions: rest,
-          notes: notes || null,
-        };
-      }),
-    });
-
-    if (photos.length > 0) {
-      await prisma.projectPhoto.createMany({
-        data: photos.map((imageUrl, index) => ({
-          projectId: project.id,
-          imageUrl,
-          sortOrder: index,
-        })),
+    await prisma.$transaction(async (tx) => {
+      await tx.project.update({
+        where: { id },
+        data: {
+          title,
+          description: notes || null,
+          zipCode,
+        },
       });
-    }
 
-    const fullProject = await prisma.project.findUnique({
-      where: { id: project.id },
+      await tx.projectItem.deleteMany({
+        where: { projectId: id },
+      });
+
+      await tx.projectPhoto.deleteMany({
+        where: { projectId: id },
+      });
+
+      await tx.projectItem.createMany({
+        data: selectedEntries.map(([key, value]) => {
+          const slug = catalogSlugMap[key];
+          const catalogItemId = catalogBySlug.get(slug)!;
+
+          const quantity =
+            typeof value.count === 'number' && Number.isFinite(value.count) && value.count > 0
+              ? value.count
+              : 1;
+
+          const { selected, count, ...rest } = value;
+
+          return {
+            projectId: id,
+            catalogItemId,
+            quantity,
+            selectedOptions: rest,
+            notes: notes || null,
+          };
+        }),
+      });
+
+      if (photos.length > 0) {
+        await tx.projectPhoto.createMany({
+          data: photos.map((imageUrl, index) => ({
+            projectId: id,
+            imageUrl,
+            sortOrder: index,
+          })),
+        });
+      }
+    });
+
+    const updatedProject = await prisma.project.findUnique({
+      where: { id },
       include: {
         items: {
           include: {
@@ -147,13 +171,13 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    return NextResponse.json({ project: fullProject }, { status: 201 });
+    return NextResponse.json({ project: updatedProject }, { status: 200 });
   } catch (error) {
-    console.error('Create project error:', error);
+    console.error('Update project error:', error);
 
     return NextResponse.json(
       {
-        error: error instanceof Error ? error.message : 'Failed to create project.',
+        error: error instanceof Error ? error.message : 'Failed to update project.',
       },
       { status: 500 }
     );
