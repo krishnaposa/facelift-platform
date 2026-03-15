@@ -217,12 +217,22 @@ export default function FaceliftLanding() {
               <div className="rounded-[24px] bg-white p-5 text-slate-900">
                 <div className="text-lg font-semibold">Homeowner Login</div>
                 <p className="mt-2 text-sm text-slate-600">Track projects, uploads, and contractor bids.</p>
-                <button className="mt-5 w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white">Continue</button>
+                <Link
+                  href="/login"
+                  className="mt-5 block w-full rounded-2xl bg-slate-900 px-4 py-3 text-center text-sm font-semibold text-white"
+                >
+                  Continue
+                </Link>
               </div>
               <div className="rounded-[24px] bg-white p-5 text-slate-900">
                 <div className="text-lg font-semibold">Contractor Login</div>
                 <p className="mt-2 text-sm text-slate-600">View open requests and submit bids by scope.</p>
-                <button className="mt-5 w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold">Continue</button>
+                <Link
+                  href="/login"
+                  className="mt-5 block w-full rounded-2xl border border-slate-300 px-4 py-3 text-center text-sm font-semibold text-slate-900"
+                >
+                  Continue
+                </Link>
               </div>
             </div>
           </div>

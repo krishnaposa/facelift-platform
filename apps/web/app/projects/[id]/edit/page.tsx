@@ -1,7 +1,7 @@
 import { redirect, notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
-import EditProjectForm from '@/components/projects/EditProjectForm';
+import EditProjectForm from '@/app/components/projects/EditProjectForm';
 
 const slugToKeyMap: Record<string, string> = {
   'front-door': 'frontDoor',
