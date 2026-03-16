@@ -234,6 +234,7 @@ export type ProjectWhereInput = {
   items?: Prisma.ProjectItemListRelationFilter
   bids?: Prisma.BidListRelationFilter
   photos?: Prisma.ProjectPhotoListRelationFilter
+  galleryPicks?: Prisma.ProjectGalleryPickListRelationFilter
 }
 
 export type ProjectOrderByWithRelationInput = {
@@ -252,6 +253,7 @@ export type ProjectOrderByWithRelationInput = {
   items?: Prisma.ProjectItemOrderByRelationAggregateInput
   bids?: Prisma.BidOrderByRelationAggregateInput
   photos?: Prisma.ProjectPhotoOrderByRelationAggregateInput
+  galleryPicks?: Prisma.ProjectGalleryPickOrderByRelationAggregateInput
 }
 
 export type ProjectWhereUniqueInput = Prisma.AtLeast<{
@@ -273,6 +275,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   items?: Prisma.ProjectItemListRelationFilter
   bids?: Prisma.BidListRelationFilter
   photos?: Prisma.ProjectPhotoListRelationFilter
+  galleryPicks?: Prisma.ProjectGalleryPickListRelationFilter
 }, "id">
 
 export type ProjectOrderByWithAggregationInput = {
@@ -324,6 +327,7 @@ export type ProjectCreateInput = {
   items?: Prisma.ProjectItemCreateNestedManyWithoutProjectInput
   bids?: Prisma.BidCreateNestedManyWithoutProjectInput
   photos?: Prisma.ProjectPhotoCreateNestedManyWithoutProjectInput
+  galleryPicks?: Prisma.ProjectGalleryPickCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateInput = {
@@ -341,6 +345,7 @@ export type ProjectUncheckedCreateInput = {
   items?: Prisma.ProjectItemUncheckedCreateNestedManyWithoutProjectInput
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutProjectInput
   photos?: Prisma.ProjectPhotoUncheckedCreateNestedManyWithoutProjectInput
+  galleryPicks?: Prisma.ProjectGalleryPickUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUpdateInput = {
@@ -358,6 +363,7 @@ export type ProjectUpdateInput = {
   items?: Prisma.ProjectItemUpdateManyWithoutProjectNestedInput
   bids?: Prisma.BidUpdateManyWithoutProjectNestedInput
   photos?: Prisma.ProjectPhotoUpdateManyWithoutProjectNestedInput
+  galleryPicks?: Prisma.ProjectGalleryPickUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateInput = {
@@ -375,6 +381,7 @@ export type ProjectUncheckedUpdateInput = {
   items?: Prisma.ProjectItemUncheckedUpdateManyWithoutProjectNestedInput
   bids?: Prisma.BidUncheckedUpdateManyWithoutProjectNestedInput
   photos?: Prisma.ProjectPhotoUncheckedUpdateManyWithoutProjectNestedInput
+  galleryPicks?: Prisma.ProjectGalleryPickUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateManyInput = {
@@ -563,6 +570,20 @@ export type ProjectUpdateOneRequiredWithoutPhotosNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutPhotosInput, Prisma.ProjectUpdateWithoutPhotosInput>, Prisma.ProjectUncheckedUpdateWithoutPhotosInput>
 }
 
+export type ProjectCreateNestedOneWithoutGalleryPicksInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutGalleryPicksInput, Prisma.ProjectUncheckedCreateWithoutGalleryPicksInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutGalleryPicksInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneRequiredWithoutGalleryPicksNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutGalleryPicksInput, Prisma.ProjectUncheckedCreateWithoutGalleryPicksInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutGalleryPicksInput
+  upsert?: Prisma.ProjectUpsertWithoutGalleryPicksInput
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutGalleryPicksInput, Prisma.ProjectUpdateWithoutGalleryPicksInput>, Prisma.ProjectUncheckedUpdateWithoutGalleryPicksInput>
+}
+
 export type ProjectCreateWithoutHomeownerInput = {
   id?: string
   title: string
@@ -577,6 +598,7 @@ export type ProjectCreateWithoutHomeownerInput = {
   items?: Prisma.ProjectItemCreateNestedManyWithoutProjectInput
   bids?: Prisma.BidCreateNestedManyWithoutProjectInput
   photos?: Prisma.ProjectPhotoCreateNestedManyWithoutProjectInput
+  galleryPicks?: Prisma.ProjectGalleryPickCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutHomeownerInput = {
@@ -593,6 +615,7 @@ export type ProjectUncheckedCreateWithoutHomeownerInput = {
   items?: Prisma.ProjectItemUncheckedCreateNestedManyWithoutProjectInput
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutProjectInput
   photos?: Prisma.ProjectPhotoUncheckedCreateNestedManyWithoutProjectInput
+  galleryPicks?: Prisma.ProjectGalleryPickUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutHomeownerInput = {
@@ -652,6 +675,7 @@ export type ProjectCreateWithoutItemsInput = {
   homeowner: Prisma.UserCreateNestedOneWithoutProjectsInput
   bids?: Prisma.BidCreateNestedManyWithoutProjectInput
   photos?: Prisma.ProjectPhotoCreateNestedManyWithoutProjectInput
+  galleryPicks?: Prisma.ProjectGalleryPickCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutItemsInput = {
@@ -668,6 +692,7 @@ export type ProjectUncheckedCreateWithoutItemsInput = {
   updatedAt?: Date | string
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutProjectInput
   photos?: Prisma.ProjectPhotoUncheckedCreateNestedManyWithoutProjectInput
+  galleryPicks?: Prisma.ProjectGalleryPickUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutItemsInput = {
@@ -700,6 +725,7 @@ export type ProjectUpdateWithoutItemsInput = {
   homeowner?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
   bids?: Prisma.BidUpdateManyWithoutProjectNestedInput
   photos?: Prisma.ProjectPhotoUpdateManyWithoutProjectNestedInput
+  galleryPicks?: Prisma.ProjectGalleryPickUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutItemsInput = {
@@ -716,6 +742,7 @@ export type ProjectUncheckedUpdateWithoutItemsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bids?: Prisma.BidUncheckedUpdateManyWithoutProjectNestedInput
   photos?: Prisma.ProjectPhotoUncheckedUpdateManyWithoutProjectNestedInput
+  galleryPicks?: Prisma.ProjectGalleryPickUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutBidsInput = {
@@ -732,6 +759,7 @@ export type ProjectCreateWithoutBidsInput = {
   homeowner: Prisma.UserCreateNestedOneWithoutProjectsInput
   items?: Prisma.ProjectItemCreateNestedManyWithoutProjectInput
   photos?: Prisma.ProjectPhotoCreateNestedManyWithoutProjectInput
+  galleryPicks?: Prisma.ProjectGalleryPickCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutBidsInput = {
@@ -748,6 +776,7 @@ export type ProjectUncheckedCreateWithoutBidsInput = {
   updatedAt?: Date | string
   items?: Prisma.ProjectItemUncheckedCreateNestedManyWithoutProjectInput
   photos?: Prisma.ProjectPhotoUncheckedCreateNestedManyWithoutProjectInput
+  galleryPicks?: Prisma.ProjectGalleryPickUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutBidsInput = {
@@ -780,6 +809,7 @@ export type ProjectUpdateWithoutBidsInput = {
   homeowner?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
   items?: Prisma.ProjectItemUpdateManyWithoutProjectNestedInput
   photos?: Prisma.ProjectPhotoUpdateManyWithoutProjectNestedInput
+  galleryPicks?: Prisma.ProjectGalleryPickUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutBidsInput = {
@@ -796,6 +826,7 @@ export type ProjectUncheckedUpdateWithoutBidsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.ProjectItemUncheckedUpdateManyWithoutProjectNestedInput
   photos?: Prisma.ProjectPhotoUncheckedUpdateManyWithoutProjectNestedInput
+  galleryPicks?: Prisma.ProjectGalleryPickUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutPhotosInput = {
@@ -812,6 +843,7 @@ export type ProjectCreateWithoutPhotosInput = {
   homeowner: Prisma.UserCreateNestedOneWithoutProjectsInput
   items?: Prisma.ProjectItemCreateNestedManyWithoutProjectInput
   bids?: Prisma.BidCreateNestedManyWithoutProjectInput
+  galleryPicks?: Prisma.ProjectGalleryPickCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutPhotosInput = {
@@ -828,6 +860,7 @@ export type ProjectUncheckedCreateWithoutPhotosInput = {
   updatedAt?: Date | string
   items?: Prisma.ProjectItemUncheckedCreateNestedManyWithoutProjectInput
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutProjectInput
+  galleryPicks?: Prisma.ProjectGalleryPickUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutPhotosInput = {
@@ -860,6 +893,7 @@ export type ProjectUpdateWithoutPhotosInput = {
   homeowner?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
   items?: Prisma.ProjectItemUpdateManyWithoutProjectNestedInput
   bids?: Prisma.BidUpdateManyWithoutProjectNestedInput
+  galleryPicks?: Prisma.ProjectGalleryPickUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutPhotosInput = {
@@ -876,6 +910,91 @@ export type ProjectUncheckedUpdateWithoutPhotosInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.ProjectItemUncheckedUpdateManyWithoutProjectNestedInput
   bids?: Prisma.BidUncheckedUpdateManyWithoutProjectNestedInput
+  galleryPicks?: Prisma.ProjectGalleryPickUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutGalleryPicksInput = {
+  id?: string
+  title: string
+  description?: string | null
+  zipCode: string
+  addressLine1?: string | null
+  city?: string | null
+  state?: string | null
+  status?: $Enums.ProjectStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  homeowner: Prisma.UserCreateNestedOneWithoutProjectsInput
+  items?: Prisma.ProjectItemCreateNestedManyWithoutProjectInput
+  bids?: Prisma.BidCreateNestedManyWithoutProjectInput
+  photos?: Prisma.ProjectPhotoCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutGalleryPicksInput = {
+  id?: string
+  homeownerId: string
+  title: string
+  description?: string | null
+  zipCode: string
+  addressLine1?: string | null
+  city?: string | null
+  state?: string | null
+  status?: $Enums.ProjectStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ProjectItemUncheckedCreateNestedManyWithoutProjectInput
+  bids?: Prisma.BidUncheckedCreateNestedManyWithoutProjectInput
+  photos?: Prisma.ProjectPhotoUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutGalleryPicksInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutGalleryPicksInput, Prisma.ProjectUncheckedCreateWithoutGalleryPicksInput>
+}
+
+export type ProjectUpsertWithoutGalleryPicksInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutGalleryPicksInput, Prisma.ProjectUncheckedUpdateWithoutGalleryPicksInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutGalleryPicksInput, Prisma.ProjectUncheckedCreateWithoutGalleryPicksInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutGalleryPicksInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutGalleryPicksInput, Prisma.ProjectUncheckedUpdateWithoutGalleryPicksInput>
+}
+
+export type ProjectUpdateWithoutGalleryPicksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeowner?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
+  items?: Prisma.ProjectItemUpdateManyWithoutProjectNestedInput
+  bids?: Prisma.BidUpdateManyWithoutProjectNestedInput
+  photos?: Prisma.ProjectPhotoUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutGalleryPicksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  homeownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ProjectItemUncheckedUpdateManyWithoutProjectNestedInput
+  bids?: Prisma.BidUncheckedUpdateManyWithoutProjectNestedInput
+  photos?: Prisma.ProjectPhotoUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateManyHomeownerInput = {
@@ -905,6 +1024,7 @@ export type ProjectUpdateWithoutHomeownerInput = {
   items?: Prisma.ProjectItemUpdateManyWithoutProjectNestedInput
   bids?: Prisma.BidUpdateManyWithoutProjectNestedInput
   photos?: Prisma.ProjectPhotoUpdateManyWithoutProjectNestedInput
+  galleryPicks?: Prisma.ProjectGalleryPickUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutHomeownerInput = {
@@ -921,6 +1041,7 @@ export type ProjectUncheckedUpdateWithoutHomeownerInput = {
   items?: Prisma.ProjectItemUncheckedUpdateManyWithoutProjectNestedInput
   bids?: Prisma.BidUncheckedUpdateManyWithoutProjectNestedInput
   photos?: Prisma.ProjectPhotoUncheckedUpdateManyWithoutProjectNestedInput
+  galleryPicks?: Prisma.ProjectGalleryPickUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateManyWithoutHomeownerInput = {
@@ -945,12 +1066,14 @@ export type ProjectCountOutputType = {
   items: number
   bids: number
   photos: number
+  galleryPicks: number
 }
 
 export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   items?: boolean | ProjectCountOutputTypeCountItemsArgs
   bids?: boolean | ProjectCountOutputTypeCountBidsArgs
   photos?: boolean | ProjectCountOutputTypeCountPhotosArgs
+  galleryPicks?: boolean | ProjectCountOutputTypeCountGalleryPicksArgs
 }
 
 /**
@@ -984,6 +1107,13 @@ export type ProjectCountOutputTypeCountPhotosArgs<ExtArgs extends runtime.Types.
   where?: Prisma.ProjectPhotoWhereInput
 }
 
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeCountGalleryPicksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProjectGalleryPickWhereInput
+}
+
 
 export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1001,6 +1131,7 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   items?: boolean | Prisma.Project$itemsArgs<ExtArgs>
   bids?: boolean | Prisma.Project$bidsArgs<ExtArgs>
   photos?: boolean | Prisma.Project$photosArgs<ExtArgs>
+  galleryPicks?: boolean | Prisma.Project$galleryPicksArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["project"]>
 
@@ -1054,6 +1185,7 @@ export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   items?: boolean | Prisma.Project$itemsArgs<ExtArgs>
   bids?: boolean | Prisma.Project$bidsArgs<ExtArgs>
   photos?: boolean | Prisma.Project$photosArgs<ExtArgs>
+  galleryPicks?: boolean | Prisma.Project$galleryPicksArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProjectIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1070,6 +1202,7 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     items: Prisma.$ProjectItemPayload<ExtArgs>[]
     bids: Prisma.$BidPayload<ExtArgs>[]
     photos: Prisma.$ProjectPhotoPayload<ExtArgs>[]
+    galleryPicks: Prisma.$ProjectGalleryPickPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1481,6 +1614,7 @@ export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.
   items<T extends Prisma.Project$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   bids<T extends Prisma.Project$bidsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$bidsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BidPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   photos<T extends Prisma.Project$photosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$photosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPhotoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  galleryPicks<T extends Prisma.Project$galleryPicksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$galleryPicksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectGalleryPickPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1991,6 +2125,30 @@ export type Project$photosArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.ProjectPhotoScalarFieldEnum | Prisma.ProjectPhotoScalarFieldEnum[]
+}
+
+/**
+ * Project.galleryPicks
+ */
+export type Project$galleryPicksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProjectGalleryPick
+   */
+  select?: Prisma.ProjectGalleryPickSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProjectGalleryPick
+   */
+  omit?: Prisma.ProjectGalleryPickOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProjectGalleryPickInclude<ExtArgs> | null
+  where?: Prisma.ProjectGalleryPickWhereInput
+  orderBy?: Prisma.ProjectGalleryPickOrderByWithRelationInput | Prisma.ProjectGalleryPickOrderByWithRelationInput[]
+  cursor?: Prisma.ProjectGalleryPickWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProjectGalleryPickScalarFieldEnum | Prisma.ProjectGalleryPickScalarFieldEnum[]
 }
 
 /**

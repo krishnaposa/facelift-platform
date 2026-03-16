@@ -96,3 +96,13 @@ export type ProjectPhoto = Prisma.ProjectPhotoModel
  * 
  */
 export type GalleryImage = Prisma.GalleryImageModel
+/**
+ * Model ProjectGalleryPick
+ * 
+ */
+export type ProjectGalleryPick = Prisma.ProjectGalleryPickModel
+/**
+ * Model UserGalleryPick
+ * 
+ */
+export type UserGalleryPick = Prisma.UserGalleryPickModel

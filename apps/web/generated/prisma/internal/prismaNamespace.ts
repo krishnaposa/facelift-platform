@@ -394,7 +394,9 @@ export const ModelName = {
   Bid: 'Bid',
   BidLineItem: 'BidLineItem',
   ProjectPhoto: 'ProjectPhoto',
-  GalleryImage: 'GalleryImage'
+  GalleryImage: 'GalleryImage',
+  ProjectGalleryPick: 'ProjectGalleryPick',
+  UserGalleryPick: 'UserGalleryPick'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -410,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "homeownerProfile" | "contractorProfile" | "catalogCategory" | "catalogItem" | "project" | "projectItem" | "bid" | "bidLineItem" | "projectPhoto" | "galleryImage"
+    modelProps: "user" | "homeownerProfile" | "contractorProfile" | "catalogCategory" | "catalogItem" | "project" | "projectItem" | "bid" | "bidLineItem" | "projectPhoto" | "galleryImage" | "projectGalleryPick" | "userGalleryPick"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1228,6 +1230,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ProjectGalleryPick: {
+      payload: Prisma.$ProjectGalleryPickPayload<ExtArgs>
+      fields: Prisma.ProjectGalleryPickFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProjectGalleryPickFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectGalleryPickPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProjectGalleryPickFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectGalleryPickPayload>
+        }
+        findFirst: {
+          args: Prisma.ProjectGalleryPickFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectGalleryPickPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProjectGalleryPickFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectGalleryPickPayload>
+        }
+        findMany: {
+          args: Prisma.ProjectGalleryPickFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectGalleryPickPayload>[]
+        }
+        create: {
+          args: Prisma.ProjectGalleryPickCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectGalleryPickPayload>
+        }
+        createMany: {
+          args: Prisma.ProjectGalleryPickCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProjectGalleryPickCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectGalleryPickPayload>[]
+        }
+        delete: {
+          args: Prisma.ProjectGalleryPickDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectGalleryPickPayload>
+        }
+        update: {
+          args: Prisma.ProjectGalleryPickUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectGalleryPickPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProjectGalleryPickDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProjectGalleryPickUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProjectGalleryPickUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectGalleryPickPayload>[]
+        }
+        upsert: {
+          args: Prisma.ProjectGalleryPickUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectGalleryPickPayload>
+        }
+        aggregate: {
+          args: Prisma.ProjectGalleryPickAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProjectGalleryPick>
+        }
+        groupBy: {
+          args: Prisma.ProjectGalleryPickGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectGalleryPickGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProjectGalleryPickCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectGalleryPickCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserGalleryPick: {
+      payload: Prisma.$UserGalleryPickPayload<ExtArgs>
+      fields: Prisma.UserGalleryPickFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserGalleryPickFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserGalleryPickPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserGalleryPickFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserGalleryPickPayload>
+        }
+        findFirst: {
+          args: Prisma.UserGalleryPickFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserGalleryPickPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserGalleryPickFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserGalleryPickPayload>
+        }
+        findMany: {
+          args: Prisma.UserGalleryPickFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserGalleryPickPayload>[]
+        }
+        create: {
+          args: Prisma.UserGalleryPickCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserGalleryPickPayload>
+        }
+        createMany: {
+          args: Prisma.UserGalleryPickCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserGalleryPickCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserGalleryPickPayload>[]
+        }
+        delete: {
+          args: Prisma.UserGalleryPickDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserGalleryPickPayload>
+        }
+        update: {
+          args: Prisma.UserGalleryPickUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserGalleryPickPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserGalleryPickDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserGalleryPickUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserGalleryPickUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserGalleryPickPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserGalleryPickUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserGalleryPickPayload>
+        }
+        aggregate: {
+          args: Prisma.UserGalleryPickAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserGalleryPick>
+        }
+        groupBy: {
+          args: Prisma.UserGalleryPickGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserGalleryPickGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserGalleryPickCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserGalleryPickCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1415,6 +1565,34 @@ export const GalleryImageScalarFieldEnum = {
 export type GalleryImageScalarFieldEnum = (typeof GalleryImageScalarFieldEnum)[keyof typeof GalleryImageScalarFieldEnum]
 
 
+export const ProjectGalleryPickScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  galleryImageId: 'galleryImageId',
+  keywords: 'keywords',
+  rank: 'rank',
+  aiReason: 'aiReason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProjectGalleryPickScalarFieldEnum = (typeof ProjectGalleryPickScalarFieldEnum)[keyof typeof ProjectGalleryPickScalarFieldEnum]
+
+
+export const UserGalleryPickScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  galleryImageId: 'galleryImageId',
+  keywords: 'keywords',
+  rank: 'rank',
+  aiReason: 'aiReason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserGalleryPickScalarFieldEnum = (typeof UserGalleryPickScalarFieldEnum)[keyof typeof UserGalleryPickScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1429,6 +1607,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -1714,6 +1899,8 @@ export type GlobalOmitConfig = {
   bidLineItem?: Prisma.BidLineItemOmit
   projectPhoto?: Prisma.ProjectPhotoOmit
   galleryImage?: Prisma.GalleryImageOmit
+  projectGalleryPick?: Prisma.ProjectGalleryPickOmit
+  userGalleryPick?: Prisma.UserGalleryPickOmit
 }
 
 /* Types for Logging */

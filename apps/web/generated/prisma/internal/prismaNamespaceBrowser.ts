@@ -61,7 +61,9 @@ export const ModelName = {
   Bid: 'Bid',
   BidLineItem: 'BidLineItem',
   ProjectPhoto: 'ProjectPhoto',
-  GalleryImage: 'GalleryImage'
+  GalleryImage: 'GalleryImage',
+  ProjectGalleryPick: 'ProjectGalleryPick',
+  UserGalleryPick: 'UserGalleryPick'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -228,6 +230,34 @@ export const GalleryImageScalarFieldEnum = {
 export type GalleryImageScalarFieldEnum = (typeof GalleryImageScalarFieldEnum)[keyof typeof GalleryImageScalarFieldEnum]
 
 
+export const ProjectGalleryPickScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  galleryImageId: 'galleryImageId',
+  keywords: 'keywords',
+  rank: 'rank',
+  aiReason: 'aiReason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProjectGalleryPickScalarFieldEnum = (typeof ProjectGalleryPickScalarFieldEnum)[keyof typeof ProjectGalleryPickScalarFieldEnum]
+
+
+export const UserGalleryPickScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  galleryImageId: 'galleryImageId',
+  keywords: 'keywords',
+  rank: 'rank',
+  aiReason: 'aiReason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserGalleryPickScalarFieldEnum = (typeof UserGalleryPickScalarFieldEnum)[keyof typeof UserGalleryPickScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -242,6 +272,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {

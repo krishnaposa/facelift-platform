@@ -1,6 +1,11 @@
 import Link from "next/link";
+import type { GalleryImageForProject } from "@/lib/project-gallery";
 
-export default function FaceliftLanding() {
+type Props = {
+  gallery: GalleryImageForProject[];
+};
+
+export default function FaceliftLanding({ gallery }: Props) {
   const categories = [
     { title: 'Front Doors', desc: 'Single door, double door, sidelights, modern styles' },
     { title: 'Bathrooms', desc: 'Bidets, vanities, fixtures, mirrors, hardware' },
@@ -8,27 +13,6 @@ export default function FaceliftLanding() {
     { title: 'Staircases', desc: 'Spindles, railings, posts, trim refreshes' },
     { title: 'Air & Vent Covers', desc: 'Modern vent covers, returns, smart airflow updates' },
     { title: 'Smart Home', desc: 'Locks, doorbells, thermostats, lighting, sensors' },
-  ];
-
-  const gallery = [
-    {
-      title: 'Modern Double Door Entry',
-      tag: 'Exterior',
-      image:
-        'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80',
-    },
-    {
-      title: 'Kitchen Reface + Stone Tops',
-      tag: 'Kitchen',
-      image:
-        'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80',
-    },
-    {
-      title: 'Luxury Bath Refresh',
-      tag: 'Bathroom',
-      image:
-        'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80',
-    },
   ];
 
   const bids = [
@@ -45,12 +29,21 @@ export default function FaceliftLanding() {
             <div className="text-2xl font-bold tracking-tight">Facelift</div>
             <div className="text-sm text-slate-500">Home upgrades, visualized and bid online</div>
           </div>
-          <nav className="hidden items-center gap-6 md:flex text-sm font-medium">
+          <nav className="hidden items-center gap-4 md:flex text-sm font-medium">
             <a href="#gallery" className="hover:text-slate-600">Gallery</a>
-            <a href="#services" className="hover:text-slate-600">Services</a>
-            <a href="#contractors" className="hover:text-slate-600">Contractors</a>
             <a href="#login" className="hover:text-slate-600">Login</a>
-            <button className="rounded-2xl bg-slate-900 px-4 py-2 text-white shadow-sm">Start a Project</button>
+            <Link
+              href="/login"
+              className="rounded-2xl bg-slate-900 px-4 py-2 text-white shadow-sm"
+            >
+              Homeowner Login
+            </Link>
+            <Link
+              href="/login"
+              className="rounded-2xl border border-slate-300 bg-white px-4 py-2 text-slate-900 shadow-sm"
+            >
+              Contractor Login
+            </Link>
           </nav>
         </div>
       </header>
@@ -69,16 +62,18 @@ export default function FaceliftLanding() {
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
-            
             <Link
-              href="/projects/new"
+              href="/login"
               className="rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-sm"
-              >
-              Create My Project
+            >
+              Homeowner Login
             </Link>
-            <button className="rounded-2xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-900">
-              Explore Ideas
-            </button>
+            <Link
+              href="/login"
+              className="rounded-2xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-900"
+            >
+              Contractor Login
+            </Link>
           </div>
           <div className="grid gap-4 pt-4 sm:grid-cols-3">
             <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
@@ -162,18 +157,35 @@ export default function FaceliftLanding() {
             Let visitors explore before and after concepts, then convert that inspiration into a project request.
           </p>
         </div>
-        <div className="grid gap-6 md:grid-cols-3">
-          {gallery.map((item, index) => (
-            <div key={`${item.title}-${index}`} className="overflow-hidden rounded-[28px] bg-white shadow-sm ring-1 ring-slate-200">
-              <img src={item.image} alt={item.title} className="h-64 w-full object-cover" />
-              <div className="p-5">
-                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">{item.tag}</div>
-                <div className="mt-2 text-xl font-semibold">{item.title}</div>
-                <button className="mt-4 rounded-2xl border border-slate-300 px-4 py-2 text-sm font-medium">Use this as inspiration</button>
+        {gallery.length === 0 ? (
+          <p className="text-slate-500">Gallery coming soon.</p>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-3">
+            {gallery.map((item) => (
+              <div
+                key={item.id}
+                className="overflow-hidden rounded-[28px] bg-white shadow-sm ring-1 ring-slate-200"
+              >
+                <img
+                  src={item.imageUrl}
+                  alt={item.title || item.catalogItemName || 'Gallery'}
+                  className="h-64 w-full object-cover"
+                />
+                <div className="p-5">
+                  <div className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                    {item.catalogItemName || item.styleTag || 'Gallery'}
+                  </div>
+                  <div className="mt-2 text-xl font-semibold">
+                    {item.title || item.caption || 'Inspiration image'}
+                  </div>
+                  <button className="mt-4 rounded-2xl border border-slate-300 px-4 py-2 text-sm font-medium">
+                    Use this as inspiration
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-10">

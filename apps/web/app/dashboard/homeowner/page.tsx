@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
+import { refreshProjectGalleryPicks, refreshUserGalleryPicks } from '@/lib/project-gallery';
 
 export default async function HomeownerDashboardPage() {
   const session = await getSession();
@@ -30,6 +31,65 @@ export default async function HomeownerDashboardPage() {
       photos: true,
     },
   });
+
+  // If the user has projects, ensure each has persisted picks (best-effort).
+  if (projects.length > 0) {
+    await Promise.allSettled(projects.slice(0, 12).map((p) => refreshProjectGalleryPicks(p.id)));
+  } else {
+    // If there are no projects yet, create a user-level AI gallery feed and persist it.
+    try {
+      await refreshUserGalleryPicks(session.userId);
+    } catch {
+      // ignore until DB is migrated / client generated
+    }
+  }
+
+  const picksByProjectId = new Map<string, Array<{ imageUrl: string; title: string | null; keywords: string[] }>>();
+  try {
+    if (projects.length > 0) {
+      const picks = await (prisma as any).projectGalleryPick?.findMany?.({
+        where: { projectId: { in: projects.map((p) => p.id) } },
+        orderBy: [{ projectId: 'asc' }, { rank: 'asc' }],
+        include: { galleryImage: true },
+      });
+
+      if (Array.isArray(picks)) {
+        for (const pick of picks) {
+          const projectId = String(pick.projectId);
+          const list = picksByProjectId.get(projectId) ?? [];
+          if (list.length >= 2) continue; // top 2 per project
+          list.push({
+            imageUrl: String(pick.galleryImage?.imageUrl ?? ''),
+            title: (pick.galleryImage?.title ?? null) as string | null,
+            keywords: Array.isArray(pick.keywords) ? pick.keywords : [],
+          });
+          picksByProjectId.set(projectId, list);
+        }
+      }
+    }
+  } catch {
+    // ignore until DB is migrated / client generated
+  }
+
+  let userGallery: Array<{ imageUrl: string; title: string | null; keywords: string[] }> = [];
+  if (projects.length === 0) {
+    try {
+      const picks = await (prisma as any).userGalleryPick?.findMany?.({
+        where: { userId: session.userId },
+        orderBy: { rank: 'asc' },
+        include: { galleryImage: true },
+      });
+      if (Array.isArray(picks)) {
+        userGallery = picks.map((p: any) => ({
+          imageUrl: String(p.galleryImage?.imageUrl ?? ''),
+          title: (p.galleryImage?.title ?? null) as string | null,
+          keywords: Array.isArray(p.keywords) ? p.keywords : [],
+        }));
+      }
+    } catch {
+      // ignore
+    }
+  }
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -78,6 +138,29 @@ export default async function HomeownerDashboardPage() {
             >
               Create Project
             </Link>
+
+            {userGallery.length > 0 && (
+              <div className="mt-8">
+                <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+                  AI gallery for you
+                </div>
+                <div className="mt-3 grid grid-cols-3 gap-4">
+                  {userGallery.map((img, idx) => (
+                    <div
+                      key={`user-gallery-${idx}`}
+                      className="overflow-hidden rounded-2xl bg-slate-50 ring-1 ring-slate-200"
+                      title={img.keywords.join(', ')}
+                    >
+                      <img
+                        src={img.imageUrl}
+                        alt={img.title ?? 'Gallery'}
+                        className="h-24 w-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         ) : (
           <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -126,6 +209,29 @@ export default async function HomeownerDashboardPage() {
                     Edit
                   </Link>
                 </div>
+
+                {picksByProjectId.get(project.id)?.length ? (
+                  <div className="mt-5">
+                    <div className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                      AI gallery picks
+                    </div>
+                    <div className="mt-3 grid grid-cols-3 gap-3">
+                      {picksByProjectId.get(project.id)!.map((p, idx) => (
+                        <div
+                          key={`${project.id}-pick-${idx}`}
+                          className="overflow-hidden rounded-2xl bg-slate-50 ring-1 ring-slate-200"
+                          title={p.keywords?.join(', ') || undefined}
+                        >
+                          <img
+                            src={p.imageUrl}
+                            alt={p.title || project.title}
+                            className="h-24 w-full object-cover"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
               </div>
             ))}
           </div>

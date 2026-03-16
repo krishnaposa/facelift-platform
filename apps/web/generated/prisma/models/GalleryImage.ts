@@ -207,6 +207,8 @@ export type GalleryImageWhereInput = {
   isPublic?: Prisma.BoolFilter<"GalleryImage"> | boolean
   createdAt?: Prisma.DateTimeFilter<"GalleryImage"> | Date | string
   catalogItem?: Prisma.XOR<Prisma.CatalogItemNullableScalarRelationFilter, Prisma.CatalogItemWhereInput> | null
+  projectPicks?: Prisma.ProjectGalleryPickListRelationFilter
+  userPicks?: Prisma.UserGalleryPickListRelationFilter
 }
 
 export type GalleryImageOrderByWithRelationInput = {
@@ -219,6 +221,8 @@ export type GalleryImageOrderByWithRelationInput = {
   isPublic?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   catalogItem?: Prisma.CatalogItemOrderByWithRelationInput
+  projectPicks?: Prisma.ProjectGalleryPickOrderByRelationAggregateInput
+  userPicks?: Prisma.UserGalleryPickOrderByRelationAggregateInput
 }
 
 export type GalleryImageWhereUniqueInput = Prisma.AtLeast<{
@@ -234,6 +238,8 @@ export type GalleryImageWhereUniqueInput = Prisma.AtLeast<{
   isPublic?: Prisma.BoolFilter<"GalleryImage"> | boolean
   createdAt?: Prisma.DateTimeFilter<"GalleryImage"> | Date | string
   catalogItem?: Prisma.XOR<Prisma.CatalogItemNullableScalarRelationFilter, Prisma.CatalogItemWhereInput> | null
+  projectPicks?: Prisma.ProjectGalleryPickListRelationFilter
+  userPicks?: Prisma.UserGalleryPickListRelationFilter
 }, "id">
 
 export type GalleryImageOrderByWithAggregationInput = {
@@ -273,6 +279,8 @@ export type GalleryImageCreateInput = {
   isPublic?: boolean
   createdAt?: Date | string
   catalogItem?: Prisma.CatalogItemCreateNestedOneWithoutGalleryImagesInput
+  projectPicks?: Prisma.ProjectGalleryPickCreateNestedManyWithoutGalleryImageInput
+  userPicks?: Prisma.UserGalleryPickCreateNestedManyWithoutGalleryImageInput
 }
 
 export type GalleryImageUncheckedCreateInput = {
@@ -284,6 +292,8 @@ export type GalleryImageUncheckedCreateInput = {
   styleTag?: string | null
   isPublic?: boolean
   createdAt?: Date | string
+  projectPicks?: Prisma.ProjectGalleryPickUncheckedCreateNestedManyWithoutGalleryImageInput
+  userPicks?: Prisma.UserGalleryPickUncheckedCreateNestedManyWithoutGalleryImageInput
 }
 
 export type GalleryImageUpdateInput = {
@@ -295,6 +305,8 @@ export type GalleryImageUpdateInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   catalogItem?: Prisma.CatalogItemUpdateOneWithoutGalleryImagesNestedInput
+  projectPicks?: Prisma.ProjectGalleryPickUpdateManyWithoutGalleryImageNestedInput
+  userPicks?: Prisma.UserGalleryPickUpdateManyWithoutGalleryImageNestedInput
 }
 
 export type GalleryImageUncheckedUpdateInput = {
@@ -306,6 +318,8 @@ export type GalleryImageUncheckedUpdateInput = {
   styleTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectPicks?: Prisma.ProjectGalleryPickUncheckedUpdateManyWithoutGalleryImageNestedInput
+  userPicks?: Prisma.UserGalleryPickUncheckedUpdateManyWithoutGalleryImageNestedInput
 }
 
 export type GalleryImageCreateManyInput = {
@@ -383,6 +397,11 @@ export type GalleryImageMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
 }
 
+export type GalleryImageScalarRelationFilter = {
+  is?: Prisma.GalleryImageWhereInput
+  isNot?: Prisma.GalleryImageWhereInput
+}
+
 export type GalleryImageCreateNestedManyWithoutCatalogItemInput = {
   create?: Prisma.XOR<Prisma.GalleryImageCreateWithoutCatalogItemInput, Prisma.GalleryImageUncheckedCreateWithoutCatalogItemInput> | Prisma.GalleryImageCreateWithoutCatalogItemInput[] | Prisma.GalleryImageUncheckedCreateWithoutCatalogItemInput[]
   connectOrCreate?: Prisma.GalleryImageCreateOrConnectWithoutCatalogItemInput | Prisma.GalleryImageCreateOrConnectWithoutCatalogItemInput[]
@@ -425,6 +444,34 @@ export type GalleryImageUncheckedUpdateManyWithoutCatalogItemNestedInput = {
   deleteMany?: Prisma.GalleryImageScalarWhereInput | Prisma.GalleryImageScalarWhereInput[]
 }
 
+export type GalleryImageCreateNestedOneWithoutProjectPicksInput = {
+  create?: Prisma.XOR<Prisma.GalleryImageCreateWithoutProjectPicksInput, Prisma.GalleryImageUncheckedCreateWithoutProjectPicksInput>
+  connectOrCreate?: Prisma.GalleryImageCreateOrConnectWithoutProjectPicksInput
+  connect?: Prisma.GalleryImageWhereUniqueInput
+}
+
+export type GalleryImageUpdateOneRequiredWithoutProjectPicksNestedInput = {
+  create?: Prisma.XOR<Prisma.GalleryImageCreateWithoutProjectPicksInput, Prisma.GalleryImageUncheckedCreateWithoutProjectPicksInput>
+  connectOrCreate?: Prisma.GalleryImageCreateOrConnectWithoutProjectPicksInput
+  upsert?: Prisma.GalleryImageUpsertWithoutProjectPicksInput
+  connect?: Prisma.GalleryImageWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.GalleryImageUpdateToOneWithWhereWithoutProjectPicksInput, Prisma.GalleryImageUpdateWithoutProjectPicksInput>, Prisma.GalleryImageUncheckedUpdateWithoutProjectPicksInput>
+}
+
+export type GalleryImageCreateNestedOneWithoutUserPicksInput = {
+  create?: Prisma.XOR<Prisma.GalleryImageCreateWithoutUserPicksInput, Prisma.GalleryImageUncheckedCreateWithoutUserPicksInput>
+  connectOrCreate?: Prisma.GalleryImageCreateOrConnectWithoutUserPicksInput
+  connect?: Prisma.GalleryImageWhereUniqueInput
+}
+
+export type GalleryImageUpdateOneRequiredWithoutUserPicksNestedInput = {
+  create?: Prisma.XOR<Prisma.GalleryImageCreateWithoutUserPicksInput, Prisma.GalleryImageUncheckedCreateWithoutUserPicksInput>
+  connectOrCreate?: Prisma.GalleryImageCreateOrConnectWithoutUserPicksInput
+  upsert?: Prisma.GalleryImageUpsertWithoutUserPicksInput
+  connect?: Prisma.GalleryImageWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.GalleryImageUpdateToOneWithWhereWithoutUserPicksInput, Prisma.GalleryImageUpdateWithoutUserPicksInput>, Prisma.GalleryImageUncheckedUpdateWithoutUserPicksInput>
+}
+
 export type GalleryImageCreateWithoutCatalogItemInput = {
   id?: string
   imageUrl: string
@@ -433,6 +480,8 @@ export type GalleryImageCreateWithoutCatalogItemInput = {
   styleTag?: string | null
   isPublic?: boolean
   createdAt?: Date | string
+  projectPicks?: Prisma.ProjectGalleryPickCreateNestedManyWithoutGalleryImageInput
+  userPicks?: Prisma.UserGalleryPickCreateNestedManyWithoutGalleryImageInput
 }
 
 export type GalleryImageUncheckedCreateWithoutCatalogItemInput = {
@@ -443,6 +492,8 @@ export type GalleryImageUncheckedCreateWithoutCatalogItemInput = {
   styleTag?: string | null
   isPublic?: boolean
   createdAt?: Date | string
+  projectPicks?: Prisma.ProjectGalleryPickUncheckedCreateNestedManyWithoutGalleryImageInput
+  userPicks?: Prisma.UserGalleryPickUncheckedCreateNestedManyWithoutGalleryImageInput
 }
 
 export type GalleryImageCreateOrConnectWithoutCatalogItemInput = {
@@ -485,6 +536,134 @@ export type GalleryImageScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"GalleryImage"> | Date | string
 }
 
+export type GalleryImageCreateWithoutProjectPicksInput = {
+  id?: string
+  imageUrl: string
+  title?: string | null
+  caption?: string | null
+  styleTag?: string | null
+  isPublic?: boolean
+  createdAt?: Date | string
+  catalogItem?: Prisma.CatalogItemCreateNestedOneWithoutGalleryImagesInput
+  userPicks?: Prisma.UserGalleryPickCreateNestedManyWithoutGalleryImageInput
+}
+
+export type GalleryImageUncheckedCreateWithoutProjectPicksInput = {
+  id?: string
+  catalogItemId?: string | null
+  imageUrl: string
+  title?: string | null
+  caption?: string | null
+  styleTag?: string | null
+  isPublic?: boolean
+  createdAt?: Date | string
+  userPicks?: Prisma.UserGalleryPickUncheckedCreateNestedManyWithoutGalleryImageInput
+}
+
+export type GalleryImageCreateOrConnectWithoutProjectPicksInput = {
+  where: Prisma.GalleryImageWhereUniqueInput
+  create: Prisma.XOR<Prisma.GalleryImageCreateWithoutProjectPicksInput, Prisma.GalleryImageUncheckedCreateWithoutProjectPicksInput>
+}
+
+export type GalleryImageUpsertWithoutProjectPicksInput = {
+  update: Prisma.XOR<Prisma.GalleryImageUpdateWithoutProjectPicksInput, Prisma.GalleryImageUncheckedUpdateWithoutProjectPicksInput>
+  create: Prisma.XOR<Prisma.GalleryImageCreateWithoutProjectPicksInput, Prisma.GalleryImageUncheckedCreateWithoutProjectPicksInput>
+  where?: Prisma.GalleryImageWhereInput
+}
+
+export type GalleryImageUpdateToOneWithWhereWithoutProjectPicksInput = {
+  where?: Prisma.GalleryImageWhereInput
+  data: Prisma.XOR<Prisma.GalleryImageUpdateWithoutProjectPicksInput, Prisma.GalleryImageUncheckedUpdateWithoutProjectPicksInput>
+}
+
+export type GalleryImageUpdateWithoutProjectPicksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  styleTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  catalogItem?: Prisma.CatalogItemUpdateOneWithoutGalleryImagesNestedInput
+  userPicks?: Prisma.UserGalleryPickUpdateManyWithoutGalleryImageNestedInput
+}
+
+export type GalleryImageUncheckedUpdateWithoutProjectPicksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  catalogItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  styleTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userPicks?: Prisma.UserGalleryPickUncheckedUpdateManyWithoutGalleryImageNestedInput
+}
+
+export type GalleryImageCreateWithoutUserPicksInput = {
+  id?: string
+  imageUrl: string
+  title?: string | null
+  caption?: string | null
+  styleTag?: string | null
+  isPublic?: boolean
+  createdAt?: Date | string
+  catalogItem?: Prisma.CatalogItemCreateNestedOneWithoutGalleryImagesInput
+  projectPicks?: Prisma.ProjectGalleryPickCreateNestedManyWithoutGalleryImageInput
+}
+
+export type GalleryImageUncheckedCreateWithoutUserPicksInput = {
+  id?: string
+  catalogItemId?: string | null
+  imageUrl: string
+  title?: string | null
+  caption?: string | null
+  styleTag?: string | null
+  isPublic?: boolean
+  createdAt?: Date | string
+  projectPicks?: Prisma.ProjectGalleryPickUncheckedCreateNestedManyWithoutGalleryImageInput
+}
+
+export type GalleryImageCreateOrConnectWithoutUserPicksInput = {
+  where: Prisma.GalleryImageWhereUniqueInput
+  create: Prisma.XOR<Prisma.GalleryImageCreateWithoutUserPicksInput, Prisma.GalleryImageUncheckedCreateWithoutUserPicksInput>
+}
+
+export type GalleryImageUpsertWithoutUserPicksInput = {
+  update: Prisma.XOR<Prisma.GalleryImageUpdateWithoutUserPicksInput, Prisma.GalleryImageUncheckedUpdateWithoutUserPicksInput>
+  create: Prisma.XOR<Prisma.GalleryImageCreateWithoutUserPicksInput, Prisma.GalleryImageUncheckedCreateWithoutUserPicksInput>
+  where?: Prisma.GalleryImageWhereInput
+}
+
+export type GalleryImageUpdateToOneWithWhereWithoutUserPicksInput = {
+  where?: Prisma.GalleryImageWhereInput
+  data: Prisma.XOR<Prisma.GalleryImageUpdateWithoutUserPicksInput, Prisma.GalleryImageUncheckedUpdateWithoutUserPicksInput>
+}
+
+export type GalleryImageUpdateWithoutUserPicksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  styleTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  catalogItem?: Prisma.CatalogItemUpdateOneWithoutGalleryImagesNestedInput
+  projectPicks?: Prisma.ProjectGalleryPickUpdateManyWithoutGalleryImageNestedInput
+}
+
+export type GalleryImageUncheckedUpdateWithoutUserPicksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  catalogItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  styleTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectPicks?: Prisma.ProjectGalleryPickUncheckedUpdateManyWithoutGalleryImageNestedInput
+}
+
 export type GalleryImageCreateManyCatalogItemInput = {
   id?: string
   imageUrl: string
@@ -503,6 +682,8 @@ export type GalleryImageUpdateWithoutCatalogItemInput = {
   styleTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectPicks?: Prisma.ProjectGalleryPickUpdateManyWithoutGalleryImageNestedInput
+  userPicks?: Prisma.UserGalleryPickUpdateManyWithoutGalleryImageNestedInput
 }
 
 export type GalleryImageUncheckedUpdateWithoutCatalogItemInput = {
@@ -513,6 +694,8 @@ export type GalleryImageUncheckedUpdateWithoutCatalogItemInput = {
   styleTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectPicks?: Prisma.ProjectGalleryPickUncheckedUpdateManyWithoutGalleryImageNestedInput
+  userPicks?: Prisma.UserGalleryPickUncheckedUpdateManyWithoutGalleryImageNestedInput
 }
 
 export type GalleryImageUncheckedUpdateManyWithoutCatalogItemInput = {
@@ -526,6 +709,44 @@ export type GalleryImageUncheckedUpdateManyWithoutCatalogItemInput = {
 }
 
 
+/**
+ * Count Type GalleryImageCountOutputType
+ */
+
+export type GalleryImageCountOutputType = {
+  projectPicks: number
+  userPicks: number
+}
+
+export type GalleryImageCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  projectPicks?: boolean | GalleryImageCountOutputTypeCountProjectPicksArgs
+  userPicks?: boolean | GalleryImageCountOutputTypeCountUserPicksArgs
+}
+
+/**
+ * GalleryImageCountOutputType without action
+ */
+export type GalleryImageCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the GalleryImageCountOutputType
+   */
+  select?: Prisma.GalleryImageCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * GalleryImageCountOutputType without action
+ */
+export type GalleryImageCountOutputTypeCountProjectPicksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProjectGalleryPickWhereInput
+}
+
+/**
+ * GalleryImageCountOutputType without action
+ */
+export type GalleryImageCountOutputTypeCountUserPicksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserGalleryPickWhereInput
+}
+
 
 export type GalleryImageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -537,6 +758,9 @@ export type GalleryImageSelect<ExtArgs extends runtime.Types.Extensions.Internal
   isPublic?: boolean
   createdAt?: boolean
   catalogItem?: boolean | Prisma.GalleryImage$catalogItemArgs<ExtArgs>
+  projectPicks?: boolean | Prisma.GalleryImage$projectPicksArgs<ExtArgs>
+  userPicks?: boolean | Prisma.GalleryImage$userPicksArgs<ExtArgs>
+  _count?: boolean | Prisma.GalleryImageCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["galleryImage"]>
 
 export type GalleryImageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -577,6 +801,9 @@ export type GalleryImageSelectScalar = {
 export type GalleryImageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "catalogItemId" | "imageUrl" | "title" | "caption" | "styleTag" | "isPublic" | "createdAt", ExtArgs["result"]["galleryImage"]>
 export type GalleryImageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   catalogItem?: boolean | Prisma.GalleryImage$catalogItemArgs<ExtArgs>
+  projectPicks?: boolean | Prisma.GalleryImage$projectPicksArgs<ExtArgs>
+  userPicks?: boolean | Prisma.GalleryImage$userPicksArgs<ExtArgs>
+  _count?: boolean | Prisma.GalleryImageCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type GalleryImageIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   catalogItem?: boolean | Prisma.GalleryImage$catalogItemArgs<ExtArgs>
@@ -589,6 +816,8 @@ export type $GalleryImagePayload<ExtArgs extends runtime.Types.Extensions.Intern
   name: "GalleryImage"
   objects: {
     catalogItem: Prisma.$CatalogItemPayload<ExtArgs> | null
+    projectPicks: Prisma.$ProjectGalleryPickPayload<ExtArgs>[]
+    userPicks: Prisma.$UserGalleryPickPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -994,6 +1223,8 @@ readonly fields: GalleryImageFieldRefs;
 export interface Prisma__GalleryImageClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   catalogItem<T extends Prisma.GalleryImage$catalogItemArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GalleryImage$catalogItemArgs<ExtArgs>>): Prisma.Prisma__CatalogItemClient<runtime.Types.Result.GetResult<Prisma.$CatalogItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  projectPicks<T extends Prisma.GalleryImage$projectPicksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GalleryImage$projectPicksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectGalleryPickPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  userPicks<T extends Prisma.GalleryImage$userPicksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GalleryImage$userPicksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserGalleryPickPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1448,6 +1679,54 @@ export type GalleryImage$catalogItemArgs<ExtArgs extends runtime.Types.Extension
    */
   include?: Prisma.CatalogItemInclude<ExtArgs> | null
   where?: Prisma.CatalogItemWhereInput
+}
+
+/**
+ * GalleryImage.projectPicks
+ */
+export type GalleryImage$projectPicksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProjectGalleryPick
+   */
+  select?: Prisma.ProjectGalleryPickSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProjectGalleryPick
+   */
+  omit?: Prisma.ProjectGalleryPickOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProjectGalleryPickInclude<ExtArgs> | null
+  where?: Prisma.ProjectGalleryPickWhereInput
+  orderBy?: Prisma.ProjectGalleryPickOrderByWithRelationInput | Prisma.ProjectGalleryPickOrderByWithRelationInput[]
+  cursor?: Prisma.ProjectGalleryPickWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProjectGalleryPickScalarFieldEnum | Prisma.ProjectGalleryPickScalarFieldEnum[]
+}
+
+/**
+ * GalleryImage.userPicks
+ */
+export type GalleryImage$userPicksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserGalleryPick
+   */
+  select?: Prisma.UserGalleryPickSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserGalleryPick
+   */
+  omit?: Prisma.UserGalleryPickOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserGalleryPickInclude<ExtArgs> | null
+  where?: Prisma.UserGalleryPickWhereInput
+  orderBy?: Prisma.UserGalleryPickOrderByWithRelationInput | Prisma.UserGalleryPickOrderByWithRelationInput[]
+  cursor?: Prisma.UserGalleryPickWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserGalleryPickScalarFieldEnum | Prisma.UserGalleryPickScalarFieldEnum[]
 }
 
 /**

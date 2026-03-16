@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getSessionFromRequest } from '@/lib/auth';
+import { refreshProjectGalleryPicks } from '@/lib/project-gallery';
 
 const catalogSlugMap = {
   frontDoor: 'front-door',
@@ -170,6 +171,13 @@ export async function PATCH(
         photos: true,
       },
     });
+
+    // Refresh persisted AI gallery picks (best-effort).
+    try {
+      await refreshProjectGalleryPicks(id);
+    } catch (error) {
+      console.warn('Failed to refresh project gallery picks:', error);
+    }
 
     return NextResponse.json({ project: updatedProject }, { status: 200 });
   } catch (error) {
