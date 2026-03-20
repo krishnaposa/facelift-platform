@@ -388,7 +388,9 @@ export async function refreshUserGalleryPicks(userId: string): Promise<UserGalle
 const LANDING_FALLBACK_GALLERY: GalleryImageForProject[] = [
   {
     id: 'fallback-1',
-    imageUrl: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80',
+    // Exterior / entry (not bedroom — the old photo id was a bedroom interior despite the title)
+    imageUrl:
+      'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80',
     title: 'Modern Double Door Entry',
     caption: null,
     styleTag: 'exterior',
@@ -548,62 +550,72 @@ export async function seedGalleryFromAI(): Promise<number> {
 /**
  * Landing-page gallery: AI-ranked (or fallback) public gallery images.
  * When the DB has no GalleryImage rows, tries to seed via AI + Unsplash, then returns DB images or placeholders.
+ *
+ * If Prisma fails (e.g. `GalleryImage` table missing — run migrations), returns static fallback images.
  */
 export async function getLandingGallery(limit = 6): Promise<GalleryImageForProject[]> {
-  let galleryImages = await prisma.galleryImage.findMany({
-    where: { isPublic: true },
-    orderBy: { createdAt: 'desc' },
-    include: { catalogItem: true },
-    take: 60,
-  });
+  try {
+    let galleryImages = await prisma.galleryImage.findMany({
+      where: { isPublic: true },
+      orderBy: { createdAt: 'desc' },
+      include: { catalogItem: true },
+      take: 60,
+    });
 
-  if (galleryImages.length === 0) {
-    try {
-      await seedGalleryFromAI();
-      galleryImages = await prisma.galleryImage.findMany({
-        where: { isPublic: true },
-        orderBy: { createdAt: 'desc' },
-        include: { catalogItem: true },
-        take: 60,
-      });
-    } catch {
-      // seed failed (e.g. no Unsplash key), use fallback below
+    if (galleryImages.length === 0) {
+      try {
+        await seedGalleryFromAI();
+        galleryImages = await prisma.galleryImage.findMany({
+          where: { isPublic: true },
+          orderBy: { createdAt: 'desc' },
+          include: { catalogItem: true },
+          take: 60,
+        });
+      } catch {
+        // seed failed (e.g. no Unsplash key), use fallback below
+      }
     }
+
+    if (galleryImages.length === 0) return LANDING_FALLBACK_GALLERY.slice(0, limit);
+
+    const candidates = galleryImages.map((img) => ({
+      id: img.id,
+      title: img.title,
+      caption: img.caption,
+      styleTag: img.styleTag,
+      catalogItemName: img.catalogItem?.name ?? null,
+    }));
+
+    const maxPicks = Math.min(limit, 12);
+
+    const aiPicks = await pickAndKeywordGalleryWithAI({
+      projectTitle: 'Landing inspiration',
+      projectDescription: 'Show a balanced set of popular home facelift gallery images.',
+      catalogItemNames: [],
+      candidates,
+      maxPicks,
+    });
+
+    const chosenIds = new Set(aiPicks.map((p) => p.galleryImageId));
+    const ordered =
+      aiPicks.length > 0
+        ? galleryImages.filter((img) => chosenIds.has(img.id))
+        : galleryImages.slice(0, maxPicks);
+
+    return ordered.slice(0, maxPicks).map((img) => ({
+      id: img.id,
+      imageUrl: img.imageUrl,
+      title: img.title,
+      caption: img.caption,
+      styleTag: img.styleTag,
+      catalogItemName: img.catalogItem?.name ?? null,
+      catalogItemSlug: img.catalogItem?.slug ?? null,
+    }));
+  } catch (err) {
+    console.error(
+      '[getLandingGallery] Database error (did you run `npx prisma migrate dev`?). Using fallback gallery.',
+      err
+    );
+    return LANDING_FALLBACK_GALLERY.slice(0, limit);
   }
-
-  if (galleryImages.length === 0) return LANDING_FALLBACK_GALLERY.slice(0, limit);
-
-  const candidates = galleryImages.map((img) => ({
-    id: img.id,
-    title: img.title,
-    caption: img.caption,
-    styleTag: img.styleTag,
-    catalogItemName: img.catalogItem?.name ?? null,
-  }));
-
-  const maxPicks = Math.min(limit, 12);
-
-  const aiPicks = await pickAndKeywordGalleryWithAI({
-    projectTitle: 'Landing inspiration',
-    projectDescription: 'Show a balanced set of popular home facelift gallery images.',
-    catalogItemNames: [],
-    candidates,
-    maxPicks,
-  });
-
-  const chosenIds = new Set(aiPicks.map((p) => p.galleryImageId));
-  const ordered =
-    aiPicks.length > 0
-      ? galleryImages.filter((img) => chosenIds.has(img.id))
-      : galleryImages.slice(0, maxPicks);
-
-  return ordered.slice(0, maxPicks).map((img) => ({
-    id: img.id,
-    imageUrl: img.imageUrl,
-    title: img.title,
-    caption: img.caption,
-    styleTag: img.styleTag,
-    catalogItemName: img.catalogItem?.name ?? null,
-    catalogItemSlug: img.catalogItem?.slug ?? null,
-  }));
 }

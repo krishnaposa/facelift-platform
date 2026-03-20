@@ -120,3 +120,35 @@ export async function getProjectCostEstimate(projectId: string): Promise<Project
   };
 }
 
+export type UsaCostEstimate = {
+  hasData: boolean;
+  average: number | null;
+  min: number | null;
+  max: number | null;
+  count: number;
+};
+
+/**
+ * Average bid cost across all bids in the system (USA-wide).
+ * No zip filtering.
+ */
+export async function getUSAAverageBidEstimate(): Promise<UsaCostEstimate> {
+  const stats = await prisma.bid.aggregate({
+    _avg: { amount: true },
+    _min: { amount: true },
+    _max: { amount: true },
+    _count: { _all: true },
+  });
+
+  const avg = stats._avg.amount ? Number(stats._avg.amount) : null;
+  const min = stats._min.amount ? Number(stats._min.amount) : null;
+  const max = stats._max.amount ? Number(stats._max.amount) : null;
+  const count = stats._count._all ?? 0;
+
+  if (!avg || count === 0) {
+    return { hasData: false, average: null, min: null, max: null, count };
+  }
+
+  return { hasData: true, average: avg, min, max, count };
+}
+

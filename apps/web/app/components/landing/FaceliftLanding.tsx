@@ -1,25 +1,23 @@
 import Link from "next/link";
 import type { GalleryImageForProject } from "@/lib/project-gallery";
+import type { LandingCatalogItem } from "@/lib/catalog-landing";
 
 type Props = {
   gallery: GalleryImageForProject[];
+  usaCost: {
+    hasData: boolean;
+    average: number | null;
+    min: number | null;
+    max: number | null;
+    count: number;
+  };
+  catalogItems: LandingCatalogItem[];
 };
 
-export default function FaceliftLanding({ gallery }: Props) {
-  const categories = [
-    { title: 'Front Doors', desc: 'Single door, double door, sidelights, modern styles' },
-    { title: 'Bathrooms', desc: 'Bidets, vanities, fixtures, mirrors, hardware' },
-    { title: 'Kitchens', desc: 'Cabinet refacing, countertops, hardware, backsplashes' },
-    { title: 'Staircases', desc: 'Spindles, railings, posts, trim refreshes' },
-    { title: 'Air & Vent Covers', desc: 'Modern vent covers, returns, smart airflow updates' },
-    { title: 'Smart Home', desc: 'Locks, doorbells, thermostats, lighting, sensors' },
-  ];
-
-  const bids = [
-    { contractor: 'Apex Home Works', price: '$7,800', eta: '12 days', match: 'Full project bid' },
-    { contractor: 'Blue Oak Renovations', price: '$4,200', eta: '6 days', match: 'Front door + spindles' },
-    { contractor: 'SmartNest Install Co.', price: '$1,250', eta: '2 days', match: 'Bidets + smart devices' },
-  ];
+export default function FaceliftLanding({ gallery, usaCost, catalogItems }: Props) {
+  const suggestedUpgrades = Array.from(
+    new Set(gallery.map((g) => g.catalogItemName).filter(Boolean) as string[])
+  ).slice(0, 6);
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
@@ -30,8 +28,8 @@ export default function FaceliftLanding({ gallery }: Props) {
             <div className="text-sm text-slate-500">Home upgrades, visualized and bid online</div>
           </div>
           <nav className="hidden items-center gap-4 md:flex text-sm font-medium">
-            <a href="#gallery" className="hover:text-slate-600">Gallery</a>
-            <a href="#login" className="hover:text-slate-600">Login</a>
+            <a href="#inspiration" className="hover:text-slate-600">Gallery</a>
+            <Link href="/login" className="hover:text-slate-600">Login</Link>
             <Link
               href="/login"
               className="rounded-2xl bg-slate-900 px-4 py-2 text-white shadow-sm"
@@ -48,8 +46,8 @@ export default function FaceliftLanding({ gallery }: Props) {
         </div>
       </header>
 
-      <section className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-2 md:items-center">
-        <div className="space-y-6">
+      <section className="mx-auto max-w-7xl px-6 py-16">
+        <div className="max-w-3xl space-y-6">
           <span className="inline-flex rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">
             Home facelift marketplace
           </span>
@@ -90,73 +88,25 @@ export default function FaceliftLanding({ gallery }: Props) {
             </div>
           </div>
         </div>
-
-        <div className="grid gap-4">
-          <div className="rounded-[28px] bg-white p-5 shadow-lg ring-1 ring-slate-200">
-            <div className="mb-4 flex items-center justify-between">
-              <div>
-                <div className="text-sm font-semibold text-slate-500">Sample project</div>
-                <div className="text-xl font-semibold">Front Exterior Refresh</div>
-              </div>
-              <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">Open for bids</span>
-            </div>
-            <div className="space-y-3 text-sm">
-              {['Replace front door with double door', 'Replace stair spindles', 'Swap air vents', 'Add smart lock + doorbell'].map((item) => (
-                <div key={item} className="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3">
-                  <span>{item}</span>
-                  <span className="text-slate-500">Selected</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="rounded-[28px] bg-slate-900 p-5 text-white shadow-lg">
-            <div className="mb-4 text-lg font-semibold">Recent bid activity</div>
-            <div className="space-y-3">
-              {bids.map((bid) => (
-                <div key={bid.contractor} className="rounded-2xl bg-white/10 p-4 backdrop-blur">
-                  <div className="flex items-center justify-between">
-                    <div className="font-medium">{bid.contractor}</div>
-                    <div className="font-semibold">{bid.price}</div>
-                  </div>
-                  <div className="mt-1 text-sm text-slate-300">{bid.match}</div>
-                  <div className="mt-2 text-xs uppercase tracking-wide text-slate-400">ETA {bid.eta}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
       </section>
 
-      <section id="services" className="mx-auto max-w-7xl px-6 py-10">
-        <div className="mb-6 flex items-end justify-between gap-4">
-          <div>
-            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Services</div>
-            <h2 className="mt-2 text-3xl font-semibold tracking-tight">Popular upgrade categories</h2>
-          </div>
-          <button className="rounded-2xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium">View full catalog</button>
-        </div>
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {categories.map((category) => (
-            <div key={category.title} className="rounded-[24px] bg-white p-6 shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-md">
-              <div className="mb-3 inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
-                Upgrade type
-              </div>
-              <h3 className="text-xl font-semibold">{category.title}</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-600">{category.desc}</p>
-              <button className="mt-5 text-sm font-semibold text-slate-900">Select options →</button>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section id="gallery" className="mx-auto max-w-7xl px-6 py-10">
+      <section id="inspiration" className="mx-auto max-w-7xl px-6 py-10">
         <div className="mb-6">
           <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Gallery</div>
           <h2 className="mt-2 text-3xl font-semibold tracking-tight">Inspiration without login</h2>
           <p className="mt-2 max-w-2xl text-slate-600">
             Let visitors explore before and after concepts, then convert that inspiration into a project request.
           </p>
+          {suggestedUpgrades.length > 0 && (
+            <div className="mt-4 text-sm text-slate-600">
+              AI suggests:{" "}
+              <span className="font-semibold text-slate-900">
+                {suggestedUpgrades.join(", ")}
+              </span>
+            </div>
+          )}
         </div>
+
         {gallery.length === 0 ? (
           <p className="text-slate-500">Gallery coming soon.</p>
         ) : (
@@ -186,6 +136,91 @@ export default function FaceliftLanding({ gallery }: Props) {
             ))}
           </div>
         )}
+
+        <div id="catalog" className="mt-12 mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+              Catalog
+            </div>
+            <h2 className="mt-2 text-3xl font-semibold tracking-tight">
+              Popular upgrade categories
+            </h2>
+            <p className="mt-2 max-w-2xl text-slate-600">
+              Every upgrade type from your catalog, with a thumbnail and options from your data.
+              Thumbnails use your gallery when available; otherwise a curated placeholder.
+            </p>
+            {usaCost.hasData ? (
+              <div className="mt-3 text-sm text-slate-600">
+                USA average bid:{" "}
+                <span className="font-semibold text-slate-900">
+                  ${usaCost.average?.toFixed(0)}
+                </span>
+                {usaCost.min !== null && usaCost.max !== null ? (
+                  <span className="text-slate-500">
+                    {" "}
+                    (typical range ${usaCost.min.toFixed(0)} – ${usaCost.max.toFixed(0)})
+                  </span>
+                ) : null}
+              </div>
+            ) : null}
+          </div>
+          <Link
+            href="/login"
+            className="shrink-0 rounded-2xl border border-slate-300 bg-white px-4 py-2 text-center text-sm font-medium text-slate-900"
+          >
+            Start a project
+          </Link>
+        </div>
+
+        {catalogItems.length === 0 ? (
+          <p className="text-sm text-slate-500">
+            Catalog could not be loaded. Check your database connection and run{" "}
+            <code className="rounded bg-slate-100 px-1">npx prisma migrate dev</code> and{" "}
+            <code className="rounded bg-slate-100 px-1">npx prisma db seed</code>.
+          </p>
+        ) : (
+          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+            {catalogItems.map((item) => (
+              <article
+                key={item.id}
+                className="overflow-hidden rounded-[24px] bg-white shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-md"
+              >
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
+                  <img
+                    src={item.thumbnailUrl}
+                    alt={item.name}
+                    className="h-full w-full object-cover"
+                  />
+                  <div className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm backdrop-blur">
+                    {item.categoryName}
+                  </div>
+                </div>
+                <div className="p-5">
+                  <h3 className="text-xl font-semibold text-slate-900">{item.name}</h3>
+                  {item.description ? (
+                    <p className="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
+                  ) : null}
+                  <ul className="mt-4 space-y-2">
+                    {item.subItems.map((line) => (
+                      <li
+                        key={line}
+                        className="rounded-xl bg-slate-50 px-3 py-2 text-sm text-slate-700"
+                      >
+                        {line}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href="/login"
+                    className="mt-5 inline-flex text-sm font-semibold text-slate-900 underline-offset-4 hover:underline"
+                  >
+                    Sign in to build a project →
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-10">
@@ -211,42 +246,6 @@ export default function FaceliftLanding({ gallery }: Props) {
               <li>Grow with repeat homeowner demand</li>
             </ul>
             <button className="mt-6 rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-slate-900">Contractor Apply</button>
-          </div>
-        </div>
-      </section>
-
-      <section id="login" className="mx-auto max-w-7xl px-6 py-10 pb-16">
-        <div className="rounded-[32px] bg-gradient-to-br from-slate-900 to-slate-700 p-8 text-white shadow-xl">
-          <div className="grid gap-8 md:grid-cols-2 md:items-center">
-            <div>
-              <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-300">Starter auth section</div>
-              <h2 className="mt-2 text-3xl font-semibold tracking-tight">Separate entry points for both sides of the marketplace</h2>
-              <p className="mt-3 max-w-xl text-slate-300">
-                Start with distinct homeowner and contractor login flows, then route each role into its own dashboard.
-              </p>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-[24px] bg-white p-5 text-slate-900">
-                <div className="text-lg font-semibold">Homeowner Login</div>
-                <p className="mt-2 text-sm text-slate-600">Track projects, uploads, and contractor bids.</p>
-                <Link
-                  href="/login"
-                  className="mt-5 block w-full rounded-2xl bg-slate-900 px-4 py-3 text-center text-sm font-semibold text-white"
-                >
-                  Continue
-                </Link>
-              </div>
-              <div className="rounded-[24px] bg-white p-5 text-slate-900">
-                <div className="text-lg font-semibold">Contractor Login</div>
-                <p className="mt-2 text-sm text-slate-600">View open requests and submit bids by scope.</p>
-                <Link
-                  href="/login"
-                  className="mt-5 block w-full rounded-2xl border border-slate-300 px-4 py-3 text-center text-sm font-semibold text-slate-900"
-                >
-                  Continue
-                </Link>
-              </div>
-            </div>
           </div>
         </div>
       </section>
