@@ -1,4 +1,6 @@
 import Link from "next/link";
+import SafeImage from "@/app/components/ui/SafeImage";
+import { formatUsdWhole } from "@/lib/format-currency";
 import type { GalleryImageForProject } from "@/lib/project-gallery";
 import type { LandingCatalogItem } from "@/lib/catalog-landing";
 
@@ -116,7 +118,7 @@ export default function FaceliftLanding({ gallery, usaCost, catalogItems }: Prop
                 key={item.id}
                 className="overflow-hidden rounded-[28px] bg-white shadow-sm ring-1 ring-slate-200"
               >
-                <img
+                <SafeImage
                   src={item.imageUrl}
                   alt={item.title || item.catalogItemName || 'Gallery'}
                   className="h-64 w-full object-cover"
@@ -147,6 +149,7 @@ export default function FaceliftLanding({ gallery, usaCost, catalogItems }: Prop
             </h2>
             <p className="mt-2 max-w-2xl text-slate-600">
               Every upgrade type from your catalog, with a thumbnail and options from your data.
+              When contractors have submitted line-item bids, we show a typical installation amount.
               Thumbnails use your gallery when available; otherwise a curated placeholder.
             </p>
             {usaCost.hasData ? (
@@ -186,7 +189,7 @@ export default function FaceliftLanding({ gallery, usaCost, catalogItems }: Prop
                 className="overflow-hidden rounded-[24px] bg-white shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-md"
               >
                 <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
-                  <img
+                  <SafeImage
                     src={item.thumbnailUrl}
                     alt={item.name}
                     className="h-full w-full object-cover"
@@ -200,6 +203,29 @@ export default function FaceliftLanding({ gallery, usaCost, catalogItems }: Prop
                   {item.description ? (
                     <p className="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
                   ) : null}
+                  {item.avgInstallCost.hasData && item.avgInstallCost.average != null ? (
+                    <div className="mt-3 rounded-xl bg-emerald-50 px-3 py-2.5 text-sm ring-1 ring-emerald-100">
+                      <div className="font-semibold text-emerald-900">
+                        Avg. install: {formatUsdWhole(item.avgInstallCost.average)}
+                        {item.avgInstallCost.min != null && item.avgInstallCost.max != null ? (
+                          <span className="font-normal text-emerald-800/90">
+                            {' '}
+                            ({formatUsdWhole(item.avgInstallCost.min)} –{' '}
+                            {formatUsdWhole(item.avgInstallCost.max)})
+                          </span>
+                        ) : null}
+                      </div>
+                      <p className="mt-1 text-xs text-emerald-800/80">
+                        From {item.avgInstallCost.count} bid line item
+                        {item.avgInstallCost.count === 1 ? '' : 's'} on this upgrade (not a quote).
+                      </p>
+                    </div>
+                  ) : (
+                    <p className="mt-3 text-xs text-slate-500">
+                      Typical install cost appears here once contractors submit line-item bids for this
+                      upgrade.
+                    </p>
+                  )}
                   <ul className="mt-4 space-y-2">
                     {item.subItems.map((line) => (
                       <li

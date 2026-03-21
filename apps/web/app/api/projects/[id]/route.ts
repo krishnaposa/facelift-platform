@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getSessionFromRequest } from '@/lib/auth';
 import { refreshProjectGalleryPicks } from '@/lib/project-gallery';
+import {
+  catalogRowsToProjectItemCreateMany,
+  type CatalogSelectionRow,
+} from '@/lib/project-catalog-sync';
 
 const catalogSlugMap = {
   frontDoor: 'front-door',
@@ -13,6 +17,27 @@ const catalogSlugMap = {
 } as const;
 
 type UpgradeKey = keyof typeof catalogSlugMap;
+
+function parseCatalogItemsBody(body: unknown): CatalogSelectionRow[] {
+  if (!body || typeof body !== 'object') return [];
+  const b = body as Record<string, unknown>;
+  if (!Array.isArray(b.catalogItems)) return [];
+  return (b.catalogItems as unknown[])
+    .filter(
+      (r): r is Record<string, unknown> =>
+        !!r && typeof r === 'object' && typeof (r as { catalogItemId?: unknown }).catalogItemId === 'string'
+    )
+    .map((row) => ({
+      catalogItemId: String(row.catalogItemId),
+      quantity: typeof row.quantity === 'number' ? row.quantity : undefined,
+      selectedOptions:
+        row.selectedOptions &&
+        typeof row.selectedOptions === 'object' &&
+        !Array.isArray(row.selectedOptions)
+          ? (row.selectedOptions as Record<string, unknown>)
+          : undefined,
+    }));
+}
 
 export async function PATCH(
   req: NextRequest,
@@ -30,7 +55,62 @@ export async function PATCH(
 
     const title = String(body?.title || '').trim();
     const zipCode = String(body?.zipCode || '').trim();
-    const selections = body?.selections;
+    const notes =
+      typeof body?.notes === 'string'
+        ? body.notes.trim()
+        : typeof body?.selections?.notes === 'string'
+          ? body.selections.notes.trim()
+          : '';
+
+    const photos: string[] = Array.isArray(body?.photos)
+      ? body.photos.filter((p: unknown) => typeof p === 'string' && p.trim().length > 0)
+      : Array.isArray(body?.selections?.photos)
+        ? body.selections.photos.filter(
+            (p: unknown) => typeof p === 'string' && p.trim().length > 0
+          )
+        : [];
+
+    /** New editor: dynamic catalogItems */
+    let rows: CatalogSelectionRow[] = parseCatalogItemsBody(body);
+
+    /** Legacy edit form: selections.items keyed by upgrade key */
+    if (rows.length === 0 && body?.selections?.items && typeof body.selections.items === 'object') {
+      const items = body.selections.items as Record<string, Record<string, unknown>>;
+      const selectedEntries = Object.entries(items).filter(
+        ([, value]) =>
+          value &&
+          typeof value === 'object' &&
+          (value as { selected?: boolean }).selected
+      ) as Array<[UpgradeKey, Record<string, unknown>]>;
+
+      if (selectedEntries.length > 0) {
+        const slugsNeeded = selectedEntries.map(([key]) => catalogSlugMap[key]);
+        const found = await prisma.catalogItem.findMany({
+          where: { slug: { in: slugsNeeded } },
+          select: { id: true, slug: true },
+        });
+        const bySlug = new Map(found.map((c) => [c.slug, c.id]));
+        rows = selectedEntries
+          .map(([key, value]) => {
+            const slug = catalogSlugMap[key];
+            const catalogItemId = bySlug.get(slug);
+            if (!catalogItemId) return null;
+            const quantity =
+              typeof value.count === 'number' &&
+              Number.isFinite(value.count) &&
+              value.count > 0
+                ? value.count
+                : 1;
+            const { selected, count, ...rest } = value;
+            return {
+              catalogItemId,
+              quantity,
+              selectedOptions: rest,
+            } satisfies CatalogSelectionRow;
+          })
+          .filter(Boolean) as CatalogSelectionRow[];
+      }
+    }
 
     if (!title) {
       return NextResponse.json(
@@ -46,9 +126,9 @@ export async function PATCH(
       );
     }
 
-    if (!selections || typeof selections !== 'object') {
+    if (rows.length === 0) {
       return NextResponse.json(
-        { error: 'Selections are required.' },
+        { error: 'Select at least one upgrade item.' },
         { status: 400 }
       );
     }
@@ -64,46 +144,16 @@ export async function PATCH(
       return NextResponse.json({ error: 'Project not found.' }, { status: 404 });
     }
 
-    const items = selections?.items ?? {};
-    const notes = typeof selections?.notes === 'string' ? selections.notes.trim() : '';
-    const photos: string[] = Array.isArray(selections?.photos)
-      ? selections.photos.filter((p: unknown) => typeof p === 'string' && p.trim().length > 0)
-      : [];
-
-    const selectedEntries = Object.entries(items).filter(
-      ([, value]) =>
-        value &&
-        typeof value === 'object' &&
-        (value as { selected?: boolean }).selected
-    ) as Array<[UpgradeKey, Record<string, unknown>]>;
-
-    if (selectedEntries.length === 0) {
-      return NextResponse.json(
-        { error: 'Select at least one upgrade item.' },
-        { status: 400 }
-      );
-    }
-
-    const slugsNeeded = selectedEntries.map(([key]) => catalogSlugMap[key]);
-
-    const catalogItems = await prisma.catalogItem.findMany({
-      where: {
-        slug: {
-          in: slugsNeeded,
-        },
-      },
-      select: {
-        id: true,
-        slug: true,
-      },
+    const ids = [...new Set(rows.map((r) => r.catalogItemId).filter(Boolean))];
+    const catalogRows = await prisma.catalogItem.findMany({
+      where: { id: { in: ids }, active: true },
+      select: { id: true },
     });
-
-    const catalogBySlug = new Map(catalogItems.map((item) => [item.slug, item.id]));
-
-    for (const slug of slugsNeeded) {
-      if (!catalogBySlug.has(slug)) {
+    const validIds = new Set(catalogRows.map((c) => c.id));
+    for (const cid of ids) {
+      if (!validIds.has(cid)) {
         return NextResponse.json(
-          { error: `Missing catalog item for slug: ${slug}` },
+          { error: `Invalid or inactive catalog item: ${cid}` },
           { status: 400 }
         );
       }
@@ -128,25 +178,7 @@ export async function PATCH(
       });
 
       await tx.projectItem.createMany({
-        data: selectedEntries.map(([key, value]) => {
-          const slug = catalogSlugMap[key];
-          const catalogItemId = catalogBySlug.get(slug)!;
-
-          const quantity =
-            typeof value.count === 'number' && Number.isFinite(value.count) && value.count > 0
-              ? value.count
-              : 1;
-
-          const { selected, count, ...rest } = value;
-
-          return {
-            projectId: id,
-            catalogItemId,
-            quantity,
-            selectedOptions: rest,
-            notes: notes || null,
-          };
-        }),
+        data: catalogRowsToProjectItemCreateMany(id, rows, notes),
       });
 
       if (photos.length > 0) {
@@ -172,7 +204,6 @@ export async function PATCH(
       },
     });
 
-    // Refresh persisted AI gallery picks (best-effort).
     try {
       await refreshProjectGalleryPicks(id);
     } catch (error) {

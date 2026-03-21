@@ -1,5 +1,18 @@
 import Link from 'next/link';
+import SafeImage from '@/app/components/ui/SafeImage';
+import HomeownerProjectCard from '@/app/dashboard/homeowner/HomeownerProjectCard';
 import { redirect } from 'next/navigation';
+import {
+  emptyAvgInstallCost,
+  getAverageBidLineAmountByCatalogItem,
+} from '@/lib/catalog-install-cost';
+import {
+  enrichCatalogForDashboard,
+  estimateProjectFromLineItemAverages,
+  formatSelectedOptions,
+  pickSuggestedCatalogItems,
+} from '@/lib/homeowner-dashboard';
+import { resolveCatalogThumbnail } from '@/lib/catalog-landing';
 import { prisma } from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
 import { refreshProjectGalleryPicks, refreshUserGalleryPicks } from '@/lib/project-gallery';
@@ -15,22 +28,52 @@ export default async function HomeownerDashboardPage() {
     redirect('/login');
   }
 
-  const projects = await prisma.project.findMany({
-    where: {
-      homeownerId: session.userId,
-    },
-    orderBy: {
-      createdAt: 'desc',
-    },
-    include: {
-      items: {
-        include: {
-          catalogItem: true,
+  const [projects, allCatalogRows, avgMap] = await Promise.all([
+    prisma.project.findMany({
+      where: {
+        homeownerId: session.userId,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      include: {
+        items: {
+          include: {
+            catalogItem: {
+              include: {
+                category: true,
+                galleryImages: {
+                  where: { isPublic: true },
+                  orderBy: { createdAt: 'desc' },
+                  take: 1,
+                  select: { imageUrl: true },
+                },
+              },
+            },
+          },
+        },
+        photos: {
+          orderBy: { sortOrder: 'asc' },
         },
       },
-      photos: true,
-    },
-  });
+    }),
+    prisma.catalogItem.findMany({
+      where: { active: true },
+      include: {
+        category: true,
+        galleryImages: {
+          where: { isPublic: true },
+          orderBy: { createdAt: 'desc' },
+          take: 1,
+          select: { imageUrl: true },
+        },
+      },
+      orderBy: [{ category: { name: 'asc' } }, { name: 'asc' }],
+    }),
+    getAverageBidLineAmountByCatalogItem(),
+  ]);
+
+  const catalogEnriched = enrichCatalogForDashboard(allCatalogRows, avgMap);
 
   // If the user has projects, ensure each has persisted picks (best-effort).
   if (projects.length > 0) {
@@ -44,7 +87,10 @@ export default async function HomeownerDashboardPage() {
     }
   }
 
-  const picksByProjectId = new Map<string, Array<{ imageUrl: string; title: string | null; keywords: string[] }>>();
+  const picksByProjectId = new Map<
+    string,
+    Array<{ imageUrl: string; title: string | null; keywords: string[] }>
+  >();
   try {
     if (projects.length > 0) {
       const picks = await (prisma as any).projectGalleryPick?.findMany?.({
@@ -126,9 +172,7 @@ export default async function HomeownerDashboardPage() {
 
         {projects.length === 0 ? (
           <div className="mt-8 rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-            <h2 className="text-2xl font-semibold text-slate-900">
-              No projects yet
-            </h2>
+            <h2 className="text-2xl font-semibold text-slate-900">No projects yet</h2>
             <p className="mt-2 text-slate-600">
               Create your first facelift project to start getting bids.
             </p>
@@ -151,7 +195,7 @@ export default async function HomeownerDashboardPage() {
                       className="overflow-hidden rounded-2xl bg-slate-50 ring-1 ring-slate-200"
                       title={img.keywords.join(', ')}
                     >
-                      <img
+                      <SafeImage
                         src={img.imageUrl}
                         alt={img.title ?? 'Gallery'}
                         className="h-24 w-full object-cover"
@@ -164,76 +208,54 @@ export default async function HomeownerDashboardPage() {
           </div>
         ) : (
           <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {projects.map((project) => (
-              <div
-                key={project.id}
-                className="rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <div className="text-lg font-semibold text-slate-900">
-                      {project.title}
-                    </div>
-                    <div className="mt-1 text-sm text-slate-500">
-                      {project.zipCode}
-                    </div>
-                  </div>
+            {projects.map((project) => {
+              const selectedIds = new Set(project.items.map((i) => i.catalogItemId));
+              const suggested = pickSuggestedCatalogItems(selectedIds, catalogEnriched, 5);
+              const estimate = estimateProjectFromLineItemAverages(
+                project.items.map((i) => ({
+                  quantity: i.quantity,
+                  catalogItemId: i.catalogItemId,
+                })),
+                avgMap
+              );
 
-                  <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
-                    {project.status}
-                  </span>
-                </div>
+              const lineItems = project.items.map((item) => ({
+                id: item.id,
+                quantity: item.quantity,
+                optionsLabel: formatSelectedOptions(item.selectedOptions),
+                catalogItem: {
+                  name: item.catalogItem.name,
+                  slug: item.catalogItem.slug,
+                  description: item.catalogItem.description,
+                  categoryName: item.catalogItem.category.name,
+                  thumbnailUrl: resolveCatalogThumbnail(
+                    item.catalogItem.slug,
+                    item.catalogItem.galleryImages[0]?.imageUrl
+                  ),
+                },
+                avgInstall: avgMap.get(item.catalogItemId) ?? emptyAvgInstallCost(),
+              }));
 
-                <div className="mt-4 text-sm text-slate-600">
-                  {project.description || 'No description yet.'}
-                </div>
-
-                <div className="mt-4 text-sm text-slate-500">
-                  {project.items.length} item{project.items.length === 1 ? '' : 's'}
-                  {' • '}
-                  {project.photos.length} photo{project.photos.length === 1 ? '' : 's'}
-                </div>
-
-                <div className="mt-6 flex gap-3">
-                  <Link
-                    href={`/projects/${project.id}`}
-                    className="rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-900"
-                  >
-                    View
-                  </Link>
-
-                  <Link
-                    href={`/projects/${project.id}/edit`}
-                    className="rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white"
-                  >
-                    Edit
-                  </Link>
-                </div>
-
-                {picksByProjectId.get(project.id)?.length ? (
-                  <div className="mt-5">
-                    <div className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
-                      AI gallery picks
-                    </div>
-                    <div className="mt-3 grid grid-cols-3 gap-3">
-                      {picksByProjectId.get(project.id)!.map((p, idx) => (
-                        <div
-                          key={`${project.id}-pick-${idx}`}
-                          className="overflow-hidden rounded-2xl bg-slate-50 ring-1 ring-slate-200"
-                          title={p.keywords?.join(', ') || undefined}
-                        >
-                          <img
-                            src={p.imageUrl}
-                            alt={p.title || project.title}
-                            className="h-24 w-full object-cover"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ) : null}
-              </div>
-            ))}
+              return (
+                <HomeownerProjectCard
+                  key={project.id}
+                  projectId={project.id}
+                  title={project.title}
+                  zipCode={project.zipCode}
+                  status={project.status}
+                  description={project.description}
+                  lineItems={lineItems}
+                  photos={project.photos.map((p) => ({
+                    id: p.id,
+                    imageUrl: p.imageUrl,
+                    caption: p.caption,
+                  }))}
+                  suggested={suggested}
+                  estimate={estimate}
+                  galleryPicks={picksByProjectId.get(project.id) ?? []}
+                />
+              );
+            })}
           </div>
         )}
       </div>

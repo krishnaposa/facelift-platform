@@ -1,17 +1,11 @@
+import SafeImage from '@/app/components/ui/SafeImage';
 import { redirect, notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
 import { getGalleryForProject } from '@/lib/project-gallery';
+import { getCatalogForWizard } from '@/lib/catalog-wizard';
+import { projectItemsToEditLines } from '@/lib/edit-project-lines';
 import EditProjectForm from '@/app/components/projects/EditProjectForm';
-
-const slugToKeyMap: Record<string, string> = {
-  'front-door': 'frontDoor',
-  bidets: 'bidets',
-  'cabinet-refacing': 'cabinetRefacing',
-  'spindles-and-railings': 'spindles',
-  'air-vents': 'airVents',
-  countertops: 'countertops',
-};
 
 export default async function EditProjectPage({
   params,
@@ -26,54 +20,57 @@ export default async function EditProjectPage({
 
   const { id } = await params;
 
-  const project = await prisma.project.findFirst({
-    where: {
-      id,
-      homeownerId: session.userId,
-    },
-    include: {
-      items: {
-        include: {
-          catalogItem: true,
+  const [project, addableCatalogRaw] = await Promise.all([
+    prisma.project.findFirst({
+      where: {
+        id,
+        homeownerId: session.userId,
+      },
+      include: {
+        items: {
+          include: {
+            catalogItem: {
+              include: {
+                category: true,
+                galleryImages: {
+                  where: { isPublic: true },
+                  orderBy: { createdAt: 'desc' },
+                  take: 1,
+                  select: { imageUrl: true },
+                },
+              },
+            },
+          },
+        },
+        photos: {
+          orderBy: {
+            sortOrder: 'asc',
+          },
         },
       },
-      photos: {
-        orderBy: {
-          sortOrder: 'asc',
-        },
-      },
-    },
-  });
+    }),
+    getCatalogForWizard(),
+  ]);
 
   if (!project) {
     notFound();
   }
 
-  const items: Record<string, Record<string, unknown>> = {};
+  const lines = projectItemsToEditLines(project.items);
 
-  for (const item of project.items) {
-    const key = slugToKeyMap[item.catalogItem.slug];
+  const addableCatalog = addableCatalogRaw.map((c) => ({
+    id: c.id,
+    name: c.name,
+    slug: c.slug,
+    description: c.description,
+    unitLabel: c.unitLabel,
+    categoryName: c.categoryName,
+    thumbnailUrl: c.thumbnailUrl,
+    optionsSchema: c.optionsSchema,
+  }));
 
-    if (!key) {
-      continue;
-    }
-
-    items[key] = {
-      selected: true,
-      ...(typeof item.selectedOptions === 'object' && item.selectedOptions
-        ? item.selectedOptions
-        : {}),
-      ...(item.quantity > 1 ? { count: item.quantity } : {}),
-    };
-  }
-
-  const initialForm = {
-    title: project.title,
-    zipCode: project.zipCode,
-    notes: project.description || '',
-    photos: project.photos.map((photo) => photo.imageUrl),
-    items,
-  };
+  const photoUrls =
+    project.photos.length > 0 ? project.photos.map((photo) => photo.imageUrl) : [''];
 
   const gallery = await getGalleryForProject(project.id);
 
@@ -94,7 +91,7 @@ export default async function EditProjectPage({
                   key={img.id}
                   className="overflow-hidden rounded-[24px] bg-slate-50 ring-1 ring-slate-200"
                 >
-                  <img
+                  <SafeImage
                     src={img.imageUrl}
                     alt={img.title || img.caption || img.catalogItemName || 'Gallery'}
                     className="h-48 w-full object-cover"
@@ -114,7 +111,15 @@ export default async function EditProjectPage({
             </div>
           </div>
         )}
-        <EditProjectForm projectId={project.id} initialForm={initialForm} />
+        <EditProjectForm
+          projectId={project.id}
+          initialTitle={project.title}
+          initialZipCode={project.zipCode}
+          initialNotes={project.description || ''}
+          initialPhotos={photoUrls}
+          lines={lines}
+          addableCatalog={addableCatalog}
+        />
       </div>
     </div>
   );

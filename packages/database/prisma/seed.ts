@@ -99,6 +99,162 @@ async function main() {
         },
       ],
     },
+    {
+      name: 'Aesthetic Upgrades (Visual & Structural)',
+      slug: 'aesthetic-upgrades',
+      items: [
+        {
+          name: 'Paint and Color Palette',
+          slug: 'paint-and-color-palette',
+          description:
+            'Apply fresh, modern paint colors to walls, trim, ceilings, and exterior siding.',
+          unitLabel: 'project',
+          optionsSchema: {
+            scope: ['interior', 'exterior', 'both'],
+            finish_level: ['standard', 'premium_prep'],
+          },
+        },
+        {
+          name: 'Lighting Fixtures',
+          slug: 'lighting-fixtures',
+          description:
+            'Replace dated chandeliers, vanity lights, and ceiling fans with modern LED lighting to brighten spaces.',
+          unitLabel: 'room',
+          optionsSchema: {
+            fixture_types: ['chandelier', 'vanity', 'ceiling_fan', 'recessed', 'mixed'],
+            led_preference: ['all_led', 'partial_led'],
+          },
+        },
+        {
+          name: 'Hardware and Details',
+          slug: 'hardware-and-details',
+          description:
+            'Replace cabinet knobs, handles, door handles, and outlet covers (e.g., screwless plates).',
+          unitLabel: 'project',
+          optionsSchema: {
+            focus: ['cabinets', 'doors', 'outlets', 'full_home_refresh'],
+            style: ['modern_matte_black', 'brushed_nickel', 'brass', 'mixed'],
+          },
+        },
+        {
+          name: 'Kitchen & Bathroom Refresh',
+          slug: 'kitchen-bathroom-refresh',
+          description:
+            'Install new countertops (quartz/marble), update backsplashes, and replace faucets and showerheads.',
+          unitLabel: 'project',
+          optionsSchema: {
+            rooms: ['kitchen', 'bathroom', 'both'],
+            countertop_material: ['quartz', 'marble', 'granite', 'mixed'],
+          },
+        },
+        {
+          name: 'Flooring',
+          slug: 'flooring',
+          description:
+            'Replace old carpet with hardwood, laminate, or vinyl plank flooring for a cleaner, modern look.',
+          unitLabel: 'sq_ft_estimate',
+          optionsSchema: {
+            material: ['hardwood', 'laminate', 'vinyl_plank', 'tile', 'mixed'],
+            scope: ['single_room', 'main_level', 'whole_home'],
+          },
+        },
+        {
+          name: 'Curb Appeal',
+          slug: 'curb-appeal',
+          description:
+            'Repaint the front door, update house numbers, and install new exterior light fixtures.',
+          unitLabel: 'project',
+          optionsSchema: {
+            focus: ['front_door', 'numbers_and_mailbox', 'exterior_lights', 'full_package'],
+          },
+        },
+      ],
+    },
+    {
+      name: 'Technological Upgrades (Convenience & Efficiency)',
+      slug: 'technological-upgrades',
+      items: [
+        {
+          name: 'Smart Lighting',
+          slug: 'smart-lighting',
+          description:
+            'Install smart dimmers and switches that allow control via phone or voice.',
+          unitLabel: 'switch',
+          optionsSchema: {
+            count: 'number',
+            ecosystem: ['alexa', 'google_home', 'apple_homekit', 'agnostic'],
+          },
+        },
+        {
+          name: 'Smart Thermostat',
+          slug: 'smart-thermostat',
+          description:
+            'Install a smart thermostat (e.g., Nest or Ecobee) to optimize energy use and control heating/cooling remotely.',
+          unitLabel: 'unit',
+          optionsSchema: {
+            brand_preference: ['nest', 'ecobee', 'honeywell', 'no_preference'],
+            zones: ['single', 'multi'],
+          },
+        },
+        {
+          name: 'Home Security',
+          slug: 'home-security',
+          description: 'Add smart doorbells, smart locks, and security cameras.',
+          unitLabel: 'project',
+          optionsSchema: {
+            package: ['doorbell_only', 'locks_and_cameras', 'full_perimeter'],
+          },
+        },
+        {
+          name: 'Modern Electrical',
+          slug: 'modern-electrical',
+          description:
+            'Upgrade outdated outlets to include USB ports, and increase safety with smart fire and smoke detectors.',
+          unitLabel: 'project',
+          optionsSchema: {
+            focus: ['usb_outlets', 'gfci_update', 'smart_detectors', 'full_panel_review'],
+          },
+        },
+        {
+          name: 'Smart Shades',
+          slug: 'smart-shades',
+          description: 'Install motorized and automated window treatments.',
+          unitLabel: 'window',
+          optionsSchema: {
+            count: 'number',
+            control: ['remote', 'app', 'voice', 'mixed'],
+          },
+        },
+      ],
+    },
+    {
+      name: 'Energy Efficiency Upgrades',
+      slug: 'energy-efficiency',
+      items: [
+        {
+          name: 'Insulation & Windows',
+          slug: 'insulation-windows',
+          description:
+            'Enhance home insulation and replace old windows with energy-efficient models to reduce utility bills.',
+          unitLabel: 'project',
+          optionsSchema: {
+            priority: ['insulation_first', 'windows_first', 'combined'],
+            window_tier: ['double_pane', 'triple_pane', 'no_preference'],
+          },
+        },
+        {
+          name: 'Energy-Efficient Appliances',
+          slug: 'energy-efficient-appliances',
+          description:
+            'Replace worn, inefficient appliances with sleek, energy-efficient models.',
+          unitLabel: 'appliance',
+          optionsSchema: {
+            count: 'number',
+            categories: ['kitchen', 'laundry', 'both'],
+          },
+        },
+      ],
+    },
   ];
 
   for (const category of categories) {
