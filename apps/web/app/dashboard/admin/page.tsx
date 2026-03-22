@@ -54,6 +54,19 @@ export default async function AdminOverviewPage() {
         platform-level change.
       </p>
 
+      <Link
+        href="/dashboard/admin/directory"
+        className="mt-8 block rounded-[28px] border border-slate-900 bg-slate-900 p-6 text-white shadow-sm transition hover:bg-slate-800"
+      >
+        <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-300">
+          Full directory
+        </div>
+        <div className="mt-2 text-xl font-semibold">All users and profiles</div>
+        <p className="mt-2 text-sm leading-relaxed text-slate-300">
+          One page with every account, homeowner and contractor details, projects, bids, and actions.
+        </p>
+      </Link>
+
       <div className="mt-10 grid gap-5 sm:grid-cols-2">
         {cards.map((c) => (
           <Link

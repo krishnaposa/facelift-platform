@@ -6,6 +6,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   const nav = [
     { href: '/dashboard/admin', label: 'Overview' },
+    { href: '/dashboard/admin/directory', label: 'Directory' },
     { href: '/dashboard/admin/users', label: 'Users' },
     { href: '/dashboard/admin/contractors', label: 'Contractors' },
     { href: '/dashboard/admin/bids', label: 'Bids' },
@@ -15,7 +16,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <div className="min-h-screen bg-slate-100">
       <header className="border-b border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-4">
           <div className="flex flex-wrap items-center gap-6">
             <div>
               <div className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
@@ -48,7 +49,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           </div>
         </div>
       </header>
-      <main className="mx-auto max-w-6xl px-6 py-10">{children}</main>
+      <main className="mx-auto max-w-7xl px-6 py-10">{children}</main>
     </div>
   );
 }
