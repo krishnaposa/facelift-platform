@@ -4,14 +4,22 @@ import { prisma } from '@/lib/prisma';
 export const dynamic = 'force-dynamic';
 
 export default async function AdminOverviewPage() {
-  const [pendingContractors, openProjects, bidsSubmitted, bidsAccepted] = await Promise.all([
-    prisma.contractorProfile.count({ where: { approvalStatus: 'PENDING' } }),
-    prisma.project.count({ where: { status: 'OPEN' } }),
-    prisma.bid.count({ where: { status: 'SUBMITTED' } }),
-    prisma.bid.count({ where: { status: 'ACCEPTED' } }),
-  ]);
+  const [adminUsers, pendingContractors, openProjects, bidsSubmitted, bidsAccepted] =
+    await Promise.all([
+      prisma.user.count({ where: { role: 'ADMIN' } }),
+      prisma.contractorProfile.count({ where: { approvalStatus: 'PENDING' } }),
+      prisma.project.count({ where: { status: 'OPEN' } }),
+      prisma.bid.count({ where: { status: 'SUBMITTED' } }),
+      prisma.bid.count({ where: { status: 'ACCEPTED' } }),
+    ]);
 
   const cards = [
+    {
+      label: 'Admin users',
+      value: adminUsers,
+      href: '/dashboard/admin/users',
+      hint: 'Promote by email or change roles in the users table.',
+    },
     {
       label: 'Contractors pending review',
       value: pendingContractors,
@@ -67,9 +75,13 @@ export default async function AdminOverviewPage() {
           Admin access
         </div>
         <p className="mt-2 text-sm leading-relaxed">
-          Admin users are not created through the public signup form. Promote a user to{' '}
-          <code className="rounded bg-slate-800 px-1.5 py-0.5 text-xs text-slate-100">ADMIN</code> in
-          the database (or seed), then sign in with the Admin option on the login page.
+          Admin accounts are not created via public signup. Use{' '}
+          <Link href="/dashboard/admin/users" className="font-semibold text-white underline underline-offset-2">
+            Users
+          </Link>{' '}
+          to promote an existing account to{' '}
+          <code className="rounded bg-slate-800 px-1.5 py-0.5 text-xs text-slate-100">ADMIN</code>, then
+          sign in with the Admin option on the login page.
         </p>
       </div>
     </div>
