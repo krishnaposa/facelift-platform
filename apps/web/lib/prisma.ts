@@ -50,6 +50,11 @@ function getPrisma(): PrismaClient {
   return prismaSingleton;
 }
 
+/** True when Postgres can be used (e.g. landing page can skip DB reads without touching `prisma`). */
+export function isDatabaseConfigured(): boolean {
+  return Boolean(process.env.DATABASE_URL?.trim());
+}
+
 /**
  * Lazy Prisma client so importing this module during `next build` does not require
  * DATABASE_URL (build only evaluates route modules; handlers are not run).

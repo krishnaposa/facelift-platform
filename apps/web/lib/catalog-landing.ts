@@ -8,7 +8,7 @@ import {
   type AvgInstallCost,
 } from '@/lib/catalog-install-cost';
 import { IMAGE_PLACEHOLDER_DATA_URL } from '@/lib/image-placeholder';
-import { prisma } from '@/lib/prisma';
+import { isDatabaseConfigured, prisma } from '@/lib/prisma';
 
 export type { AvgInstallCost };
 
@@ -96,6 +96,9 @@ export function optionsSchemaToSubItems(schema: unknown): string[] {
 }
 
 export async function getCatalogItemsForLanding(): Promise<LandingCatalogItem[]> {
+  if (!isDatabaseConfigured()) {
+    return [];
+  }
   try {
     const [items, avgById] = await Promise.all([
       prisma.catalogItem.findMany({

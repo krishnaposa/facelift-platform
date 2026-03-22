@@ -1,5 +1,5 @@
 import { unstable_noStore as noStore } from 'next/cache';
-import { prisma } from '@/lib/prisma';
+import { isDatabaseConfigured, prisma } from '@/lib/prisma';
 import { getAzureOpenAI, isAzureOpenAIConfigured } from '@/lib/azure-openai';
 
 export type EstimateExplainer = {
@@ -281,6 +281,9 @@ export type UsaCostEstimate = {
  * No zip filtering.
  */
 export async function getUSAAverageBidEstimate(): Promise<UsaCostEstimate> {
+  if (!isDatabaseConfigured()) {
+    return { hasData: false, average: null, min: null, max: null, count: 0 };
+  }
   const stats = await prisma.bid.aggregate({
     _avg: { amount: true },
     _min: { amount: true },

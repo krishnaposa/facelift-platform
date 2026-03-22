@@ -4,7 +4,7 @@
  * to derive style tags from project title, description, and photos context,
  * then filters/ranks gallery by those tags.
  */
-import { prisma } from '@/lib/prisma';
+import { isDatabaseConfigured, prisma } from '@/lib/prisma';
 import { getAzureOpenAI, isAzureOpenAIConfigured } from '@/lib/azure-openai';
 
 export type GalleryImageForProject = {
@@ -630,6 +630,9 @@ export async function seedGalleryFromAI(): Promise<number> {
  * If Prisma fails (e.g. `GalleryImage` table missing — run migrations), returns static fallback images.
  */
 export async function getLandingGallery(limit = 6): Promise<GalleryImageForProject[]> {
+  if (!isDatabaseConfigured()) {
+    return LANDING_FALLBACK_GALLERY.slice(0, limit);
+  }
   try {
     let galleryImages = await prisma.galleryImage.findMany({
       where: { isPublic: true },
