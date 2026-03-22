@@ -15,6 +15,7 @@ import {
 import { resolveCatalogThumbnail } from '@/lib/catalog-landing';
 import { prisma } from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
+import EstimateExplainerBlock from '@/app/components/project/EstimateExplainerBlock';
 import { getGalleryForProject } from '@/lib/project-gallery';
 import { getProjectCostEstimate } from '@/lib/project-cost';
 
@@ -146,17 +147,17 @@ export default async function ProjectDetailPage({
           </div>
         </div>
 
-        <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          <div className="rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <div className="mt-8 grid gap-6 lg:grid-cols-2 lg:items-start">
+          <div className="h-fit w-full rounded-[28px] bg-white p-5 shadow-sm ring-1 ring-slate-200 sm:p-6">
             <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
               Description
             </div>
-            <p className="mt-4 text-slate-700">
-              {project.description || 'No description provided.'}
+            <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-slate-700">
+              {project.description?.trim() || 'No description provided.'}
             </p>
           </div>
 
-          <div className="space-y-6">
+          <div className="min-h-0 space-y-6">
             <div className="rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200">
               <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
                 Requested upgrades
@@ -264,14 +265,9 @@ export default async function ProjectDetailPage({
                       bid{costEstimate.count === 1 ? '' : 's'} in {project.zipCode}.
                     </div>
                   )}
-                  {costEstimate.explanation && (
-                    <div className="text-sm text-slate-600">
-                      {costEstimate.explanation}
-                    </div>
-                  )}
-                  <div className="text-xs text-slate-400">
-                    This is a rough estimate and not a guaranteed price.
-                  </div>
+                  {costEstimate.explainer ? (
+                    <EstimateExplainerBlock explainer={costEstimate.explainer} />
+                  ) : null}
                 </div>
               ) : (
                 <div className="mt-4 text-sm text-slate-600">

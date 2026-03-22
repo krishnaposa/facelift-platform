@@ -1,3 +1,4 @@
+import EstimateExplainerBlock from '@/app/components/project/EstimateExplainerBlock';
 import Link from 'next/link';
 import SafeImage from '@/app/components/ui/SafeImage';
 import ContractorBidForm from '@/app/dashboard/contractor/projects/ContractorBidForm';
@@ -142,17 +143,17 @@ export default async function ContractorProjectDetailPage({
           </div>
         ) : null}
 
-        <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          <div className="rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <div className="mt-8 grid gap-6 lg:grid-cols-2 lg:items-start">
+          <div className="h-fit w-full rounded-[28px] bg-white p-5 shadow-sm ring-1 ring-slate-200 sm:p-6">
             <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
               Description
             </div>
-            <p className="mt-4 text-slate-700">
-              {project.description || 'No description provided.'}
+            <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-slate-700">
+              {project.description?.trim() || 'No description provided.'}
             </p>
           </div>
 
-          <div className="rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200">
+          <div className="h-fit min-h-0 rounded-[28px] bg-white p-5 shadow-sm ring-1 ring-slate-200 sm:p-6">
             <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
               Estimated cost in this zip
             </div>
@@ -167,9 +168,9 @@ export default async function ContractorProjectDetailPage({
                     {costEstimate.count} bid{costEstimate.count === 1 ? '' : 's'} in {project.zipCode}.
                   </div>
                 )}
-                <div className="text-xs text-slate-400">
-                  Rough benchmark from past bids — not a guaranteed price.
-                </div>
+                {costEstimate.explainer ? (
+                  <EstimateExplainerBlock explainer={costEstimate.explainer} />
+                ) : null}
               </div>
             ) : (
               <p className="mt-4 text-sm text-slate-600">

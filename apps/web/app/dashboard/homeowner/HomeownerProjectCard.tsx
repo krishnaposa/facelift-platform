@@ -59,7 +59,9 @@ export default function HomeownerProjectCard({
         </span>
       </div>
 
-      <div className="mt-4 text-sm text-slate-600">{description || 'No description yet.'}</div>
+      <p className="mt-3 line-clamp-4 text-sm leading-relaxed text-slate-600">
+        {description?.trim() || 'No description yet.'}
+      </p>
 
       <div className="mt-4 flex flex-wrap gap-2 text-sm text-slate-500">
         <span>
