@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getSessionFromRequest } from '@/lib/auth';
+import { parseCatalogItemsBody } from '@/lib/parse-catalog-items-body';
+import { catalogRowsToProjectItemCreateMany } from '@/lib/project-catalog-sync';
+import { refreshProjectGalleryPicks } from '@/lib/project-gallery';
 
 const PROJECT_STATUSES = [
   'DRAFT',
@@ -71,13 +74,53 @@ export async function PATCH(
           : String(body.adminNotes).trim().slice(0, 20_000) || null;
     }
 
-    if (Object.keys(data).length === 0) {
+    const rows = parseCatalogItemsBody(body);
+    const hasCatalogItems = Array.isArray((body as Record<string, unknown>)?.catalogItems);
+
+    if (hasCatalogItems) {
+      if (rows.length === 0) {
+        return NextResponse.json(
+          {
+            error:
+              'Add at least one catalog line item, or omit catalogItems to leave line items unchanged.',
+          },
+          { status: 400 }
+        );
+      }
+      const ids = [...new Set(rows.map((r) => r.catalogItemId))];
+      const catalogRows = await prisma.catalogItem.findMany({
+        where: { id: { in: ids }, active: true },
+        select: { id: true },
+      });
+      const validIds = new Set(catalogRows.map((c) => c.id));
+      for (const cid of ids) {
+        if (!validIds.has(cid)) {
+          return NextResponse.json(
+            { error: `Invalid or inactive catalog item: ${cid}` },
+            { status: 400 }
+          );
+        }
+      }
+    }
+
+    if (Object.keys(data).length === 0 && !hasCatalogItems) {
       return NextResponse.json({ error: 'No valid fields to update.' }, { status: 400 });
     }
 
-    const updated = await prisma.project.update({
+    await prisma.$transaction(async (tx) => {
+      if (Object.keys(data).length > 0) {
+        await tx.project.update({ where: { id }, data });
+      }
+      if (hasCatalogItems) {
+        await tx.projectItem.deleteMany({ where: { projectId: id } });
+        await tx.projectItem.createMany({
+          data: catalogRowsToProjectItemCreateMany(id, rows),
+        });
+      }
+    });
+
+    const updated = await prisma.project.findUnique({
       where: { id },
-      data,
       select: {
         id: true,
         title: true,
@@ -88,6 +131,14 @@ export async function PATCH(
         updatedAt: true,
       },
     });
+
+    if (hasCatalogItems) {
+      try {
+        await refreshProjectGalleryPicks(id);
+      } catch (e) {
+        console.warn('Admin project items: refreshProjectGalleryPicks failed', e);
+      }
+    }
 
     return NextResponse.json({ project: updated });
   } catch (e) {
