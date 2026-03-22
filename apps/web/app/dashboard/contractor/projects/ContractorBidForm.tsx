@@ -1,5 +1,6 @@
 'use client';
 
+import NoteAssistantButton from '@/app/components/project/NoteAssistantButton';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 
@@ -153,6 +154,16 @@ export default function ContractorBidForm({
           className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-slate-900"
           placeholder="Timeline, materials, what’s included…"
         />
+        <div className="mt-2">
+          <NoteAssistantButton
+            projectId={projectId}
+            role="contractor"
+            contractorIntent="cover_letter"
+            draftValue={message}
+            onApply={setMessage}
+            label="Suggest cover letter (assistant)"
+          />
+        </div>
       </div>
 
       <div className="space-y-4">

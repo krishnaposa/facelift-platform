@@ -113,6 +113,8 @@ model Project {
   homeownerId   String
   title         String
   description   String?
+  /// Access, timing, constraints — shown to contractors on open projects to cut repeat questions.
+  notesForContractors String? @db.Text
   /// Internal coordination / follow-ups (not shown to contractors on the public bid view).
   adminNotes    String?        @db.Text
   zipCode       String

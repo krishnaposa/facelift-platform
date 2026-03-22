@@ -15,6 +15,7 @@ import {
 import { resolveCatalogThumbnail } from '@/lib/catalog-landing';
 import { prisma } from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
+import ContractorFacingNoteEditor from '@/app/components/project/ContractorFacingNoteEditor';
 import EstimateExplainerBlock from '@/app/components/project/EstimateExplainerBlock';
 import { getGalleryForProject } from '@/lib/project-gallery';
 import { getProjectCostEstimate } from '@/lib/project-cost';
@@ -277,6 +278,13 @@ export default async function ProjectDetailPage({
               )}
             </div>
           </div>
+        </div>
+
+        <div className="mt-6">
+          <ContractorFacingNoteEditor
+            projectId={project.id}
+            initialText={project.notesForContractors ?? ''}
+          />
         </div>
 
         {contractorInquiries.length > 0 ? (

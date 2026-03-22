@@ -1,5 +1,6 @@
 'use client';
 
+import NoteAssistantButton from '@/app/components/project/NoteAssistantButton';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -86,6 +87,15 @@ export default function ContractorMessageForm({
             minLength={3}
             className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-900"
             placeholder="Ask for clarification or more detail…"
+          />
+          <NoteAssistantButton
+            projectId={projectId}
+            role="contractor"
+            projectItemId={projectItemId}
+            draftValue={body}
+            onApply={setBody}
+            label="Suggest message (assistant)"
+            className="mt-1"
           />
           {error ? <p className="text-xs font-medium text-red-600">{error}</p> : null}
           <div className="flex flex-wrap gap-2">

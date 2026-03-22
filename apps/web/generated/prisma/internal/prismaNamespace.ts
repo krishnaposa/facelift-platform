@@ -1563,6 +1563,7 @@ export const ProjectScalarFieldEnum = {
   homeownerId: 'homeownerId',
   title: 'title',
   description: 'description',
+  notesForContractors: 'notesForContractors',
   adminNotes: 'adminNotes',
   zipCode: 'zipCode',
   addressLine1: 'addressLine1',

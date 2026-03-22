@@ -66,6 +66,16 @@ export async function PATCH(
           ? body.selections.notes.trim()
           : '';
 
+    let notesForContractors: string | null | undefined;
+    if (Object.prototype.hasOwnProperty.call(body ?? {}, 'notesForContractors')) {
+      const n = (body as { notesForContractors?: unknown }).notesForContractors;
+      if (n !== null && n !== undefined && typeof n !== 'string') {
+        return NextResponse.json({ error: 'Invalid notes for contractors.' }, { status: 400 });
+      }
+      notesForContractors =
+        typeof n === 'string' ? n.trim().slice(0, 8000) || null : null;
+    }
+
     const photos: string[] = Array.isArray(body?.photos)
       ? body.photos.filter((p: unknown) => typeof p === 'string' && p.trim().length > 0)
       : Array.isArray(body?.selections?.photos)
@@ -170,6 +180,7 @@ export async function PATCH(
           title,
           description: notes || null,
           zipCode,
+          ...(notesForContractors !== undefined ? { notesForContractors } : {}),
         },
       });
 

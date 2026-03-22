@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import SafeImage from '@/app/components/ui/SafeImage';
+import NoteAssistantButton from '@/app/components/project/NoteAssistantButton';
 import {
   defaultSelectedOptionsFromSchema,
   schemaUsesCountField,
@@ -77,6 +78,7 @@ export default function EditProjectForm({
   initialTitle,
   initialZipCode,
   initialNotes,
+  initialNotesForContractors,
   initialPhotos,
   lines: initialLines,
   addableCatalog,
@@ -85,6 +87,7 @@ export default function EditProjectForm({
   initialTitle: string;
   initialZipCode: string;
   initialNotes: string;
+  initialNotesForContractors: string;
   initialPhotos: string[];
   lines: EditFormLine[];
   addableCatalog: AddableCatalogEntry[];
@@ -93,6 +96,7 @@ export default function EditProjectForm({
   const [title, setTitle] = useState(initialTitle);
   const [zipCode, setZipCode] = useState(initialZipCode);
   const [notes, setNotes] = useState(initialNotes);
+  const [notesForContractors, setNotesForContractors] = useState(initialNotesForContractors);
   const [photos, setPhotos] = useState(initialPhotos);
   const [lines, setLines] = useState<EditFormLine[]>(initialLines);
   const [saving, setSaving] = useState(false);
@@ -160,6 +164,7 @@ export default function EditProjectForm({
           title: title.trim(),
           zipCode: zipCode.trim(),
           notes: notes.trim(),
+          notesForContractors: notesForContractors.trim(),
           photos: cleanedPhotos,
           catalogItems: lines.map(lineToCatalogPayload),
         }),
@@ -225,6 +230,32 @@ export default function EditProjectForm({
             onChange={(e) => setNotes(e.target.value)}
             className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-slate-900"
           />
+        </div>
+
+        <div>
+          <label className="mb-2 block text-sm font-semibold text-slate-700">
+            Note for contractors
+          </label>
+          <p className="mb-4 text-sm text-slate-600">
+            Shown to contractors on your open project. Use this for access, scheduling, and constraints — not
+            duplicated in your description above.
+          </p>
+          <textarea
+            rows={4}
+            value={notesForContractors}
+            onChange={(e) => setNotesForContractors(e.target.value)}
+            placeholder="e.g. gate code, parking, pets, quiet hours…"
+            className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-slate-900"
+          />
+          <div className="mt-4">
+            <NoteAssistantButton
+              projectId={projectId}
+              role="homeowner"
+              draftValue={notesForContractors}
+              onApply={setNotesForContractors}
+              label="Suggest note (assistant)"
+            />
+          </div>
         </div>
 
         <div>

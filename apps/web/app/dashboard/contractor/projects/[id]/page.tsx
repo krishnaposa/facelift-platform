@@ -128,6 +128,17 @@ export default async function ContractorProjectDetailPage({
           </Link>
         </div>
 
+        {project.notesForContractors?.trim() ? (
+          <div className="mt-6 rounded-[28px] border border-emerald-200 bg-emerald-50/90 p-5 shadow-sm ring-1 ring-emerald-100 sm:p-6">
+            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-800">
+              Homeowner note
+            </div>
+            <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-emerald-950">
+              {project.notesForContractors.trim()}
+            </p>
+          </div>
+        ) : null}
+
         {existingBid ? (
           <div className="mt-6 rounded-2xl bg-sky-50 px-4 py-3 text-sm text-sky-950 ring-1 ring-sky-100">
             <span className="font-semibold">Your bid: </span>

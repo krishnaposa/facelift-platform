@@ -29,6 +29,7 @@ export type ProjectMinAggregateOutputType = {
   homeownerId: string | null
   title: string | null
   description: string | null
+  notesForContractors: string | null
   adminNotes: string | null
   zipCode: string | null
   addressLine1: string | null
@@ -44,6 +45,7 @@ export type ProjectMaxAggregateOutputType = {
   homeownerId: string | null
   title: string | null
   description: string | null
+  notesForContractors: string | null
   adminNotes: string | null
   zipCode: string | null
   addressLine1: string | null
@@ -59,6 +61,7 @@ export type ProjectCountAggregateOutputType = {
   homeownerId: number
   title: number
   description: number
+  notesForContractors: number
   adminNotes: number
   zipCode: number
   addressLine1: number
@@ -76,6 +79,7 @@ export type ProjectMinAggregateInputType = {
   homeownerId?: true
   title?: true
   description?: true
+  notesForContractors?: true
   adminNotes?: true
   zipCode?: true
   addressLine1?: true
@@ -91,6 +95,7 @@ export type ProjectMaxAggregateInputType = {
   homeownerId?: true
   title?: true
   description?: true
+  notesForContractors?: true
   adminNotes?: true
   zipCode?: true
   addressLine1?: true
@@ -106,6 +111,7 @@ export type ProjectCountAggregateInputType = {
   homeownerId?: true
   title?: true
   description?: true
+  notesForContractors?: true
   adminNotes?: true
   zipCode?: true
   addressLine1?: true
@@ -194,6 +200,7 @@ export type ProjectGroupByOutputType = {
   homeownerId: string
   title: string
   description: string | null
+  notesForContractors: string | null
   adminNotes: string | null
   zipCode: string
   addressLine1: string | null
@@ -230,6 +237,7 @@ export type ProjectWhereInput = {
   homeownerId?: Prisma.StringFilter<"Project"> | string
   title?: Prisma.StringFilter<"Project"> | string
   description?: Prisma.StringNullableFilter<"Project"> | string | null
+  notesForContractors?: Prisma.StringNullableFilter<"Project"> | string | null
   adminNotes?: Prisma.StringNullableFilter<"Project"> | string | null
   zipCode?: Prisma.StringFilter<"Project"> | string
   addressLine1?: Prisma.StringNullableFilter<"Project"> | string | null
@@ -251,6 +259,7 @@ export type ProjectOrderByWithRelationInput = {
   homeownerId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  notesForContractors?: Prisma.SortOrderInput | Prisma.SortOrder
   adminNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   zipCode?: Prisma.SortOrder
   addressLine1?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -275,6 +284,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   homeownerId?: Prisma.StringFilter<"Project"> | string
   title?: Prisma.StringFilter<"Project"> | string
   description?: Prisma.StringNullableFilter<"Project"> | string | null
+  notesForContractors?: Prisma.StringNullableFilter<"Project"> | string | null
   adminNotes?: Prisma.StringNullableFilter<"Project"> | string | null
   zipCode?: Prisma.StringFilter<"Project"> | string
   addressLine1?: Prisma.StringNullableFilter<"Project"> | string | null
@@ -296,6 +306,7 @@ export type ProjectOrderByWithAggregationInput = {
   homeownerId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  notesForContractors?: Prisma.SortOrderInput | Prisma.SortOrder
   adminNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   zipCode?: Prisma.SortOrder
   addressLine1?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -317,6 +328,7 @@ export type ProjectScalarWhereWithAggregatesInput = {
   homeownerId?: Prisma.StringWithAggregatesFilter<"Project"> | string
   title?: Prisma.StringWithAggregatesFilter<"Project"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  notesForContractors?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   adminNotes?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   zipCode?: Prisma.StringWithAggregatesFilter<"Project"> | string
   addressLine1?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
@@ -331,6 +343,7 @@ export type ProjectCreateInput = {
   id?: string
   title: string
   description?: string | null
+  notesForContractors?: string | null
   adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
@@ -352,6 +365,7 @@ export type ProjectUncheckedCreateInput = {
   homeownerId: string
   title: string
   description?: string | null
+  notesForContractors?: string | null
   adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
@@ -371,6 +385,7 @@ export type ProjectUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notesForContractors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -392,6 +407,7 @@ export type ProjectUncheckedUpdateInput = {
   homeownerId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notesForContractors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -412,6 +428,7 @@ export type ProjectCreateManyInput = {
   homeownerId: string
   title: string
   description?: string | null
+  notesForContractors?: string | null
   adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
@@ -426,6 +443,7 @@ export type ProjectUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notesForContractors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -441,6 +459,7 @@ export type ProjectUncheckedUpdateManyInput = {
   homeownerId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notesForContractors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -466,6 +485,7 @@ export type ProjectCountOrderByAggregateInput = {
   homeownerId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  notesForContractors?: Prisma.SortOrder
   adminNotes?: Prisma.SortOrder
   zipCode?: Prisma.SortOrder
   addressLine1?: Prisma.SortOrder
@@ -481,6 +501,7 @@ export type ProjectMaxOrderByAggregateInput = {
   homeownerId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  notesForContractors?: Prisma.SortOrder
   adminNotes?: Prisma.SortOrder
   zipCode?: Prisma.SortOrder
   addressLine1?: Prisma.SortOrder
@@ -496,6 +517,7 @@ export type ProjectMinOrderByAggregateInput = {
   homeownerId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  notesForContractors?: Prisma.SortOrder
   adminNotes?: Prisma.SortOrder
   zipCode?: Prisma.SortOrder
   addressLine1?: Prisma.SortOrder
@@ -631,6 +653,7 @@ export type ProjectCreateWithoutHomeownerInput = {
   id?: string
   title: string
   description?: string | null
+  notesForContractors?: string | null
   adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
@@ -650,6 +673,7 @@ export type ProjectUncheckedCreateWithoutHomeownerInput = {
   id?: string
   title: string
   description?: string | null
+  notesForContractors?: string | null
   adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
@@ -699,6 +723,7 @@ export type ProjectScalarWhereInput = {
   homeownerId?: Prisma.StringFilter<"Project"> | string
   title?: Prisma.StringFilter<"Project"> | string
   description?: Prisma.StringNullableFilter<"Project"> | string | null
+  notesForContractors?: Prisma.StringNullableFilter<"Project"> | string | null
   adminNotes?: Prisma.StringNullableFilter<"Project"> | string | null
   zipCode?: Prisma.StringFilter<"Project"> | string
   addressLine1?: Prisma.StringNullableFilter<"Project"> | string | null
@@ -713,6 +738,7 @@ export type ProjectCreateWithoutItemsInput = {
   id?: string
   title: string
   description?: string | null
+  notesForContractors?: string | null
   adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
@@ -733,6 +759,7 @@ export type ProjectUncheckedCreateWithoutItemsInput = {
   homeownerId: string
   title: string
   description?: string | null
+  notesForContractors?: string | null
   adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
@@ -767,6 +794,7 @@ export type ProjectUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notesForContractors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -787,6 +815,7 @@ export type ProjectUncheckedUpdateWithoutItemsInput = {
   homeownerId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notesForContractors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -805,6 +834,7 @@ export type ProjectCreateWithoutContractorMessagesInput = {
   id?: string
   title: string
   description?: string | null
+  notesForContractors?: string | null
   adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
@@ -825,6 +855,7 @@ export type ProjectUncheckedCreateWithoutContractorMessagesInput = {
   homeownerId: string
   title: string
   description?: string | null
+  notesForContractors?: string | null
   adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
@@ -859,6 +890,7 @@ export type ProjectUpdateWithoutContractorMessagesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notesForContractors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -879,6 +911,7 @@ export type ProjectUncheckedUpdateWithoutContractorMessagesInput = {
   homeownerId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notesForContractors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -897,6 +930,7 @@ export type ProjectCreateWithoutBidsInput = {
   id?: string
   title: string
   description?: string | null
+  notesForContractors?: string | null
   adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
@@ -917,6 +951,7 @@ export type ProjectUncheckedCreateWithoutBidsInput = {
   homeownerId: string
   title: string
   description?: string | null
+  notesForContractors?: string | null
   adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
@@ -951,6 +986,7 @@ export type ProjectUpdateWithoutBidsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notesForContractors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -971,6 +1007,7 @@ export type ProjectUncheckedUpdateWithoutBidsInput = {
   homeownerId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notesForContractors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -989,6 +1026,7 @@ export type ProjectCreateWithoutPhotosInput = {
   id?: string
   title: string
   description?: string | null
+  notesForContractors?: string | null
   adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
@@ -1009,6 +1047,7 @@ export type ProjectUncheckedCreateWithoutPhotosInput = {
   homeownerId: string
   title: string
   description?: string | null
+  notesForContractors?: string | null
   adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
@@ -1043,6 +1082,7 @@ export type ProjectUpdateWithoutPhotosInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notesForContractors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1063,6 +1103,7 @@ export type ProjectUncheckedUpdateWithoutPhotosInput = {
   homeownerId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notesForContractors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1081,6 +1122,7 @@ export type ProjectCreateWithoutGalleryPicksInput = {
   id?: string
   title: string
   description?: string | null
+  notesForContractors?: string | null
   adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
@@ -1101,6 +1143,7 @@ export type ProjectUncheckedCreateWithoutGalleryPicksInput = {
   homeownerId: string
   title: string
   description?: string | null
+  notesForContractors?: string | null
   adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
@@ -1135,6 +1178,7 @@ export type ProjectUpdateWithoutGalleryPicksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notesForContractors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1155,6 +1199,7 @@ export type ProjectUncheckedUpdateWithoutGalleryPicksInput = {
   homeownerId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notesForContractors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1173,6 +1218,7 @@ export type ProjectCreateManyHomeownerInput = {
   id?: string
   title: string
   description?: string | null
+  notesForContractors?: string | null
   adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
@@ -1187,6 +1233,7 @@ export type ProjectUpdateWithoutHomeownerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notesForContractors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1206,6 +1253,7 @@ export type ProjectUncheckedUpdateWithoutHomeownerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notesForContractors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1225,6 +1273,7 @@ export type ProjectUncheckedUpdateManyWithoutHomeownerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notesForContractors?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1307,6 +1356,7 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   homeownerId?: boolean
   title?: boolean
   description?: boolean
+  notesForContractors?: boolean
   adminNotes?: boolean
   zipCode?: boolean
   addressLine1?: boolean
@@ -1329,6 +1379,7 @@ export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   homeownerId?: boolean
   title?: boolean
   description?: boolean
+  notesForContractors?: boolean
   adminNotes?: boolean
   zipCode?: boolean
   addressLine1?: boolean
@@ -1345,6 +1396,7 @@ export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   homeownerId?: boolean
   title?: boolean
   description?: boolean
+  notesForContractors?: boolean
   adminNotes?: boolean
   zipCode?: boolean
   addressLine1?: boolean
@@ -1361,6 +1413,7 @@ export type ProjectSelectScalar = {
   homeownerId?: boolean
   title?: boolean
   description?: boolean
+  notesForContractors?: boolean
   adminNotes?: boolean
   zipCode?: boolean
   addressLine1?: boolean
@@ -1371,7 +1424,7 @@ export type ProjectSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "homeownerId" | "title" | "description" | "adminNotes" | "zipCode" | "addressLine1" | "city" | "state" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
+export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "homeownerId" | "title" | "description" | "notesForContractors" | "adminNotes" | "zipCode" | "addressLine1" | "city" | "state" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   homeowner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   items?: boolean | Prisma.Project$itemsArgs<ExtArgs>
@@ -1403,6 +1456,10 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     homeownerId: string
     title: string
     description: string | null
+    /**
+     * Access, timing, constraints — shown to contractors on open projects to cut repeat questions.
+     */
+    notesForContractors: string | null
     /**
      * Internal coordination / follow-ups (not shown to contractors on the public bid view).
      */
@@ -1847,6 +1904,7 @@ export interface ProjectFieldRefs {
   readonly homeownerId: Prisma.FieldRef<"Project", 'String'>
   readonly title: Prisma.FieldRef<"Project", 'String'>
   readonly description: Prisma.FieldRef<"Project", 'String'>
+  readonly notesForContractors: Prisma.FieldRef<"Project", 'String'>
   readonly adminNotes: Prisma.FieldRef<"Project", 'String'>
   readonly zipCode: Prisma.FieldRef<"Project", 'String'>
   readonly addressLine1: Prisma.FieldRef<"Project", 'String'>

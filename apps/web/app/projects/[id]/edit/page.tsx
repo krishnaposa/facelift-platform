@@ -118,6 +118,7 @@ export default async function EditProjectPage({
           initialTitle={project.title}
           initialZipCode={project.zipCode}
           initialNotes={project.description || ''}
+          initialNotesForContractors={project.notesForContractors ?? ''}
           initialPhotos={photoUrls}
           lines={lines}
           addableCatalog={addableCatalog}
