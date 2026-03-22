@@ -8,7 +8,7 @@ The production web app is **`apps/web`** (Next.js). The database schema and Pris
 
 ## 1. Prerequisites
 
-- **Node.js** 20.x or 22.x (match the version you use locally).
+- **Node.js** 24.x (match the version you use locally).
 - **PostgreSQL** 14+ (Azure Database for PostgreSQL is supported).
 - **pnpm**, **npm**, or **yarn** for installing dependencies (examples below use `npm` from each package directory).
 
@@ -98,7 +98,7 @@ This section describes a common, supported pattern: **Azure App Service (Linux)*
 
 | Azure resource | Role |
 |----------------|------|
-| **Azure App Service** (Linux, Node 20) | Hosts `apps/web` (`next start` after `next build`). |
+| **Azure App Service** (Linux, Node 24) | Hosts `apps/web` (`next start` after `next build`). |
 | **Azure Database for PostgreSQL – Flexible Server** | Primary `DATABASE_URL` target. |
 | **Azure OpenAI** (optional) | Same AI stack as local dev (`AZURE_OPENAI_*` env vars). |
 | **Azure Key Vault** (optional) | Store `SESSION_SECRET`, `DATABASE_URL`, API keys; reference from App Service. |
@@ -120,7 +120,7 @@ This section describes a common, supported pattern: **Azure App Service (Linux)*
 
 ### 5.3 App Service (Linux + Node)
 
-1. Create an **App Service** on **Linux**, runtime stack **Node 20** (or the LTS version you standardized on).
+1. Create an **App Service** on **Linux**, runtime stack **Node 24** (match `engines` in `apps/web/package.json`).
 2. Set **Application settings** → **General settings**:
    - **Startup Command:** `npm start` (the deployed package is the built `apps/web` tree; `package.json` defines `"start": "next start"`).
    - **SCM_DO_BUILD_DURING_DEPLOYMENT:** `false` when you deploy a **pre-built** artifact from CI (recommended for this repo). That avoids Oryx rebuilding on the server and matches the GitHub Actions workflow.
