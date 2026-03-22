@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import AdminBidStatusSelect from '@/app/dashboard/admin/AdminBidStatusSelect';
+import { contractorCompanyDisplayName } from '@/lib/contractor-company-name';
 import { formatUsdWhole } from '@/lib/format-currency';
 import { prisma } from '@/lib/prisma';
 
@@ -13,7 +14,7 @@ export default async function AdminBidsPage() {
       contractor: {
         select: {
           email: true,
-          contractorProfile: { select: { companyName: true } },
+          contractorProfile: { select: { companyName: true, companyNameEncrypted: true } },
         },
       },
       project: {
@@ -60,7 +61,8 @@ export default async function AdminBidsPage() {
             ) : (
               bids.map((b) => {
                 const co =
-                  b.contractor.contractorProfile?.companyName ?? b.contractor.email;
+                  contractorCompanyDisplayName(b.contractor.contractorProfile) ||
+                  b.contractor.email;
                 return (
                   <tr key={b.id} className="border-b border-slate-100 last:border-0">
                     <td className="px-4 py-3">

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getSession } from '@/lib/auth';
+import { contractorCompanyDisplayName } from '@/lib/contractor-company-name';
 import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
@@ -22,7 +23,7 @@ export default async function ContractorDashboardPage() {
 
   const profile = await prisma.contractorProfile.findUnique({
     where: { userId: session.userId },
-    select: { companyName: true, approvalStatus: true },
+    select: { companyName: true, companyNameEncrypted: true, approvalStatus: true },
   });
 
   const openProjects = await prisma.project.count({
@@ -36,7 +37,7 @@ export default async function ContractorDashboardPage() {
           Contractor dashboard
         </div>
         <h1 className="mt-2 text-4xl font-semibold tracking-tight text-slate-900">
-          {profile?.companyName ?? 'Contractor'}
+          {contractorCompanyDisplayName(profile)}
         </h1>
         <p className="mt-2 text-slate-600">{session.email}</p>
         {profile?.approvalStatus ? (

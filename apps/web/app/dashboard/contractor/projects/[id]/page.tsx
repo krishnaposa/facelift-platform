@@ -13,6 +13,7 @@ import { formatSelectedOptions } from '@/lib/homeowner-dashboard';
 import { resolveCatalogThumbnail } from '@/lib/catalog-landing';
 import { prisma } from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
+import { peerBidderLabel } from '@/lib/contractor-company-name';
 import { contractorApprovalBlockReason } from '@/lib/contractor-approval';
 import { getProjectCostEstimate } from '@/lib/project-cost';
 
@@ -77,7 +78,7 @@ export default async function ContractorProjectDetailPage({
     notFound();
   }
 
-  const [costEstimate, avgMap, existingBid, approvalLock] = await Promise.all([
+  const [costEstimate, avgMap, existingBid, approvalLock, otherBids] = await Promise.all([
     getProjectCostEstimate(project.id),
     getAverageBidLineAmountByCatalogItem({ zipCode: project.zipCode }),
     prisma.bid.findUnique({
@@ -90,6 +91,21 @@ export default async function ContractorProjectDetailPage({
       include: { lineItems: true },
     }),
     contractorApprovalBlockReason(session.userId),
+    prisma.bid.findMany({
+      where: {
+        projectId: project.id,
+        contractorId: { not: session.userId },
+        status: { in: ['SUBMITTED', 'SHORTLISTED', 'ACCEPTED'] },
+      },
+      orderBy: { amount: 'asc' },
+      select: {
+        id: true,
+        amount: true,
+        daysToComplete: true,
+        status: true,
+        contractorId: true,
+      },
+    }),
   ]);
 
   const canBidAndMessage = approvalLock == null;
@@ -135,6 +151,34 @@ export default async function ContractorProjectDetailPage({
             <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-emerald-950">
               {project.notesForContractors.trim()}
             </p>
+          </div>
+        ) : null}
+
+        {otherBids.length > 0 ? (
+          <div className="mt-6 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200">
+            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+              Other bids on this job
+            </div>
+            <p className="mt-2 text-sm text-slate-600">
+              Competitor company names stay private. Labels are stable for this project so you can compare
+              totals and timelines.
+            </p>
+            <ul className="mt-4 space-y-3">
+              {otherBids.map((b) => (
+                <li
+                  key={b.id}
+                  className="flex flex-wrap items-baseline justify-between gap-2 rounded-2xl border border-slate-200 bg-slate-50/90 px-4 py-3 text-sm"
+                >
+                  <span className="font-semibold text-slate-900">
+                    {peerBidderLabel(project.id, b.contractorId)}
+                  </span>
+                  <span className="text-slate-700">
+                    {formatUsdWhole(Number(b.amount))} · {b.daysToComplete} day
+                    {b.daysToComplete === 1 ? '' : 's'} · {b.status}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
         ) : null}
 

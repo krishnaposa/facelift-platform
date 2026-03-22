@@ -62,7 +62,7 @@ export default async function CompareBidsPage({
       contractor: {
         select: {
           email: true,
-          contractorProfile: { select: { companyName: true } },
+          contractorProfile: { select: { companyName: true, companyNameEncrypted: true } },
         },
       },
     },

@@ -28,6 +28,7 @@ export type ContractorProfileMinAggregateOutputType = {
   id: string | null
   userId: string | null
   companyName: string | null
+  companyNameEncrypted: string | null
   phone: string | null
   licenseNumber: string | null
   insuranceDocUrl: string | null
@@ -40,6 +41,7 @@ export type ContractorProfileMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   companyName: string | null
+  companyNameEncrypted: string | null
   phone: string | null
   licenseNumber: string | null
   insuranceDocUrl: string | null
@@ -52,6 +54,7 @@ export type ContractorProfileCountAggregateOutputType = {
   id: number
   userId: number
   companyName: number
+  companyNameEncrypted: number
   phone: number
   licenseNumber: number
   insuranceDocUrl: number
@@ -67,6 +70,7 @@ export type ContractorProfileMinAggregateInputType = {
   id?: true
   userId?: true
   companyName?: true
+  companyNameEncrypted?: true
   phone?: true
   licenseNumber?: true
   insuranceDocUrl?: true
@@ -79,6 +83,7 @@ export type ContractorProfileMaxAggregateInputType = {
   id?: true
   userId?: true
   companyName?: true
+  companyNameEncrypted?: true
   phone?: true
   licenseNumber?: true
   insuranceDocUrl?: true
@@ -91,6 +96,7 @@ export type ContractorProfileCountAggregateInputType = {
   id?: true
   userId?: true
   companyName?: true
+  companyNameEncrypted?: true
   phone?: true
   licenseNumber?: true
   insuranceDocUrl?: true
@@ -176,7 +182,8 @@ export type ContractorProfileGroupByArgs<ExtArgs extends runtime.Types.Extension
 export type ContractorProfileGroupByOutputType = {
   id: string
   userId: string
-  companyName: string
+  companyName: string | null
+  companyNameEncrypted: string | null
   phone: string | null
   licenseNumber: string | null
   insuranceDocUrl: string | null
@@ -210,7 +217,8 @@ export type ContractorProfileWhereInput = {
   NOT?: Prisma.ContractorProfileWhereInput | Prisma.ContractorProfileWhereInput[]
   id?: Prisma.StringFilter<"ContractorProfile"> | string
   userId?: Prisma.StringFilter<"ContractorProfile"> | string
-  companyName?: Prisma.StringFilter<"ContractorProfile"> | string
+  companyName?: Prisma.StringNullableFilter<"ContractorProfile"> | string | null
+  companyNameEncrypted?: Prisma.StringNullableFilter<"ContractorProfile"> | string | null
   phone?: Prisma.StringNullableFilter<"ContractorProfile"> | string | null
   licenseNumber?: Prisma.StringNullableFilter<"ContractorProfile"> | string | null
   insuranceDocUrl?: Prisma.StringNullableFilter<"ContractorProfile"> | string | null
@@ -224,7 +232,8 @@ export type ContractorProfileWhereInput = {
 export type ContractorProfileOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  companyName?: Prisma.SortOrder
+  companyName?: Prisma.SortOrderInput | Prisma.SortOrder
+  companyNameEncrypted?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   licenseNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   insuranceDocUrl?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -241,7 +250,8 @@ export type ContractorProfileWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ContractorProfileWhereInput | Prisma.ContractorProfileWhereInput[]
   OR?: Prisma.ContractorProfileWhereInput[]
   NOT?: Prisma.ContractorProfileWhereInput | Prisma.ContractorProfileWhereInput[]
-  companyName?: Prisma.StringFilter<"ContractorProfile"> | string
+  companyName?: Prisma.StringNullableFilter<"ContractorProfile"> | string | null
+  companyNameEncrypted?: Prisma.StringNullableFilter<"ContractorProfile"> | string | null
   phone?: Prisma.StringNullableFilter<"ContractorProfile"> | string | null
   licenseNumber?: Prisma.StringNullableFilter<"ContractorProfile"> | string | null
   insuranceDocUrl?: Prisma.StringNullableFilter<"ContractorProfile"> | string | null
@@ -255,7 +265,8 @@ export type ContractorProfileWhereUniqueInput = Prisma.AtLeast<{
 export type ContractorProfileOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  companyName?: Prisma.SortOrder
+  companyName?: Prisma.SortOrderInput | Prisma.SortOrder
+  companyNameEncrypted?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   licenseNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   insuranceDocUrl?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -274,7 +285,8 @@ export type ContractorProfileScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ContractorProfileScalarWhereWithAggregatesInput | Prisma.ContractorProfileScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"ContractorProfile"> | string
   userId?: Prisma.StringWithAggregatesFilter<"ContractorProfile"> | string
-  companyName?: Prisma.StringWithAggregatesFilter<"ContractorProfile"> | string
+  companyName?: Prisma.StringNullableWithAggregatesFilter<"ContractorProfile"> | string | null
+  companyNameEncrypted?: Prisma.StringNullableWithAggregatesFilter<"ContractorProfile"> | string | null
   phone?: Prisma.StringNullableWithAggregatesFilter<"ContractorProfile"> | string | null
   licenseNumber?: Prisma.StringNullableWithAggregatesFilter<"ContractorProfile"> | string | null
   insuranceDocUrl?: Prisma.StringNullableWithAggregatesFilter<"ContractorProfile"> | string | null
@@ -286,7 +298,8 @@ export type ContractorProfileScalarWhereWithAggregatesInput = {
 
 export type ContractorProfileCreateInput = {
   id?: string
-  companyName: string
+  companyName?: string | null
+  companyNameEncrypted?: string | null
   phone?: string | null
   licenseNumber?: string | null
   insuranceDocUrl?: string | null
@@ -300,7 +313,8 @@ export type ContractorProfileCreateInput = {
 export type ContractorProfileUncheckedCreateInput = {
   id?: string
   userId: string
-  companyName: string
+  companyName?: string | null
+  companyNameEncrypted?: string | null
   phone?: string | null
   licenseNumber?: string | null
   insuranceDocUrl?: string | null
@@ -312,7 +326,8 @@ export type ContractorProfileUncheckedCreateInput = {
 
 export type ContractorProfileUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  companyName?: Prisma.StringFieldUpdateOperationsInput | string
+  companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyNameEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   insuranceDocUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -326,7 +341,8 @@ export type ContractorProfileUpdateInput = {
 export type ContractorProfileUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  companyName?: Prisma.StringFieldUpdateOperationsInput | string
+  companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyNameEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   insuranceDocUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -339,7 +355,8 @@ export type ContractorProfileUncheckedUpdateInput = {
 export type ContractorProfileCreateManyInput = {
   id?: string
   userId: string
-  companyName: string
+  companyName?: string | null
+  companyNameEncrypted?: string | null
   phone?: string | null
   licenseNumber?: string | null
   insuranceDocUrl?: string | null
@@ -351,7 +368,8 @@ export type ContractorProfileCreateManyInput = {
 
 export type ContractorProfileUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  companyName?: Prisma.StringFieldUpdateOperationsInput | string
+  companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyNameEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   insuranceDocUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -364,7 +382,8 @@ export type ContractorProfileUpdateManyMutationInput = {
 export type ContractorProfileUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  companyName?: Prisma.StringFieldUpdateOperationsInput | string
+  companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyNameEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   insuranceDocUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -391,6 +410,7 @@ export type ContractorProfileCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
+  companyNameEncrypted?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   licenseNumber?: Prisma.SortOrder
   insuranceDocUrl?: Prisma.SortOrder
@@ -404,6 +424,7 @@ export type ContractorProfileMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
+  companyNameEncrypted?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   licenseNumber?: Prisma.SortOrder
   insuranceDocUrl?: Prisma.SortOrder
@@ -416,6 +437,7 @@ export type ContractorProfileMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
+  companyNameEncrypted?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   licenseNumber?: Prisma.SortOrder
   insuranceDocUrl?: Prisma.SortOrder
@@ -471,7 +493,8 @@ export type EnumContractorApprovalStatusFieldUpdateOperationsInput = {
 
 export type ContractorProfileCreateWithoutUserInput = {
   id?: string
-  companyName: string
+  companyName?: string | null
+  companyNameEncrypted?: string | null
   phone?: string | null
   licenseNumber?: string | null
   insuranceDocUrl?: string | null
@@ -483,7 +506,8 @@ export type ContractorProfileCreateWithoutUserInput = {
 
 export type ContractorProfileUncheckedCreateWithoutUserInput = {
   id?: string
-  companyName: string
+  companyName?: string | null
+  companyNameEncrypted?: string | null
   phone?: string | null
   licenseNumber?: string | null
   insuranceDocUrl?: string | null
@@ -511,7 +535,8 @@ export type ContractorProfileUpdateToOneWithWhereWithoutUserInput = {
 
 export type ContractorProfileUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  companyName?: Prisma.StringFieldUpdateOperationsInput | string
+  companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyNameEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   insuranceDocUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -523,7 +548,8 @@ export type ContractorProfileUpdateWithoutUserInput = {
 
 export type ContractorProfileUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  companyName?: Prisma.StringFieldUpdateOperationsInput | string
+  companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyNameEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   insuranceDocUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -539,6 +565,7 @@ export type ContractorProfileSelect<ExtArgs extends runtime.Types.Extensions.Int
   id?: boolean
   userId?: boolean
   companyName?: boolean
+  companyNameEncrypted?: boolean
   phone?: boolean
   licenseNumber?: boolean
   insuranceDocUrl?: boolean
@@ -553,6 +580,7 @@ export type ContractorProfileSelectCreateManyAndReturn<ExtArgs extends runtime.T
   id?: boolean
   userId?: boolean
   companyName?: boolean
+  companyNameEncrypted?: boolean
   phone?: boolean
   licenseNumber?: boolean
   insuranceDocUrl?: boolean
@@ -567,6 +595,7 @@ export type ContractorProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   id?: boolean
   userId?: boolean
   companyName?: boolean
+  companyNameEncrypted?: boolean
   phone?: boolean
   licenseNumber?: boolean
   insuranceDocUrl?: boolean
@@ -581,6 +610,7 @@ export type ContractorProfileSelectScalar = {
   id?: boolean
   userId?: boolean
   companyName?: boolean
+  companyNameEncrypted?: boolean
   phone?: boolean
   licenseNumber?: boolean
   insuranceDocUrl?: boolean
@@ -590,7 +620,7 @@ export type ContractorProfileSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ContractorProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "companyName" | "phone" | "licenseNumber" | "insuranceDocUrl" | "serviceZipCodes" | "approvalStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["contractorProfile"]>
+export type ContractorProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "companyName" | "companyNameEncrypted" | "phone" | "licenseNumber" | "insuranceDocUrl" | "serviceZipCodes" | "approvalStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["contractorProfile"]>
 export type ContractorProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -609,7 +639,14 @@ export type $ContractorProfilePayload<ExtArgs extends runtime.Types.Extensions.I
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
-    companyName: string
+    /**
+     * Legacy plaintext before backfill; prefer companyNameEncrypted.
+     */
+    companyName: string | null
+    /**
+     * AES-256-GCM encrypted company name (base64: iv+tag+ciphertext).
+     */
+    companyNameEncrypted: string | null
     phone: string | null
     licenseNumber: string | null
     insuranceDocUrl: string | null
@@ -1044,6 +1081,7 @@ export interface ContractorProfileFieldRefs {
   readonly id: Prisma.FieldRef<"ContractorProfile", 'String'>
   readonly userId: Prisma.FieldRef<"ContractorProfile", 'String'>
   readonly companyName: Prisma.FieldRef<"ContractorProfile", 'String'>
+  readonly companyNameEncrypted: Prisma.FieldRef<"ContractorProfile", 'String'>
   readonly phone: Prisma.FieldRef<"ContractorProfile", 'String'>
   readonly licenseNumber: Prisma.FieldRef<"ContractorProfile", 'String'>
   readonly insuranceDocUrl: Prisma.FieldRef<"ContractorProfile", 'String'>

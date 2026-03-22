@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
+import { encryptCompanyName } from '@/lib/contractor-company-name';
 import { prisma } from '@/lib/prisma';
 import { setSessionCookie } from '@/lib/auth';
 
@@ -58,7 +59,8 @@ export async function POST(req: NextRequest) {
         await tx.contractorProfile.create({
           data: {
             userId: u.id,
-            companyName,
+            companyName: null,
+            companyNameEncrypted: encryptCompanyName(companyName),
             serviceZipCodes: [],
           },
         });

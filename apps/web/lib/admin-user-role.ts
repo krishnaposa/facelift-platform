@@ -1,3 +1,4 @@
+import { encryptCompanyName } from '@/lib/contractor-company-name';
 import { prisma } from '@/lib/prisma';
 import type { SessionRole } from '@/lib/auth-routing';
 
@@ -52,7 +53,8 @@ export async function applyUserRoleUpdate(params: {
         where: { userId: targetUserId },
         create: {
           userId: targetUserId,
-          companyName: 'Company (update in profile)',
+          companyName: null,
+          companyNameEncrypted: encryptCompanyName('Company (update in profile)'),
           serviceZipCodes: [],
         },
         update: {},

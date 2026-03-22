@@ -2,6 +2,8 @@
  * Homeowner bid comparison + gap detection (scope, price spread, schedule).
  */
 
+import { contractorCompanyDisplayName } from '@/lib/contractor-company-name';
+
 export type ProjectLineRef = {
   id: string;
   name: string;
@@ -64,7 +66,13 @@ export function toComparableBidInput(bid: {
   amount: unknown;
   daysToComplete: number;
   message: string | null;
-  contractor: { email: string; contractorProfile: { companyName: string | null } | null };
+  contractor: {
+    email: string;
+    contractorProfile: {
+      companyName: string | null;
+      companyNameEncrypted?: string | null;
+    } | null;
+  };
   lineItems: Array<{ projectItemId: string; amount: unknown; note: string | null }>;
 }): ComparableBidInput {
   const lineByProjectItemId = new Map<string, { amount: number; note: string | null }>();
@@ -77,7 +85,8 @@ export function toComparableBidInput(bid: {
   return {
     id: bid.id,
     status: bid.status,
-    contractorLabel: bid.contractor.contractorProfile?.companyName ?? bid.contractor.email,
+    contractorLabel:
+      contractorCompanyDisplayName(bid.contractor.contractorProfile) || bid.contractor.email,
     total: Number(bid.amount),
     daysToComplete: bid.daysToComplete,
     hasCoverLetter: !!(bid.message && String(bid.message).trim()),

@@ -112,6 +112,7 @@ export const ContractorProfileScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   companyName: 'companyName',
+  companyNameEncrypted: 'companyNameEncrypted',
   phone: 'phone',
   licenseNumber: 'licenseNumber',
   insuranceDocUrl: 'insuranceDocUrl',

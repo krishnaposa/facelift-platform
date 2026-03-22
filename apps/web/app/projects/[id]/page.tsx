@@ -13,6 +13,7 @@ import {
   pickSuggestedCatalogItems,
 } from '@/lib/homeowner-dashboard';
 import { resolveCatalogThumbnail } from '@/lib/catalog-landing';
+import { contractorCompanyDisplayName } from '@/lib/contractor-company-name';
 import { prisma } from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
 import ContractorFacingNoteEditor from '@/app/components/project/ContractorFacingNoteEditor';
@@ -93,7 +94,7 @@ export default async function ProjectDetailPage({
         contractor: {
           select: {
             email: true,
-            contractorProfile: { select: { companyName: true } },
+            contractorProfile: { select: { companyName: true, companyNameEncrypted: true } },
           },
         },
         projectItem: {
@@ -340,7 +341,8 @@ export default async function ProjectDetailPage({
                 >
                   <div className="flex flex-wrap items-baseline justify-between gap-2 text-xs text-slate-500">
                     <span className="font-semibold text-slate-800">
-                      {m.contractor.contractorProfile?.companyName ?? m.contractor.email}
+                      {contractorCompanyDisplayName(m.contractor.contractorProfile) ||
+                        m.contractor.email}
                     </span>
                     <time dateTime={m.createdAt.toISOString()}>
                       {new Intl.DateTimeFormat('en-US', {

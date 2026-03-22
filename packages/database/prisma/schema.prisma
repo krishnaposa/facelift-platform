@@ -85,7 +85,10 @@ model HomeownerProfile {
 model ContractorProfile {
   id             String                    @id @default(uuid())
   userId         String                    @unique
-  companyName    String
+  /// Legacy plaintext before backfill; prefer companyNameEncrypted.
+  companyName    String?
+  /// AES-256-GCM encrypted company name (base64: iv+tag+ciphertext).
+  companyNameEncrypted String?            @db.Text
   phone          String?
   licenseNumber  String?
   insuranceDocUrl String?

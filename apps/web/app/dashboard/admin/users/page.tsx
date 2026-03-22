@@ -2,6 +2,7 @@ import AdminDeleteUserButton from '@/app/dashboard/admin/AdminDeleteUserButton';
 import AdminUserRoleSelect from '@/app/dashboard/admin/AdminUserRoleSelect';
 import PromoteUserForm from '@/app/dashboard/admin/PromoteUserForm';
 import { getSession } from '@/lib/auth';
+import { contractorCompanyDisplayName } from '@/lib/contractor-company-name';
 import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
@@ -18,7 +19,9 @@ export default async function AdminUsersPage() {
       email: true,
       role: true,
       createdAt: true,
-      contractorProfile: { select: { approvalStatus: true, companyName: true } },
+      contractorProfile: {
+        select: { approvalStatus: true, companyName: true, companyNameEncrypted: true },
+      },
     },
   });
 
@@ -71,7 +74,7 @@ export default async function AdminUsersPage() {
                     </td>
                     <td className="px-4 py-3 text-slate-600">
                       {u.contractorProfile ? (
-                        <span title={u.contractorProfile.companyName}>
+                        <span title={contractorCompanyDisplayName(u.contractorProfile)}>
                           {u.contractorProfile.approvalStatus}
                         </span>
                       ) : (

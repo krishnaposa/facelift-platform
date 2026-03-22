@@ -1,4 +1,5 @@
 import AdminContractorApprovalSelect from '@/app/dashboard/admin/AdminContractorApprovalSelect';
+import { contractorCompanyDisplayName } from '@/lib/contractor-company-name';
 import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
@@ -43,7 +44,9 @@ export default async function AdminContractorsPage() {
             ) : (
               contractors.map((c) => (
                 <tr key={c.id} className="border-b border-slate-100 last:border-0">
-                  <td className="px-4 py-3 font-semibold text-slate-900">{c.companyName}</td>
+                  <td className="px-4 py-3 font-semibold text-slate-900">
+                    {contractorCompanyDisplayName(c)}
+                  </td>
                   <td className="px-4 py-3 text-slate-600">{c.user.email}</td>
                   <td className="px-4 py-3 text-slate-600">{c.phone ?? '—'}</td>
                   <td className="px-4 py-3 text-slate-600">{c.licenseNumber ?? '—'}</td>
