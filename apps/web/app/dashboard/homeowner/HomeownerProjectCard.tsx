@@ -32,6 +32,7 @@ type Props = {
   suggested: EnrichedCatalogItem[];
   estimate: { sum: number; linesWithData: number };
   galleryPicks: Array<{ imageUrl: string; title: string | null; keywords: string[] }>;
+  comparableBidCount?: number;
 };
 
 export default function HomeownerProjectCard({
@@ -45,6 +46,7 @@ export default function HomeownerProjectCard({
   suggested,
   estimate,
   galleryPicks,
+  comparableBidCount = 0,
 }: Props) {
   return (
     <div className="rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200">
@@ -99,6 +101,15 @@ export default function HomeownerProjectCard({
         >
           Edit
         </Link>
+
+        {comparableBidCount > 0 ? (
+          <Link
+            href={`/projects/${projectId}/compare-bids`}
+            className="rounded-2xl border border-emerald-600 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-950 ring-1 ring-emerald-200 hover:bg-emerald-100"
+          >
+            {comparableBidCount >= 2 ? 'Compare bids & gaps' : 'View bid'}
+          </Link>
+        ) : null}
       </div>
 
       {galleryPicks.length > 0 ? (

@@ -73,7 +73,7 @@ export default async function HomeownerDashboardPage() {
     },
   });
 
-  const [allCatalogRows, bidMaps] = await Promise.all([
+  const [allCatalogRows, bidMaps, bidCountRows] = await Promise.all([
     prisma.catalogItem.findMany({
       where: { active: true },
       include: {
@@ -90,7 +90,21 @@ export default async function HomeownerDashboardPage() {
     getAverageBidLineMapsForZips(
       projects.length > 0 ? projects.map((p) => p.zipCode) : []
     ),
+    projects.length > 0
+      ? prisma.bid.groupBy({
+          by: ['projectId'],
+          where: {
+            projectId: { in: projects.map((p) => p.id) },
+            status: { in: ['SUBMITTED', 'SHORTLISTED', 'ACCEPTED'] },
+          },
+          _count: { _all: true },
+        })
+      : Promise.resolve([] as Array<{ projectId: string; _count: { _all: number } }>),
   ]);
+
+  const bidCountByProject = new Map<string, number>(
+    bidCountRows.map((r) => [r.projectId, r._count._all])
+  );
 
   // If the user has projects, refresh AI gallery picks when stale (best-effort).
   if (projects.length > 0) {
@@ -281,6 +295,7 @@ export default async function HomeownerDashboardPage() {
                   suggested={suggested}
                   estimate={estimate}
                   galleryPicks={picksByProjectId.get(project.id) ?? []}
+                  comparableBidCount={bidCountByProject.get(project.id) ?? 0}
                 />
               );
             })}

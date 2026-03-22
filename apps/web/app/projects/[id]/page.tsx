@@ -68,7 +68,8 @@ export default async function ProjectDetailPage({
     notFound();
   }
 
-  const [gallery, costEstimate, avgMap, allCatalogRows, contractorInquiries] = await Promise.all([
+  const [gallery, costEstimate, avgMap, allCatalogRows, contractorInquiries, comparableBidCount] =
+    await Promise.all([
     getGalleryForProject(project.id),
     getProjectCostEstimate(project.id),
     getAverageBidLineAmountByCatalogItem({ zipCode: project.zipCode }),
@@ -102,6 +103,12 @@ export default async function ProjectDetailPage({
         },
       },
     }),
+    prisma.bid.count({
+      where: {
+        projectId: project.id,
+        status: { in: ['SUBMITTED', 'SHORTLISTED', 'ACCEPTED'] },
+      },
+    }),
   ]);
 
   const catalogEnriched = enrichCatalogForDashboard(allCatalogRows, avgMap);
@@ -131,7 +138,7 @@ export default async function ProjectDetailPage({
             </p>
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             <Link
               href="/dashboard/homeowner"
               className="rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-900"
@@ -145,8 +152,38 @@ export default async function ProjectDetailPage({
             >
               Edit Project
             </Link>
+
+            {comparableBidCount > 0 ? (
+              <Link
+                href={`/projects/${project.id}/compare-bids`}
+                className="rounded-2xl border border-emerald-600 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-950 ring-1 ring-emerald-200 hover:bg-emerald-100"
+              >
+                {comparableBidCount >= 2 ? 'Compare bids & gaps' : 'View bid'}
+              </Link>
+            ) : null}
           </div>
         </div>
+
+        {comparableBidCount >= 2 ? (
+          <div className="mt-6 rounded-2xl border border-emerald-200 bg-gradient-to-r from-emerald-50 to-white px-5 py-4 ring-1 ring-emerald-100">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <div className="text-sm font-semibold text-emerald-900">
+                  {comparableBidCount} bids to compare
+                </div>
+                <p className="mt-1 text-sm text-emerald-900/85">
+                  See line-by-line prices, scope gaps ($0 lines), and schedule spread in one place.
+                </p>
+              </div>
+              <Link
+                href={`/projects/${project.id}/compare-bids`}
+                className="shrink-0 rounded-2xl bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-800"
+              >
+                Open comparison
+              </Link>
+            </div>
+          </div>
+        ) : null}
 
         <div className="mt-8 grid gap-6 lg:grid-cols-2 lg:items-start">
           <div className="h-fit w-full rounded-[28px] bg-white p-5 shadow-sm ring-1 ring-slate-200 sm:p-6">
