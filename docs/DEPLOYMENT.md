@@ -121,19 +121,25 @@ This section describes a common, supported pattern: **Azure App Service (Linux)*
 ### 5.3 App Service (Linux + Node)
 
 1. Create an **App Service** on **Linux**, runtime stack **Node 20** (or the LTS version you standardized on).
-2. Set the **startup command** to run Next from `apps/web` after build, for example:
+2. Set **Application settings** → **General settings**:
+   - **Startup Command:** `npm start` (the deployed package is the built `apps/web` tree; `package.json` defines `"start": "next start"`).
+   - **SCM_DO_BUILD_DURING_DEPLOYMENT:** `false` when you deploy a **pre-built** artifact from CI (recommended for this repo). That avoids Oryx rebuilding on the server and matches the GitHub Actions workflow.
 
-   ```bash
-   node node_modules/next/dist/bin/next start
-   ```
+3. **GitHub Actions (this repository):** The workflow **`.github/workflows/azure-app-service.yml`** runs on pushes to **`main`** (and **workflow_dispatch**). It installs dependencies, runs `prisma generate`, builds Next.js, prunes devDependencies, runs `prisma migrate deploy`, then deploys **`apps/web`** with **`azure/webapps-deploy`**.
 
-   Configure **Working Directory** (or deployment structure) so it equals **`apps/web`** after deployment, or use a root `package.json` script that `cd`s into `apps/web` and runs `next start`.
+   Configure the following in the GitHub repository:
 
-3. **Deployment options:**
-   - **GitHub Actions** / **Azure DevOps**: Build in CI (`npm ci`, `prisma migrate deploy`, `next build`), then deploy artifacts (e.g. **zip deploy** or **Run From Package**).
-   - **Oryx** (built-in build): Point App Service at the repo; configure **build** and **start** commands in **Application settings** or `package.json` at the root of what gets deployed.
+   | Kind | Name | Purpose |
+   |------|------|---------|
+   | **Variable** | `AZURE_WEBAPP_NAME` | App Service name (e.g. `my-facelift-app`). |
+   | **Secret** | `AZURE_WEBAPP_PUBLISH_PROFILE` | Contents of the app’s **Get publish profile** download from Azure Portal (`.PublishSettings` file). |
+   | **Secret** | `DATABASE_URL` | Production PostgreSQL URL; used for `prisma generate` (required by `packages/database/prisma.config.ts`), `prisma migrate deploy`, and must match what you set on App Service. |
 
-4. **Application settings** (Configuration → Application settings): Add all variables from **Section 3**, at minimum `DATABASE_URL`, `SESSION_SECRET`, and any AI/email keys you use.
+   In Azure Portal → App Service → **Configuration** → **Application settings**, set the same runtime variables as **Section 3** (`SESSION_SECRET`, `DATABASE_URL`, and so on). The workflow does not push those for you.
+
+4. **Other deployment options:**
+   - **Azure DevOps** or manual pipelines: mirror the same steps (generate → build → migrate deploy → zip deploy of `apps/web`).
+   - **Oryx** (built-in build from Git): Point App Service at a repo root that builds `apps/web`; configure build and start so the running directory matches **`apps/web`**.
 
 5. **HTTPS:** Enable **TLS** on the default `azurewebsites.net` host or bind a **custom domain** with a managed certificate.
 
