@@ -24,7 +24,7 @@ export default async function ContractorDashboardLayout({
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="sticky top-0 z-20 border-b border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6">
           <div className="flex flex-wrap items-center gap-6">
             <Link href="/dashboard/contractor" className="leading-tight">
               <div className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">

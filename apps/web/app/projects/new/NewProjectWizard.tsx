@@ -226,8 +226,8 @@ export default function NewProjectWizard({ catalog }: Props) {
 
   if (catalog.length === 0) {
     return (
-      <div className="min-h-screen bg-slate-50 px-6 py-16">
-        <div className="mx-auto max-w-lg rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
+      <div className="min-h-screen bg-slate-50 px-4 py-12 sm:px-6 sm:py-16">
+        <div className="mx-auto max-w-lg rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
           <h1 className="text-xl font-semibold text-slate-900">Catalog unavailable</h1>
           <p className="mt-2 text-slate-600">
             We couldn&apos;t load upgrade options. Check your database and run migrations + seed.

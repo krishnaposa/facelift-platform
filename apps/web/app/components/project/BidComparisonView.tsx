@@ -16,7 +16,7 @@ export default function BidComparisonView({ projectTitle, projectId, snapshot }:
   const { bids, rows, gaps, cheapestBidId, fastestBidId } = snapshot;
 
   return (
-    <div className="space-y-8">
+    <div className="min-w-0 space-y-8">
       <div>
         <Link
           href={`/projects/${projectId}`}
@@ -24,10 +24,10 @@ export default function BidComparisonView({ projectTitle, projectId, snapshot }:
         >
           ← Back to project
         </Link>
-        <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">
+        <h1 className="mt-3 text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
           Compare bids
         </h1>
-        <p className="mt-2 max-w-2xl text-slate-600">
+        <p className="mt-2 max-w-2xl break-words text-slate-600">
           {projectTitle} — line-by-line prices, schedule, and gaps to resolve before you award work.
         </p>
       </div>
@@ -127,7 +127,7 @@ export default function BidComparisonView({ projectTitle, projectId, snapshot }:
               $0 usually means that contractor is not including that upgrade—verify scope before comparing
               totals.
             </p>
-            <div className="mt-4 overflow-x-auto">
+            <div className="mt-4 max-w-full overflow-x-auto overscroll-x-contain">
               <table className="min-w-[640px] w-full border-collapse text-sm">
                 <thead>
                   <tr className="border-b border-slate-200 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">

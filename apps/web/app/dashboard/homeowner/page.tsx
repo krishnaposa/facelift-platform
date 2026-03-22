@@ -177,19 +177,19 @@ export default async function HomeownerDashboardPage() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="mx-auto max-w-6xl px-6 py-10">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
+      <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
+        <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
+          <div className="min-w-0">
             <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
               Homeowner Dashboard
             </div>
-            <h1 className="mt-2 text-4xl font-semibold tracking-tight text-slate-900">
+            <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
               My Projects
             </h1>
-            <p className="mt-2 text-slate-600">{session.email}</p>
+            <p className="mt-2 break-words text-slate-600">{session.email}</p>
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             <form action="/api/auth/logout" method="post">
               <button
                 type="submit"
@@ -226,7 +226,7 @@ export default async function HomeownerDashboardPage() {
                 <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
                   AI gallery for you
                 </div>
-                <div className="mt-3 grid grid-cols-3 gap-4">
+                <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
                   {userGallery.map((img, idx) => (
                     <div
                       key={`user-gallery-${idx}`}

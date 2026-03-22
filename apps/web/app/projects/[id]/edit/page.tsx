@@ -78,7 +78,7 @@ export default async function EditProjectPage({
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="mx-auto max-w-4xl px-6 py-10">
+      <div className="mx-auto min-w-0 max-w-4xl px-4 py-8 sm:px-6 sm:py-10">
         {gallery.length > 0 && (
           <div className="mb-8 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200">
             <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">

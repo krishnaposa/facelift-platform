@@ -24,12 +24,12 @@ export default function FaceliftLanding({ gallery, usaCost, catalogItems }: Prop
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <div>
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+          <div className="min-w-0">
             <div className="text-2xl font-bold tracking-tight">Facelift</div>
             <div className="text-sm text-slate-500">Home upgrades, visualized and bid online</div>
           </div>
-          <nav className="hidden items-center gap-3 md:flex text-sm font-medium">
+          <nav className="hidden items-center gap-3 text-sm font-medium md:flex">
             <a href="#inspiration" className="hover:text-slate-600">Gallery</a>
             <Link href="/signup" className="hover:text-slate-600">Sign up</Link>
             <Link
@@ -39,16 +39,36 @@ export default function FaceliftLanding({ gallery, usaCost, catalogItems }: Prop
               Log in
             </Link>
           </nav>
+          <div className="flex flex-wrap items-center gap-2 md:hidden">
+            <a
+              href="#inspiration"
+              className="rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
+            >
+              Gallery
+            </a>
+            <Link
+              href="/signup"
+              className="rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
+            >
+              Sign up
+            </Link>
+            <Link
+              href="/login"
+              className="rounded-2xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm"
+            >
+              Log in
+            </Link>
+          </div>
         </div>
       </header>
 
-      <section className="mx-auto max-w-7xl px-6 py-16">
+      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
         <div className="max-w-3xl space-y-6">
           <span className="inline-flex rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">
             Home facelift marketplace
           </span>
           <div className="space-y-4">
-            <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
+            <h1 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
               Upgrade your home, choose the exact items, and get contractor bids.
             </h1>
             <p className="max-w-xl text-lg leading-8 text-slate-600">
@@ -86,7 +106,7 @@ export default function FaceliftLanding({ gallery, usaCost, catalogItems }: Prop
         </div>
       </section>
 
-      <section id="inspiration" className="mx-auto max-w-7xl px-6 py-10">
+      <section id="inspiration" className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
         <div className="mb-6">
           <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Gallery</div>
           <h2 className="mt-2 text-3xl font-semibold tracking-tight">Inspiration without login</h2>
@@ -243,7 +263,7 @@ export default function FaceliftLanding({ gallery, usaCost, catalogItems }: Prop
         )}
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-10">
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
         <div className="grid gap-6 lg:grid-cols-2">
           <div className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
             <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">For homeowners</div>

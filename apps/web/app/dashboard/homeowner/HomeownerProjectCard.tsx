@@ -50,8 +50,8 @@ export default function HomeownerProjectCard({
 }: Props) {
   return (
     <div className="rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200">
-      <div className="flex items-start justify-between gap-3">
-        <div>
+      <div className="flex min-w-0 items-start justify-between gap-3">
+        <div className="min-w-0">
           <div className="text-lg font-semibold text-slate-900">{title}</div>
           <div className="mt-1 text-sm text-slate-500">{zipCode}</div>
         </div>
@@ -117,7 +117,7 @@ export default function HomeownerProjectCard({
           <div className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
             AI gallery picks
           </div>
-          <div className="mt-3 grid grid-cols-3 gap-3">
+          <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
             {galleryPicks.map((p, idx) => (
               <div
                 key={`${projectId}-pick-${idx}`}

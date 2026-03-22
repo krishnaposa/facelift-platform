@@ -125,13 +125,13 @@ export default async function ProjectDetailPage({
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="mx-auto max-w-5xl px-6 py-10">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
+      <div className="mx-auto min-w-0 max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
+        <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
+          <div className="min-w-0">
             <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
               Project Detail
             </div>
-            <h1 className="mt-2 text-4xl font-semibold tracking-tight text-slate-900">
+            <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
               {project.title}
             </h1>
             <p className="mt-2 text-slate-600">
@@ -139,7 +139,7 @@ export default async function ProjectDetailPage({
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-3">
+          <div className="flex min-w-0 flex-wrap gap-2 sm:gap-3">
             <Link
               href="/dashboard/homeowner"
               className="rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-900"

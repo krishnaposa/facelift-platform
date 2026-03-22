@@ -49,8 +49,8 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="mx-auto flex min-h-screen max-w-md items-center px-6 py-12">
-        <div className="w-full rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
+      <div className="mx-auto flex min-h-screen max-w-md items-center px-4 py-10 sm:px-6 sm:py-12">
+        <div className="w-full min-w-0 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
           <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
             Login
           </div>

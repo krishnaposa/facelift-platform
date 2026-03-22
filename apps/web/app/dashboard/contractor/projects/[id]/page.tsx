@@ -121,13 +121,13 @@ export default async function ContractorProjectDetailPage({
   });
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-10">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
+    <div className="mx-auto min-w-0 max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
+        <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
+          <div className="min-w-0">
             <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
               Open project
             </div>
-            <h1 className="mt-2 text-4xl font-semibold tracking-tight text-slate-900">
+            <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
               {project.title}
             </h1>
             <p className="mt-2 text-slate-600">
@@ -259,9 +259,9 @@ export default async function ContractorProjectDetailPage({
               return (
                 <div
                   key={item.id}
-                  className="flex gap-4 rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-200"
+                  className="flex flex-col gap-4 rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-200 sm:flex-row"
                 >
-                  <div className="relative h-28 w-32 shrink-0 overflow-hidden rounded-xl bg-slate-100 sm:h-32 sm:w-40">
+                  <div className="relative mx-auto h-40 w-full max-w-[200px] shrink-0 overflow-hidden rounded-xl bg-slate-100 sm:mx-0 sm:h-32 sm:w-40 sm:max-w-none">
                     <SafeImage
                       src={thumb}
                       alt={item.catalogItem.name}
