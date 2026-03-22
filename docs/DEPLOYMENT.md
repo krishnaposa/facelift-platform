@@ -125,14 +125,13 @@ This section describes a common, supported pattern: **Azure App Service (Linux)*
    - **Startup Command:** `npm start` (the deployed package is the built `apps/web` tree; `package.json` defines `"start": "next start"`).
    - **SCM_DO_BUILD_DURING_DEPLOYMENT:** `false` when you deploy a **pre-built** artifact from CI (recommended for this repo). That avoids Oryx rebuilding on the server and matches the GitHub Actions workflow.
 
-3. **GitHub Actions (this repository):** The workflow **`.github/workflows/azure-app-service.yml`** runs on pushes to **`main`** (and **workflow_dispatch**). It installs dependencies, runs `prisma generate`, builds Next.js, prunes devDependencies, runs `prisma migrate deploy`, then deploys **`apps/web`** with **`azure/webapps-deploy`**.
+3. **GitHub Actions (this repository):** The workflow **`.github/workflows/azure-app-service.yml`** runs on pushes to **`main`** (and **workflow_dispatch**). It installs dependencies, runs `prisma generate`, builds Next.js, prunes devDependencies, runs `prisma migrate deploy`, then deploys **`apps/web`** to App Service **`housefacelift`** with **`azure/webapps-deploy`**.
 
    Configure the following in the GitHub repository:
 
    | Kind | Name | Purpose |
    |------|------|---------|
-   | **Variable** | `AZURE_WEBAPP_NAME` | App Service name (e.g. `my-facelift-app`). |
-   | **Secret** | `AZURE_WEBAPP_PUBLISH_PROFILE` | Contents of the app’s **Get publish profile** download from Azure Portal (`.PublishSettings` file). |
+   | **Secret** | `AZURE_WEBAPP_PUBLISH_PROFILE` | Contents of the app’s **Get publish profile** download from Azure Portal for **`housefacelift`** (`.PublishSettings` file). |
    | **Secret** | `DATABASE_URL` | Production PostgreSQL URL; used for `prisma generate` (required by `packages/database/prisma.config.ts`), `prisma migrate deploy`, and must match what you set on App Service. |
 
    In Azure Portal → App Service → **Configuration** → **Application settings**, set the same runtime variables as **Section 3** (`SESSION_SECRET`, `DATABASE_URL`, and so on). The workflow does not push those for you.

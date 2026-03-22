@@ -1,5 +1,5 @@
 # Build and deploy apps/web to Azure App Service (Linux, Node).
-# Configure repository secrets and variables (see docs/DEPLOYMENT.md §5.3).
+# Target: App Service **housefacelift**. Secrets: see docs/DEPLOYMENT.md §5.3.
 
 name: Deploy to Azure App Service
 
@@ -64,6 +64,6 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: ${{ vars.AZURE_WEBAPP_NAME }}
+          app-name: housefacelift
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: apps/web
