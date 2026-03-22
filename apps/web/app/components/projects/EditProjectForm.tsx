@@ -30,6 +30,7 @@ function addLineFromCatalog(cat: AddableCatalogEntry): EditFormLine {
     key: crypto.randomUUID(),
     catalogItemId: cat.id,
     quantity,
+    lineNotes: '',
     options,
     catalogItem: {
       name: cat.name,
@@ -47,6 +48,8 @@ function lineToCatalogPayload(line: EditFormLine): CatalogSelectionRow {
   const schema = line.catalogItem.optionsSchema;
   const opts = { ...line.options };
   let quantity = Math.max(1, Math.floor(line.quantity));
+  const notesTrim = line.lineNotes.trim();
+  const notes = notesTrim ? notesTrim.slice(0, 2000) : undefined;
 
   if (schemaUsesCountField(schema)) {
     const c = typeof opts.count === 'number' ? opts.count : line.quantity;
@@ -57,6 +60,7 @@ function lineToCatalogPayload(line: EditFormLine): CatalogSelectionRow {
       catalogItemId: line.catalogItemId,
       quantity,
       selectedOptions: clean,
+      ...(notes ? { notes } : {}),
     };
   }
 
@@ -64,6 +68,7 @@ function lineToCatalogPayload(line: EditFormLine): CatalogSelectionRow {
     catalogItemId: line.catalogItemId,
     quantity,
     selectedOptions: opts,
+    ...(notes ? { notes } : {}),
   };
 }
 
@@ -348,6 +353,24 @@ export default function EditProjectForm({
                         ) : null}
                       </div>
                     ) : null}
+                  </div>
+
+                  <div className="mt-4">
+                    <label className="mb-2 block text-sm font-semibold text-slate-700">
+                      Notes for contractors (this line only)
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={line.lineNotes}
+                      onChange={(e) =>
+                        patchLine(line.key, (l) => ({
+                          ...l,
+                          lineNotes: e.target.value,
+                        }))
+                      }
+                      className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-slate-900"
+                      placeholder="Optional details visible to contractors for this upgrade"
+                    />
                   </div>
                 </div>
               );

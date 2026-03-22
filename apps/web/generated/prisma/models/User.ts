@@ -195,6 +195,7 @@ export type UserWhereInput = {
   projects?: Prisma.ProjectListRelationFilter
   bids?: Prisma.BidListRelationFilter
   galleryUserPicks?: Prisma.UserGalleryPickListRelationFilter
+  projectContractorMessages?: Prisma.ProjectContractorMessageListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -209,6 +210,7 @@ export type UserOrderByWithRelationInput = {
   projects?: Prisma.ProjectOrderByRelationAggregateInput
   bids?: Prisma.BidOrderByRelationAggregateInput
   galleryUserPicks?: Prisma.UserGalleryPickOrderByRelationAggregateInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -226,6 +228,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   projects?: Prisma.ProjectListRelationFilter
   bids?: Prisma.BidListRelationFilter
   galleryUserPicks?: Prisma.UserGalleryPickListRelationFilter
+  projectContractorMessages?: Prisma.ProjectContractorMessageListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -264,6 +267,7 @@ export type UserCreateInput = {
   projects?: Prisma.ProjectCreateNestedManyWithoutHomeownerInput
   bids?: Prisma.BidCreateNestedManyWithoutContractorInput
   galleryUserPicks?: Prisma.UserGalleryPickCreateNestedManyWithoutUserInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutContractorInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -278,6 +282,7 @@ export type UserUncheckedCreateInput = {
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutHomeownerInput
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutContractorInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedCreateNestedManyWithoutUserInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutContractorInput
 }
 
 export type UserUpdateInput = {
@@ -292,6 +297,7 @@ export type UserUpdateInput = {
   projects?: Prisma.ProjectUpdateManyWithoutHomeownerNestedInput
   bids?: Prisma.BidUpdateManyWithoutContractorNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUpdateManyWithoutUserNestedInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutContractorNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -306,6 +312,7 @@ export type UserUncheckedUpdateInput = {
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutHomeownerNestedInput
   bids?: Prisma.BidUncheckedUpdateManyWithoutContractorNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedUpdateManyWithoutUserNestedInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutContractorNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -425,6 +432,20 @@ export type UserUpdateOneRequiredWithoutProjectsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProjectsInput, Prisma.UserUpdateWithoutProjectsInput>, Prisma.UserUncheckedUpdateWithoutProjectsInput>
 }
 
+export type UserCreateNestedOneWithoutProjectContractorMessagesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutProjectContractorMessagesInput, Prisma.UserUncheckedCreateWithoutProjectContractorMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProjectContractorMessagesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutProjectContractorMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutProjectContractorMessagesInput, Prisma.UserUncheckedCreateWithoutProjectContractorMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProjectContractorMessagesInput
+  upsert?: Prisma.UserUpsertWithoutProjectContractorMessagesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProjectContractorMessagesInput, Prisma.UserUpdateWithoutProjectContractorMessagesInput>, Prisma.UserUncheckedUpdateWithoutProjectContractorMessagesInput>
+}
+
 export type UserCreateNestedOneWithoutBidsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutBidsInput, Prisma.UserUncheckedCreateWithoutBidsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutBidsInput
@@ -464,6 +485,7 @@ export type UserCreateWithoutHomeownerProfileInput = {
   projects?: Prisma.ProjectCreateNestedManyWithoutHomeownerInput
   bids?: Prisma.BidCreateNestedManyWithoutContractorInput
   galleryUserPicks?: Prisma.UserGalleryPickCreateNestedManyWithoutUserInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutContractorInput
 }
 
 export type UserUncheckedCreateWithoutHomeownerProfileInput = {
@@ -477,6 +499,7 @@ export type UserUncheckedCreateWithoutHomeownerProfileInput = {
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutHomeownerInput
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutContractorInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedCreateNestedManyWithoutUserInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutContractorInput
 }
 
 export type UserCreateOrConnectWithoutHomeownerProfileInput = {
@@ -506,6 +529,7 @@ export type UserUpdateWithoutHomeownerProfileInput = {
   projects?: Prisma.ProjectUpdateManyWithoutHomeownerNestedInput
   bids?: Prisma.BidUpdateManyWithoutContractorNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUpdateManyWithoutUserNestedInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutContractorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutHomeownerProfileInput = {
@@ -519,6 +543,7 @@ export type UserUncheckedUpdateWithoutHomeownerProfileInput = {
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutHomeownerNestedInput
   bids?: Prisma.BidUncheckedUpdateManyWithoutContractorNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedUpdateManyWithoutUserNestedInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutContractorNestedInput
 }
 
 export type UserCreateWithoutContractorProfileInput = {
@@ -532,6 +557,7 @@ export type UserCreateWithoutContractorProfileInput = {
   projects?: Prisma.ProjectCreateNestedManyWithoutHomeownerInput
   bids?: Prisma.BidCreateNestedManyWithoutContractorInput
   galleryUserPicks?: Prisma.UserGalleryPickCreateNestedManyWithoutUserInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutContractorInput
 }
 
 export type UserUncheckedCreateWithoutContractorProfileInput = {
@@ -545,6 +571,7 @@ export type UserUncheckedCreateWithoutContractorProfileInput = {
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutHomeownerInput
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutContractorInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedCreateNestedManyWithoutUserInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutContractorInput
 }
 
 export type UserCreateOrConnectWithoutContractorProfileInput = {
@@ -574,6 +601,7 @@ export type UserUpdateWithoutContractorProfileInput = {
   projects?: Prisma.ProjectUpdateManyWithoutHomeownerNestedInput
   bids?: Prisma.BidUpdateManyWithoutContractorNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUpdateManyWithoutUserNestedInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutContractorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutContractorProfileInput = {
@@ -587,6 +615,7 @@ export type UserUncheckedUpdateWithoutContractorProfileInput = {
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutHomeownerNestedInput
   bids?: Prisma.BidUncheckedUpdateManyWithoutContractorNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedUpdateManyWithoutUserNestedInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutContractorNestedInput
 }
 
 export type UserCreateWithoutProjectsInput = {
@@ -600,6 +629,7 @@ export type UserCreateWithoutProjectsInput = {
   contractorProfile?: Prisma.ContractorProfileCreateNestedOneWithoutUserInput
   bids?: Prisma.BidCreateNestedManyWithoutContractorInput
   galleryUserPicks?: Prisma.UserGalleryPickCreateNestedManyWithoutUserInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutContractorInput
 }
 
 export type UserUncheckedCreateWithoutProjectsInput = {
@@ -613,6 +643,7 @@ export type UserUncheckedCreateWithoutProjectsInput = {
   contractorProfile?: Prisma.ContractorProfileUncheckedCreateNestedOneWithoutUserInput
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutContractorInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedCreateNestedManyWithoutUserInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutContractorInput
 }
 
 export type UserCreateOrConnectWithoutProjectsInput = {
@@ -642,6 +673,7 @@ export type UserUpdateWithoutProjectsInput = {
   contractorProfile?: Prisma.ContractorProfileUpdateOneWithoutUserNestedInput
   bids?: Prisma.BidUpdateManyWithoutContractorNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUpdateManyWithoutUserNestedInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutContractorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProjectsInput = {
@@ -653,6 +685,79 @@ export type UserUncheckedUpdateWithoutProjectsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   homeownerProfile?: Prisma.HomeownerProfileUncheckedUpdateOneWithoutUserNestedInput
   contractorProfile?: Prisma.ContractorProfileUncheckedUpdateOneWithoutUserNestedInput
+  bids?: Prisma.BidUncheckedUpdateManyWithoutContractorNestedInput
+  galleryUserPicks?: Prisma.UserGalleryPickUncheckedUpdateManyWithoutUserNestedInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutContractorNestedInput
+}
+
+export type UserCreateWithoutProjectContractorMessagesInput = {
+  id?: string
+  email: string
+  passwordHash?: string | null
+  role: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  homeownerProfile?: Prisma.HomeownerProfileCreateNestedOneWithoutUserInput
+  contractorProfile?: Prisma.ContractorProfileCreateNestedOneWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutHomeownerInput
+  bids?: Prisma.BidCreateNestedManyWithoutContractorInput
+  galleryUserPicks?: Prisma.UserGalleryPickCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutProjectContractorMessagesInput = {
+  id?: string
+  email: string
+  passwordHash?: string | null
+  role: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  homeownerProfile?: Prisma.HomeownerProfileUncheckedCreateNestedOneWithoutUserInput
+  contractorProfile?: Prisma.ContractorProfileUncheckedCreateNestedOneWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutHomeownerInput
+  bids?: Prisma.BidUncheckedCreateNestedManyWithoutContractorInput
+  galleryUserPicks?: Prisma.UserGalleryPickUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutProjectContractorMessagesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutProjectContractorMessagesInput, Prisma.UserUncheckedCreateWithoutProjectContractorMessagesInput>
+}
+
+export type UserUpsertWithoutProjectContractorMessagesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutProjectContractorMessagesInput, Prisma.UserUncheckedUpdateWithoutProjectContractorMessagesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutProjectContractorMessagesInput, Prisma.UserUncheckedCreateWithoutProjectContractorMessagesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutProjectContractorMessagesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutProjectContractorMessagesInput, Prisma.UserUncheckedUpdateWithoutProjectContractorMessagesInput>
+}
+
+export type UserUpdateWithoutProjectContractorMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeownerProfile?: Prisma.HomeownerProfileUpdateOneWithoutUserNestedInput
+  contractorProfile?: Prisma.ContractorProfileUpdateOneWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutHomeownerNestedInput
+  bids?: Prisma.BidUpdateManyWithoutContractorNestedInput
+  galleryUserPicks?: Prisma.UserGalleryPickUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutProjectContractorMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeownerProfile?: Prisma.HomeownerProfileUncheckedUpdateOneWithoutUserNestedInput
+  contractorProfile?: Prisma.ContractorProfileUncheckedUpdateOneWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutHomeownerNestedInput
   bids?: Prisma.BidUncheckedUpdateManyWithoutContractorNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -668,6 +773,7 @@ export type UserCreateWithoutBidsInput = {
   contractorProfile?: Prisma.ContractorProfileCreateNestedOneWithoutUserInput
   projects?: Prisma.ProjectCreateNestedManyWithoutHomeownerInput
   galleryUserPicks?: Prisma.UserGalleryPickCreateNestedManyWithoutUserInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutContractorInput
 }
 
 export type UserUncheckedCreateWithoutBidsInput = {
@@ -681,6 +787,7 @@ export type UserUncheckedCreateWithoutBidsInput = {
   contractorProfile?: Prisma.ContractorProfileUncheckedCreateNestedOneWithoutUserInput
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutHomeownerInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedCreateNestedManyWithoutUserInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutContractorInput
 }
 
 export type UserCreateOrConnectWithoutBidsInput = {
@@ -710,6 +817,7 @@ export type UserUpdateWithoutBidsInput = {
   contractorProfile?: Prisma.ContractorProfileUpdateOneWithoutUserNestedInput
   projects?: Prisma.ProjectUpdateManyWithoutHomeownerNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUpdateManyWithoutUserNestedInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutContractorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBidsInput = {
@@ -723,6 +831,7 @@ export type UserUncheckedUpdateWithoutBidsInput = {
   contractorProfile?: Prisma.ContractorProfileUncheckedUpdateOneWithoutUserNestedInput
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutHomeownerNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedUpdateManyWithoutUserNestedInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutContractorNestedInput
 }
 
 export type UserCreateWithoutGalleryUserPicksInput = {
@@ -736,6 +845,7 @@ export type UserCreateWithoutGalleryUserPicksInput = {
   contractorProfile?: Prisma.ContractorProfileCreateNestedOneWithoutUserInput
   projects?: Prisma.ProjectCreateNestedManyWithoutHomeownerInput
   bids?: Prisma.BidCreateNestedManyWithoutContractorInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutContractorInput
 }
 
 export type UserUncheckedCreateWithoutGalleryUserPicksInput = {
@@ -749,6 +859,7 @@ export type UserUncheckedCreateWithoutGalleryUserPicksInput = {
   contractorProfile?: Prisma.ContractorProfileUncheckedCreateNestedOneWithoutUserInput
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutHomeownerInput
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutContractorInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutContractorInput
 }
 
 export type UserCreateOrConnectWithoutGalleryUserPicksInput = {
@@ -778,6 +889,7 @@ export type UserUpdateWithoutGalleryUserPicksInput = {
   contractorProfile?: Prisma.ContractorProfileUpdateOneWithoutUserNestedInput
   projects?: Prisma.ProjectUpdateManyWithoutHomeownerNestedInput
   bids?: Prisma.BidUpdateManyWithoutContractorNestedInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutContractorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutGalleryUserPicksInput = {
@@ -791,6 +903,7 @@ export type UserUncheckedUpdateWithoutGalleryUserPicksInput = {
   contractorProfile?: Prisma.ContractorProfileUncheckedUpdateOneWithoutUserNestedInput
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutHomeownerNestedInput
   bids?: Prisma.BidUncheckedUpdateManyWithoutContractorNestedInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutContractorNestedInput
 }
 
 
@@ -802,12 +915,14 @@ export type UserCountOutputType = {
   projects: number
   bids: number
   galleryUserPicks: number
+  projectContractorMessages: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   projects?: boolean | UserCountOutputTypeCountProjectsArgs
   bids?: boolean | UserCountOutputTypeCountBidsArgs
   galleryUserPicks?: boolean | UserCountOutputTypeCountGalleryUserPicksArgs
+  projectContractorMessages?: boolean | UserCountOutputTypeCountProjectContractorMessagesArgs
 }
 
 /**
@@ -841,6 +956,13 @@ export type UserCountOutputTypeCountGalleryUserPicksArgs<ExtArgs extends runtime
   where?: Prisma.UserGalleryPickWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountProjectContractorMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProjectContractorMessageWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -854,6 +976,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   projects?: boolean | Prisma.User$projectsArgs<ExtArgs>
   bids?: boolean | Prisma.User$bidsArgs<ExtArgs>
   galleryUserPicks?: boolean | Prisma.User$galleryUserPicksArgs<ExtArgs>
+  projectContractorMessages?: boolean | Prisma.User$projectContractorMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -891,6 +1014,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   projects?: boolean | Prisma.User$projectsArgs<ExtArgs>
   bids?: boolean | Prisma.User$bidsArgs<ExtArgs>
   galleryUserPicks?: boolean | Prisma.User$galleryUserPicksArgs<ExtArgs>
+  projectContractorMessages?: boolean | Prisma.User$projectContractorMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -904,6 +1028,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     projects: Prisma.$ProjectPayload<ExtArgs>[]
     bids: Prisma.$BidPayload<ExtArgs>[]
     galleryUserPicks: Prisma.$UserGalleryPickPayload<ExtArgs>[]
+    projectContractorMessages: Prisma.$ProjectContractorMessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1311,6 +1436,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   projects<T extends Prisma.User$projectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   bids<T extends Prisma.User$bidsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$bidsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BidPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   galleryUserPicks<T extends Prisma.User$galleryUserPicksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$galleryUserPicksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserGalleryPickPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  projectContractorMessages<T extends Prisma.User$projectContractorMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$projectContractorMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectContractorMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1542,11 +1668,6 @@ export type UserFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Skip the first `n` Users.
    */
   skip?: number
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-   * 
-   * Filter by unique combinations of Users.
-   */
   distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
 }
 
@@ -1846,6 +1967,30 @@ export type User$galleryUserPicksArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.UserGalleryPickScalarFieldEnum | Prisma.UserGalleryPickScalarFieldEnum[]
+}
+
+/**
+ * User.projectContractorMessages
+ */
+export type User$projectContractorMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProjectContractorMessage
+   */
+  select?: Prisma.ProjectContractorMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProjectContractorMessage
+   */
+  omit?: Prisma.ProjectContractorMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProjectContractorMessageInclude<ExtArgs> | null
+  where?: Prisma.ProjectContractorMessageWhereInput
+  orderBy?: Prisma.ProjectContractorMessageOrderByWithRelationInput | Prisma.ProjectContractorMessageOrderByWithRelationInput[]
+  cursor?: Prisma.ProjectContractorMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProjectContractorMessageScalarFieldEnum | Prisma.ProjectContractorMessageScalarFieldEnum[]
 }
 
 /**

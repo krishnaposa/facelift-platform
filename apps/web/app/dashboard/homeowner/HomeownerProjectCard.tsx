@@ -9,6 +9,8 @@ export type DashboardLineItem = {
   id: string;
   quantity: number;
   optionsLabel: string;
+  /** Per-line homeowner notes for contractors. */
+  contractorNotes?: string | null;
   catalogItem: {
     name: string;
     slug: string;
@@ -73,7 +75,8 @@ export default function HomeownerProjectCard({
             <span className="font-medium text-emerald-800">
               Est. from bid data: {formatUsdWhole(estimate.sum)}{' '}
               <span className="font-normal text-slate-500">
-                ({estimate.linesWithData} line{estimate.linesWithData === 1 ? '' : 's'} with averages)
+                ({estimate.linesWithData} line{estimate.linesWithData === 1 ? '' : 's'} with averages;
+                prefers {zipCode} when we have local line items)
               </span>
             </span>
           </>
@@ -153,6 +156,12 @@ export default function HomeownerProjectCard({
                         <span className="text-slate-500"> · {row.optionsLabel}</span>
                       ) : null}
                     </div>
+                    {row.contractorNotes ? (
+                      <p className="mt-2 rounded-lg bg-amber-50/90 px-2 py-1.5 text-xs text-amber-950 ring-1 ring-amber-100">
+                        <span className="font-semibold">Contractor note: </span>
+                        {row.contractorNotes}
+                      </p>
+                    ) : null}
                     {row.avgInstall.hasData && row.avgInstall.average != null ? (
                       <div className="mt-2 text-sm text-emerald-800">
                         Typical install (from bids): {formatUsdWhole(row.avgInstall.average)}

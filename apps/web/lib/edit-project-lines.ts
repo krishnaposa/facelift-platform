@@ -10,6 +10,7 @@ export function projectItemsToEditLines(
     id: string;
     catalogItemId: string;
     quantity: number;
+    notes: string | null;
     selectedOptions: unknown;
     catalogItem: {
       name: string;
@@ -45,6 +46,7 @@ export function projectItemsToEditLines(
       key: item.id,
       catalogItemId: item.catalogItemId,
       quantity: item.quantity,
+      lineNotes: item.notes?.trim() ?? '',
       options,
       catalogItem: {
         name: item.catalogItem.name,

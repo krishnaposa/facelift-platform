@@ -7,6 +7,8 @@ import { getCatalogForWizard } from '@/lib/catalog-wizard';
 import { projectItemsToEditLines } from '@/lib/edit-project-lines';
 import EditProjectForm from '@/app/components/projects/EditProjectForm';
 
+export const dynamic = 'force-dynamic';
+
 export default async function EditProjectPage({
   params,
 }: {

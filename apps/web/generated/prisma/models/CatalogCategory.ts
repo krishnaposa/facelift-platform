@@ -1056,11 +1056,6 @@ export type CatalogCategoryFindManyArgs<ExtArgs extends runtime.Types.Extensions
    * Skip the first `n` CatalogCategories.
    */
   skip?: number
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-   * 
-   * Filter by unique combinations of CatalogCategories.
-   */
   distinct?: Prisma.CatalogCategoryScalarFieldEnum | Prisma.CatalogCategoryScalarFieldEnum[]
 }
 

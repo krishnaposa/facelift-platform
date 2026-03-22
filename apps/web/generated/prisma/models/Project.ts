@@ -29,6 +29,7 @@ export type ProjectMinAggregateOutputType = {
   homeownerId: string | null
   title: string | null
   description: string | null
+  adminNotes: string | null
   zipCode: string | null
   addressLine1: string | null
   city: string | null
@@ -43,6 +44,7 @@ export type ProjectMaxAggregateOutputType = {
   homeownerId: string | null
   title: string | null
   description: string | null
+  adminNotes: string | null
   zipCode: string | null
   addressLine1: string | null
   city: string | null
@@ -57,6 +59,7 @@ export type ProjectCountAggregateOutputType = {
   homeownerId: number
   title: number
   description: number
+  adminNotes: number
   zipCode: number
   addressLine1: number
   city: number
@@ -73,6 +76,7 @@ export type ProjectMinAggregateInputType = {
   homeownerId?: true
   title?: true
   description?: true
+  adminNotes?: true
   zipCode?: true
   addressLine1?: true
   city?: true
@@ -87,6 +91,7 @@ export type ProjectMaxAggregateInputType = {
   homeownerId?: true
   title?: true
   description?: true
+  adminNotes?: true
   zipCode?: true
   addressLine1?: true
   city?: true
@@ -101,6 +106,7 @@ export type ProjectCountAggregateInputType = {
   homeownerId?: true
   title?: true
   description?: true
+  adminNotes?: true
   zipCode?: true
   addressLine1?: true
   city?: true
@@ -188,6 +194,7 @@ export type ProjectGroupByOutputType = {
   homeownerId: string
   title: string
   description: string | null
+  adminNotes: string | null
   zipCode: string
   addressLine1: string | null
   city: string | null
@@ -223,6 +230,7 @@ export type ProjectWhereInput = {
   homeownerId?: Prisma.StringFilter<"Project"> | string
   title?: Prisma.StringFilter<"Project"> | string
   description?: Prisma.StringNullableFilter<"Project"> | string | null
+  adminNotes?: Prisma.StringNullableFilter<"Project"> | string | null
   zipCode?: Prisma.StringFilter<"Project"> | string
   addressLine1?: Prisma.StringNullableFilter<"Project"> | string | null
   city?: Prisma.StringNullableFilter<"Project"> | string | null
@@ -235,6 +243,7 @@ export type ProjectWhereInput = {
   bids?: Prisma.BidListRelationFilter
   photos?: Prisma.ProjectPhotoListRelationFilter
   galleryPicks?: Prisma.ProjectGalleryPickListRelationFilter
+  contractorMessages?: Prisma.ProjectContractorMessageListRelationFilter
 }
 
 export type ProjectOrderByWithRelationInput = {
@@ -242,6 +251,7 @@ export type ProjectOrderByWithRelationInput = {
   homeownerId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  adminNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   zipCode?: Prisma.SortOrder
   addressLine1?: Prisma.SortOrderInput | Prisma.SortOrder
   city?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -254,6 +264,7 @@ export type ProjectOrderByWithRelationInput = {
   bids?: Prisma.BidOrderByRelationAggregateInput
   photos?: Prisma.ProjectPhotoOrderByRelationAggregateInput
   galleryPicks?: Prisma.ProjectGalleryPickOrderByRelationAggregateInput
+  contractorMessages?: Prisma.ProjectContractorMessageOrderByRelationAggregateInput
 }
 
 export type ProjectWhereUniqueInput = Prisma.AtLeast<{
@@ -264,6 +275,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   homeownerId?: Prisma.StringFilter<"Project"> | string
   title?: Prisma.StringFilter<"Project"> | string
   description?: Prisma.StringNullableFilter<"Project"> | string | null
+  adminNotes?: Prisma.StringNullableFilter<"Project"> | string | null
   zipCode?: Prisma.StringFilter<"Project"> | string
   addressLine1?: Prisma.StringNullableFilter<"Project"> | string | null
   city?: Prisma.StringNullableFilter<"Project"> | string | null
@@ -276,6 +288,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   bids?: Prisma.BidListRelationFilter
   photos?: Prisma.ProjectPhotoListRelationFilter
   galleryPicks?: Prisma.ProjectGalleryPickListRelationFilter
+  contractorMessages?: Prisma.ProjectContractorMessageListRelationFilter
 }, "id">
 
 export type ProjectOrderByWithAggregationInput = {
@@ -283,6 +296,7 @@ export type ProjectOrderByWithAggregationInput = {
   homeownerId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  adminNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   zipCode?: Prisma.SortOrder
   addressLine1?: Prisma.SortOrderInput | Prisma.SortOrder
   city?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -303,6 +317,7 @@ export type ProjectScalarWhereWithAggregatesInput = {
   homeownerId?: Prisma.StringWithAggregatesFilter<"Project"> | string
   title?: Prisma.StringWithAggregatesFilter<"Project"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  adminNotes?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   zipCode?: Prisma.StringWithAggregatesFilter<"Project"> | string
   addressLine1?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   city?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
@@ -316,6 +331,7 @@ export type ProjectCreateInput = {
   id?: string
   title: string
   description?: string | null
+  adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
   city?: string | null
@@ -328,6 +344,7 @@ export type ProjectCreateInput = {
   bids?: Prisma.BidCreateNestedManyWithoutProjectInput
   photos?: Prisma.ProjectPhotoCreateNestedManyWithoutProjectInput
   galleryPicks?: Prisma.ProjectGalleryPickCreateNestedManyWithoutProjectInput
+  contractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateInput = {
@@ -335,6 +352,7 @@ export type ProjectUncheckedCreateInput = {
   homeownerId: string
   title: string
   description?: string | null
+  adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
   city?: string | null
@@ -346,12 +364,14 @@ export type ProjectUncheckedCreateInput = {
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutProjectInput
   photos?: Prisma.ProjectPhotoUncheckedCreateNestedManyWithoutProjectInput
   galleryPicks?: Prisma.ProjectGalleryPickUncheckedCreateNestedManyWithoutProjectInput
+  contractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -364,6 +384,7 @@ export type ProjectUpdateInput = {
   bids?: Prisma.BidUpdateManyWithoutProjectNestedInput
   photos?: Prisma.ProjectPhotoUpdateManyWithoutProjectNestedInput
   galleryPicks?: Prisma.ProjectGalleryPickUpdateManyWithoutProjectNestedInput
+  contractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateInput = {
@@ -371,6 +392,7 @@ export type ProjectUncheckedUpdateInput = {
   homeownerId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -382,6 +404,7 @@ export type ProjectUncheckedUpdateInput = {
   bids?: Prisma.BidUncheckedUpdateManyWithoutProjectNestedInput
   photos?: Prisma.ProjectPhotoUncheckedUpdateManyWithoutProjectNestedInput
   galleryPicks?: Prisma.ProjectGalleryPickUncheckedUpdateManyWithoutProjectNestedInput
+  contractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateManyInput = {
@@ -389,6 +412,7 @@ export type ProjectCreateManyInput = {
   homeownerId: string
   title: string
   description?: string | null
+  adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
   city?: string | null
@@ -402,6 +426,7 @@ export type ProjectUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -416,6 +441,7 @@ export type ProjectUncheckedUpdateManyInput = {
   homeownerId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -440,6 +466,7 @@ export type ProjectCountOrderByAggregateInput = {
   homeownerId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  adminNotes?: Prisma.SortOrder
   zipCode?: Prisma.SortOrder
   addressLine1?: Prisma.SortOrder
   city?: Prisma.SortOrder
@@ -454,6 +481,7 @@ export type ProjectMaxOrderByAggregateInput = {
   homeownerId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  adminNotes?: Prisma.SortOrder
   zipCode?: Prisma.SortOrder
   addressLine1?: Prisma.SortOrder
   city?: Prisma.SortOrder
@@ -468,6 +496,7 @@ export type ProjectMinOrderByAggregateInput = {
   homeownerId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  adminNotes?: Prisma.SortOrder
   zipCode?: Prisma.SortOrder
   addressLine1?: Prisma.SortOrder
   city?: Prisma.SortOrder
@@ -542,6 +571,20 @@ export type ProjectUpdateOneRequiredWithoutItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutItemsInput, Prisma.ProjectUpdateWithoutItemsInput>, Prisma.ProjectUncheckedUpdateWithoutItemsInput>
 }
 
+export type ProjectCreateNestedOneWithoutContractorMessagesInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutContractorMessagesInput, Prisma.ProjectUncheckedCreateWithoutContractorMessagesInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutContractorMessagesInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneRequiredWithoutContractorMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutContractorMessagesInput, Prisma.ProjectUncheckedCreateWithoutContractorMessagesInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutContractorMessagesInput
+  upsert?: Prisma.ProjectUpsertWithoutContractorMessagesInput
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutContractorMessagesInput, Prisma.ProjectUpdateWithoutContractorMessagesInput>, Prisma.ProjectUncheckedUpdateWithoutContractorMessagesInput>
+}
+
 export type ProjectCreateNestedOneWithoutBidsInput = {
   create?: Prisma.XOR<Prisma.ProjectCreateWithoutBidsInput, Prisma.ProjectUncheckedCreateWithoutBidsInput>
   connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutBidsInput
@@ -588,6 +631,7 @@ export type ProjectCreateWithoutHomeownerInput = {
   id?: string
   title: string
   description?: string | null
+  adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
   city?: string | null
@@ -599,12 +643,14 @@ export type ProjectCreateWithoutHomeownerInput = {
   bids?: Prisma.BidCreateNestedManyWithoutProjectInput
   photos?: Prisma.ProjectPhotoCreateNestedManyWithoutProjectInput
   galleryPicks?: Prisma.ProjectGalleryPickCreateNestedManyWithoutProjectInput
+  contractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutHomeownerInput = {
   id?: string
   title: string
   description?: string | null
+  adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
   city?: string | null
@@ -616,6 +662,7 @@ export type ProjectUncheckedCreateWithoutHomeownerInput = {
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutProjectInput
   photos?: Prisma.ProjectPhotoUncheckedCreateNestedManyWithoutProjectInput
   galleryPicks?: Prisma.ProjectGalleryPickUncheckedCreateNestedManyWithoutProjectInput
+  contractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutHomeownerInput = {
@@ -652,6 +699,7 @@ export type ProjectScalarWhereInput = {
   homeownerId?: Prisma.StringFilter<"Project"> | string
   title?: Prisma.StringFilter<"Project"> | string
   description?: Prisma.StringNullableFilter<"Project"> | string | null
+  adminNotes?: Prisma.StringNullableFilter<"Project"> | string | null
   zipCode?: Prisma.StringFilter<"Project"> | string
   addressLine1?: Prisma.StringNullableFilter<"Project"> | string | null
   city?: Prisma.StringNullableFilter<"Project"> | string | null
@@ -665,6 +713,7 @@ export type ProjectCreateWithoutItemsInput = {
   id?: string
   title: string
   description?: string | null
+  adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
   city?: string | null
@@ -676,6 +725,7 @@ export type ProjectCreateWithoutItemsInput = {
   bids?: Prisma.BidCreateNestedManyWithoutProjectInput
   photos?: Prisma.ProjectPhotoCreateNestedManyWithoutProjectInput
   galleryPicks?: Prisma.ProjectGalleryPickCreateNestedManyWithoutProjectInput
+  contractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutItemsInput = {
@@ -683,6 +733,7 @@ export type ProjectUncheckedCreateWithoutItemsInput = {
   homeownerId: string
   title: string
   description?: string | null
+  adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
   city?: string | null
@@ -693,6 +744,7 @@ export type ProjectUncheckedCreateWithoutItemsInput = {
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutProjectInput
   photos?: Prisma.ProjectPhotoUncheckedCreateNestedManyWithoutProjectInput
   galleryPicks?: Prisma.ProjectGalleryPickUncheckedCreateNestedManyWithoutProjectInput
+  contractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutItemsInput = {
@@ -715,6 +767,7 @@ export type ProjectUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -726,6 +779,7 @@ export type ProjectUpdateWithoutItemsInput = {
   bids?: Prisma.BidUpdateManyWithoutProjectNestedInput
   photos?: Prisma.ProjectPhotoUpdateManyWithoutProjectNestedInput
   galleryPicks?: Prisma.ProjectGalleryPickUpdateManyWithoutProjectNestedInput
+  contractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutItemsInput = {
@@ -733,6 +787,7 @@ export type ProjectUncheckedUpdateWithoutItemsInput = {
   homeownerId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -743,12 +798,106 @@ export type ProjectUncheckedUpdateWithoutItemsInput = {
   bids?: Prisma.BidUncheckedUpdateManyWithoutProjectNestedInput
   photos?: Prisma.ProjectPhotoUncheckedUpdateManyWithoutProjectNestedInput
   galleryPicks?: Prisma.ProjectGalleryPickUncheckedUpdateManyWithoutProjectNestedInput
+  contractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutContractorMessagesInput = {
+  id?: string
+  title: string
+  description?: string | null
+  adminNotes?: string | null
+  zipCode: string
+  addressLine1?: string | null
+  city?: string | null
+  state?: string | null
+  status?: $Enums.ProjectStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  homeowner: Prisma.UserCreateNestedOneWithoutProjectsInput
+  items?: Prisma.ProjectItemCreateNestedManyWithoutProjectInput
+  bids?: Prisma.BidCreateNestedManyWithoutProjectInput
+  photos?: Prisma.ProjectPhotoCreateNestedManyWithoutProjectInput
+  galleryPicks?: Prisma.ProjectGalleryPickCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutContractorMessagesInput = {
+  id?: string
+  homeownerId: string
+  title: string
+  description?: string | null
+  adminNotes?: string | null
+  zipCode: string
+  addressLine1?: string | null
+  city?: string | null
+  state?: string | null
+  status?: $Enums.ProjectStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ProjectItemUncheckedCreateNestedManyWithoutProjectInput
+  bids?: Prisma.BidUncheckedCreateNestedManyWithoutProjectInput
+  photos?: Prisma.ProjectPhotoUncheckedCreateNestedManyWithoutProjectInput
+  galleryPicks?: Prisma.ProjectGalleryPickUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutContractorMessagesInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutContractorMessagesInput, Prisma.ProjectUncheckedCreateWithoutContractorMessagesInput>
+}
+
+export type ProjectUpsertWithoutContractorMessagesInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutContractorMessagesInput, Prisma.ProjectUncheckedUpdateWithoutContractorMessagesInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutContractorMessagesInput, Prisma.ProjectUncheckedCreateWithoutContractorMessagesInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutContractorMessagesInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutContractorMessagesInput, Prisma.ProjectUncheckedUpdateWithoutContractorMessagesInput>
+}
+
+export type ProjectUpdateWithoutContractorMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeowner?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
+  items?: Prisma.ProjectItemUpdateManyWithoutProjectNestedInput
+  bids?: Prisma.BidUpdateManyWithoutProjectNestedInput
+  photos?: Prisma.ProjectPhotoUpdateManyWithoutProjectNestedInput
+  galleryPicks?: Prisma.ProjectGalleryPickUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutContractorMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  homeownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ProjectItemUncheckedUpdateManyWithoutProjectNestedInput
+  bids?: Prisma.BidUncheckedUpdateManyWithoutProjectNestedInput
+  photos?: Prisma.ProjectPhotoUncheckedUpdateManyWithoutProjectNestedInput
+  galleryPicks?: Prisma.ProjectGalleryPickUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutBidsInput = {
   id?: string
   title: string
   description?: string | null
+  adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
   city?: string | null
@@ -760,6 +909,7 @@ export type ProjectCreateWithoutBidsInput = {
   items?: Prisma.ProjectItemCreateNestedManyWithoutProjectInput
   photos?: Prisma.ProjectPhotoCreateNestedManyWithoutProjectInput
   galleryPicks?: Prisma.ProjectGalleryPickCreateNestedManyWithoutProjectInput
+  contractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutBidsInput = {
@@ -767,6 +917,7 @@ export type ProjectUncheckedCreateWithoutBidsInput = {
   homeownerId: string
   title: string
   description?: string | null
+  adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
   city?: string | null
@@ -777,6 +928,7 @@ export type ProjectUncheckedCreateWithoutBidsInput = {
   items?: Prisma.ProjectItemUncheckedCreateNestedManyWithoutProjectInput
   photos?: Prisma.ProjectPhotoUncheckedCreateNestedManyWithoutProjectInput
   galleryPicks?: Prisma.ProjectGalleryPickUncheckedCreateNestedManyWithoutProjectInput
+  contractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutBidsInput = {
@@ -799,6 +951,7 @@ export type ProjectUpdateWithoutBidsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -810,6 +963,7 @@ export type ProjectUpdateWithoutBidsInput = {
   items?: Prisma.ProjectItemUpdateManyWithoutProjectNestedInput
   photos?: Prisma.ProjectPhotoUpdateManyWithoutProjectNestedInput
   galleryPicks?: Prisma.ProjectGalleryPickUpdateManyWithoutProjectNestedInput
+  contractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutBidsInput = {
@@ -817,6 +971,7 @@ export type ProjectUncheckedUpdateWithoutBidsInput = {
   homeownerId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -827,12 +982,14 @@ export type ProjectUncheckedUpdateWithoutBidsInput = {
   items?: Prisma.ProjectItemUncheckedUpdateManyWithoutProjectNestedInput
   photos?: Prisma.ProjectPhotoUncheckedUpdateManyWithoutProjectNestedInput
   galleryPicks?: Prisma.ProjectGalleryPickUncheckedUpdateManyWithoutProjectNestedInput
+  contractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutPhotosInput = {
   id?: string
   title: string
   description?: string | null
+  adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
   city?: string | null
@@ -844,6 +1001,7 @@ export type ProjectCreateWithoutPhotosInput = {
   items?: Prisma.ProjectItemCreateNestedManyWithoutProjectInput
   bids?: Prisma.BidCreateNestedManyWithoutProjectInput
   galleryPicks?: Prisma.ProjectGalleryPickCreateNestedManyWithoutProjectInput
+  contractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutPhotosInput = {
@@ -851,6 +1009,7 @@ export type ProjectUncheckedCreateWithoutPhotosInput = {
   homeownerId: string
   title: string
   description?: string | null
+  adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
   city?: string | null
@@ -861,6 +1020,7 @@ export type ProjectUncheckedCreateWithoutPhotosInput = {
   items?: Prisma.ProjectItemUncheckedCreateNestedManyWithoutProjectInput
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutProjectInput
   galleryPicks?: Prisma.ProjectGalleryPickUncheckedCreateNestedManyWithoutProjectInput
+  contractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutPhotosInput = {
@@ -883,6 +1043,7 @@ export type ProjectUpdateWithoutPhotosInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -894,6 +1055,7 @@ export type ProjectUpdateWithoutPhotosInput = {
   items?: Prisma.ProjectItemUpdateManyWithoutProjectNestedInput
   bids?: Prisma.BidUpdateManyWithoutProjectNestedInput
   galleryPicks?: Prisma.ProjectGalleryPickUpdateManyWithoutProjectNestedInput
+  contractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutPhotosInput = {
@@ -901,6 +1063,7 @@ export type ProjectUncheckedUpdateWithoutPhotosInput = {
   homeownerId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -911,12 +1074,14 @@ export type ProjectUncheckedUpdateWithoutPhotosInput = {
   items?: Prisma.ProjectItemUncheckedUpdateManyWithoutProjectNestedInput
   bids?: Prisma.BidUncheckedUpdateManyWithoutProjectNestedInput
   galleryPicks?: Prisma.ProjectGalleryPickUncheckedUpdateManyWithoutProjectNestedInput
+  contractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutGalleryPicksInput = {
   id?: string
   title: string
   description?: string | null
+  adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
   city?: string | null
@@ -928,6 +1093,7 @@ export type ProjectCreateWithoutGalleryPicksInput = {
   items?: Prisma.ProjectItemCreateNestedManyWithoutProjectInput
   bids?: Prisma.BidCreateNestedManyWithoutProjectInput
   photos?: Prisma.ProjectPhotoCreateNestedManyWithoutProjectInput
+  contractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutGalleryPicksInput = {
@@ -935,6 +1101,7 @@ export type ProjectUncheckedCreateWithoutGalleryPicksInput = {
   homeownerId: string
   title: string
   description?: string | null
+  adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
   city?: string | null
@@ -945,6 +1112,7 @@ export type ProjectUncheckedCreateWithoutGalleryPicksInput = {
   items?: Prisma.ProjectItemUncheckedCreateNestedManyWithoutProjectInput
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutProjectInput
   photos?: Prisma.ProjectPhotoUncheckedCreateNestedManyWithoutProjectInput
+  contractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutGalleryPicksInput = {
@@ -967,6 +1135,7 @@ export type ProjectUpdateWithoutGalleryPicksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -978,6 +1147,7 @@ export type ProjectUpdateWithoutGalleryPicksInput = {
   items?: Prisma.ProjectItemUpdateManyWithoutProjectNestedInput
   bids?: Prisma.BidUpdateManyWithoutProjectNestedInput
   photos?: Prisma.ProjectPhotoUpdateManyWithoutProjectNestedInput
+  contractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutGalleryPicksInput = {
@@ -985,6 +1155,7 @@ export type ProjectUncheckedUpdateWithoutGalleryPicksInput = {
   homeownerId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -995,12 +1166,14 @@ export type ProjectUncheckedUpdateWithoutGalleryPicksInput = {
   items?: Prisma.ProjectItemUncheckedUpdateManyWithoutProjectNestedInput
   bids?: Prisma.BidUncheckedUpdateManyWithoutProjectNestedInput
   photos?: Prisma.ProjectPhotoUncheckedUpdateManyWithoutProjectNestedInput
+  contractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateManyHomeownerInput = {
   id?: string
   title: string
   description?: string | null
+  adminNotes?: string | null
   zipCode: string
   addressLine1?: string | null
   city?: string | null
@@ -1014,6 +1187,7 @@ export type ProjectUpdateWithoutHomeownerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1025,12 +1199,14 @@ export type ProjectUpdateWithoutHomeownerInput = {
   bids?: Prisma.BidUpdateManyWithoutProjectNestedInput
   photos?: Prisma.ProjectPhotoUpdateManyWithoutProjectNestedInput
   galleryPicks?: Prisma.ProjectGalleryPickUpdateManyWithoutProjectNestedInput
+  contractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutHomeownerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1042,12 +1218,14 @@ export type ProjectUncheckedUpdateWithoutHomeownerInput = {
   bids?: Prisma.BidUncheckedUpdateManyWithoutProjectNestedInput
   photos?: Prisma.ProjectPhotoUncheckedUpdateManyWithoutProjectNestedInput
   galleryPicks?: Prisma.ProjectGalleryPickUncheckedUpdateManyWithoutProjectNestedInput
+  contractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateManyWithoutHomeownerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
   addressLine1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1067,6 +1245,7 @@ export type ProjectCountOutputType = {
   bids: number
   photos: number
   galleryPicks: number
+  contractorMessages: number
 }
 
 export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1074,6 +1253,7 @@ export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   bids?: boolean | ProjectCountOutputTypeCountBidsArgs
   photos?: boolean | ProjectCountOutputTypeCountPhotosArgs
   galleryPicks?: boolean | ProjectCountOutputTypeCountGalleryPicksArgs
+  contractorMessages?: boolean | ProjectCountOutputTypeCountContractorMessagesArgs
 }
 
 /**
@@ -1114,12 +1294,20 @@ export type ProjectCountOutputTypeCountGalleryPicksArgs<ExtArgs extends runtime.
   where?: Prisma.ProjectGalleryPickWhereInput
 }
 
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeCountContractorMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProjectContractorMessageWhereInput
+}
+
 
 export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   homeownerId?: boolean
   title?: boolean
   description?: boolean
+  adminNotes?: boolean
   zipCode?: boolean
   addressLine1?: boolean
   city?: boolean
@@ -1132,6 +1320,7 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   bids?: boolean | Prisma.Project$bidsArgs<ExtArgs>
   photos?: boolean | Prisma.Project$photosArgs<ExtArgs>
   galleryPicks?: boolean | Prisma.Project$galleryPicksArgs<ExtArgs>
+  contractorMessages?: boolean | Prisma.Project$contractorMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["project"]>
 
@@ -1140,6 +1329,7 @@ export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   homeownerId?: boolean
   title?: boolean
   description?: boolean
+  adminNotes?: boolean
   zipCode?: boolean
   addressLine1?: boolean
   city?: boolean
@@ -1155,6 +1345,7 @@ export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   homeownerId?: boolean
   title?: boolean
   description?: boolean
+  adminNotes?: boolean
   zipCode?: boolean
   addressLine1?: boolean
   city?: boolean
@@ -1170,6 +1361,7 @@ export type ProjectSelectScalar = {
   homeownerId?: boolean
   title?: boolean
   description?: boolean
+  adminNotes?: boolean
   zipCode?: boolean
   addressLine1?: boolean
   city?: boolean
@@ -1179,13 +1371,14 @@ export type ProjectSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "homeownerId" | "title" | "description" | "zipCode" | "addressLine1" | "city" | "state" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
+export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "homeownerId" | "title" | "description" | "adminNotes" | "zipCode" | "addressLine1" | "city" | "state" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   homeowner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   items?: boolean | Prisma.Project$itemsArgs<ExtArgs>
   bids?: boolean | Prisma.Project$bidsArgs<ExtArgs>
   photos?: boolean | Prisma.Project$photosArgs<ExtArgs>
   galleryPicks?: boolean | Prisma.Project$galleryPicksArgs<ExtArgs>
+  contractorMessages?: boolean | Prisma.Project$contractorMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProjectIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1203,12 +1396,17 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     bids: Prisma.$BidPayload<ExtArgs>[]
     photos: Prisma.$ProjectPhotoPayload<ExtArgs>[]
     galleryPicks: Prisma.$ProjectGalleryPickPayload<ExtArgs>[]
+    contractorMessages: Prisma.$ProjectContractorMessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     homeownerId: string
     title: string
     description: string | null
+    /**
+     * Internal coordination / follow-ups (not shown to contractors on the public bid view).
+     */
+    adminNotes: string | null
     zipCode: string
     addressLine1: string | null
     city: string | null
@@ -1615,6 +1813,7 @@ export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.
   bids<T extends Prisma.Project$bidsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$bidsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BidPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   photos<T extends Prisma.Project$photosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$photosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPhotoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   galleryPicks<T extends Prisma.Project$galleryPicksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$galleryPicksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectGalleryPickPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  contractorMessages<T extends Prisma.Project$contractorMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$contractorMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectContractorMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1648,6 +1847,7 @@ export interface ProjectFieldRefs {
   readonly homeownerId: Prisma.FieldRef<"Project", 'String'>
   readonly title: Prisma.FieldRef<"Project", 'String'>
   readonly description: Prisma.FieldRef<"Project", 'String'>
+  readonly adminNotes: Prisma.FieldRef<"Project", 'String'>
   readonly zipCode: Prisma.FieldRef<"Project", 'String'>
   readonly addressLine1: Prisma.FieldRef<"Project", 'String'>
   readonly city: Prisma.FieldRef<"Project", 'String'>
@@ -1851,11 +2051,6 @@ export type ProjectFindManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Skip the first `n` Projects.
    */
   skip?: number
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-   * 
-   * Filter by unique combinations of Projects.
-   */
   distinct?: Prisma.ProjectScalarFieldEnum | Prisma.ProjectScalarFieldEnum[]
 }
 
@@ -2149,6 +2344,30 @@ export type Project$galleryPicksArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.ProjectGalleryPickScalarFieldEnum | Prisma.ProjectGalleryPickScalarFieldEnum[]
+}
+
+/**
+ * Project.contractorMessages
+ */
+export type Project$contractorMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProjectContractorMessage
+   */
+  select?: Prisma.ProjectContractorMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProjectContractorMessage
+   */
+  omit?: Prisma.ProjectContractorMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProjectContractorMessageInclude<ExtArgs> | null
+  where?: Prisma.ProjectContractorMessageWhereInput
+  orderBy?: Prisma.ProjectContractorMessageOrderByWithRelationInput | Prisma.ProjectContractorMessageOrderByWithRelationInput[]
+  cursor?: Prisma.ProjectContractorMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProjectContractorMessageScalarFieldEnum | Prisma.ProjectContractorMessageScalarFieldEnum[]
 }
 
 /**

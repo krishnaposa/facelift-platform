@@ -77,6 +77,11 @@ export type Project = Prisma.ProjectModel
  */
 export type ProjectItem = Prisma.ProjectItemModel
 /**
+ * Model ProjectContractorMessage
+ * Question or clarification from a contractor to the homeowner (project-wide or per line item).
+ */
+export type ProjectContractorMessage = Prisma.ProjectContractorMessageModel
+/**
  * Model Bid
  * 
  */

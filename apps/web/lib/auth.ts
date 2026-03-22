@@ -1,10 +1,11 @@
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtVerify, SignJWT } from 'jose';
+import type { SessionRole } from '@/lib/auth-routing';
 
 export const SESSION_COOKIE_NAME = 'facelift_session';
 
-export type SessionRole = 'HOMEOWNER' | 'CONTRACTOR' | 'ADMIN';
+export type { SessionRole } from '@/lib/auth-routing';
 
 export type SessionPayload = {
   userId: string;

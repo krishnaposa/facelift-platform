@@ -22,16 +22,19 @@ export default function SafeImage({
   loading = 'lazy',
   placeholderSrc = IMAGE_PLACEHOLDER_DATA_URL,
 }: Props) {
-  const initialBad = !src || String(src).trim() === '';
-  const [usePlaceholder, setUsePlaceholder] = useState(initialBad);
+  /** Only flip after a real load error — initial src is derived from props so SSR and hydration match. */
+  const [loadFailed, setLoadFailed] = useState(false);
+  const trimmed = src != null ? String(src).trim() : '';
+  const usePlaceholder = loadFailed || trimmed.length === 0;
+  const imgSrc = usePlaceholder ? placeholderSrc : trimmed;
 
   const onError = useCallback(() => {
-    setUsePlaceholder(true);
+    setLoadFailed(true);
   }, []);
 
   return (
     <img
-      src={usePlaceholder ? placeholderSrc : String(src)}
+      src={imgSrc}
       alt={alt}
       className={className}
       loading={loading}

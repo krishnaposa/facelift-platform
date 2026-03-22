@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.5.0
- * Query Engine version: 280c870be64f457428992c43c1f6d557fab6e29e
+ * Prisma Client JS version: 7.4.2
+ * Query Engine version: 94a226be1cf2967af2541cca5529f0f7ba866919
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.5.0",
-  engine: "280c870be64f457428992c43c1f6d557fab6e29e"
+  client: "7.4.2",
+  engine: "94a226be1cf2967af2541cca5529f0f7ba866919"
 }
 
 /**
@@ -391,6 +391,7 @@ export const ModelName = {
   CatalogItem: 'CatalogItem',
   Project: 'Project',
   ProjectItem: 'ProjectItem',
+  ProjectContractorMessage: 'ProjectContractorMessage',
   Bid: 'Bid',
   BidLineItem: 'BidLineItem',
   ProjectPhoto: 'ProjectPhoto',
@@ -412,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "homeownerProfile" | "contractorProfile" | "catalogCategory" | "catalogItem" | "project" | "projectItem" | "bid" | "bidLineItem" | "projectPhoto" | "galleryImage" | "projectGalleryPick" | "userGalleryPick"
+    modelProps: "user" | "homeownerProfile" | "contractorProfile" | "catalogCategory" | "catalogItem" | "project" | "projectItem" | "projectContractorMessage" | "bid" | "bidLineItem" | "projectPhoto" | "galleryImage" | "projectGalleryPick" | "userGalleryPick"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -931,6 +932,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ProjectItemCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ProjectItemCountAggregateOutputType> | number
+        }
+      }
+    }
+    ProjectContractorMessage: {
+      payload: Prisma.$ProjectContractorMessagePayload<ExtArgs>
+      fields: Prisma.ProjectContractorMessageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProjectContractorMessageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectContractorMessagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProjectContractorMessageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectContractorMessagePayload>
+        }
+        findFirst: {
+          args: Prisma.ProjectContractorMessageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectContractorMessagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProjectContractorMessageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectContractorMessagePayload>
+        }
+        findMany: {
+          args: Prisma.ProjectContractorMessageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectContractorMessagePayload>[]
+        }
+        create: {
+          args: Prisma.ProjectContractorMessageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectContractorMessagePayload>
+        }
+        createMany: {
+          args: Prisma.ProjectContractorMessageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProjectContractorMessageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectContractorMessagePayload>[]
+        }
+        delete: {
+          args: Prisma.ProjectContractorMessageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectContractorMessagePayload>
+        }
+        update: {
+          args: Prisma.ProjectContractorMessageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectContractorMessagePayload>
+        }
+        deleteMany: {
+          args: Prisma.ProjectContractorMessageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProjectContractorMessageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProjectContractorMessageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectContractorMessagePayload>[]
+        }
+        upsert: {
+          args: Prisma.ProjectContractorMessageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectContractorMessagePayload>
+        }
+        aggregate: {
+          args: Prisma.ProjectContractorMessageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProjectContractorMessage>
+        }
+        groupBy: {
+          args: Prisma.ProjectContractorMessageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectContractorMessageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProjectContractorMessageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectContractorMessageCountAggregateOutputType> | number
         }
       }
     }
@@ -1488,6 +1563,7 @@ export const ProjectScalarFieldEnum = {
   homeownerId: 'homeownerId',
   title: 'title',
   description: 'description',
+  adminNotes: 'adminNotes',
   zipCode: 'zipCode',
   addressLine1: 'addressLine1',
   city: 'city',
@@ -1511,6 +1587,19 @@ export const ProjectItemScalarFieldEnum = {
 } as const
 
 export type ProjectItemScalarFieldEnum = (typeof ProjectItemScalarFieldEnum)[keyof typeof ProjectItemScalarFieldEnum]
+
+
+export const ProjectContractorMessageScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  contractorId: 'contractorId',
+  projectItemId: 'projectItemId',
+  body: 'body',
+  createdAt: 'createdAt',
+  readAt: 'readAt'
+} as const
+
+export type ProjectContractorMessageScalarFieldEnum = (typeof ProjectContractorMessageScalarFieldEnum)[keyof typeof ProjectContractorMessageScalarFieldEnum]
 
 
 export const BidScalarFieldEnum = {
@@ -1895,6 +1984,7 @@ export type GlobalOmitConfig = {
   catalogItem?: Prisma.CatalogItemOmit
   project?: Prisma.ProjectOmit
   projectItem?: Prisma.ProjectItemOmit
+  projectContractorMessage?: Prisma.ProjectContractorMessageOmit
   bid?: Prisma.BidOmit
   bidLineItem?: Prisma.BidLineItemOmit
   projectPhoto?: Prisma.ProjectPhotoOmit

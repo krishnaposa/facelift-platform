@@ -9,8 +9,7 @@ export { schemaUsesCountField } from '@/lib/catalog-selection';
  */
 export function catalogRowsToProjectItemCreateMany(
   projectId: string,
-  rows: CatalogSelectionRow[],
-  itemNotes: string | null
+  rows: CatalogSelectionRow[]
 ) {
   return rows.map((row) => {
     const opts = { ...(row.selectedOptions ?? {}) };
@@ -22,6 +21,10 @@ export function catalogRowsToProjectItemCreateMany(
     }
     const clean: Record<string, unknown> = { ...opts };
     delete clean.count;
+    const lineNotes =
+      typeof row.notes === 'string' && row.notes.trim()
+        ? row.notes.trim().slice(0, 2000)
+        : null;
     return {
       projectId,
       catalogItemId: row.catalogItemId,
@@ -30,7 +33,7 @@ export function catalogRowsToProjectItemCreateMany(
         Object.keys(clean).length > 0
           ? (clean as Prisma.InputJsonValue)
           : Prisma.JsonNull,
-      notes: itemNotes || null,
+      notes: lineNotes,
     };
   });
 }

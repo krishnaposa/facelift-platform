@@ -58,6 +58,7 @@ export const ModelName = {
   CatalogItem: 'CatalogItem',
   Project: 'Project',
   ProjectItem: 'ProjectItem',
+  ProjectContractorMessage: 'ProjectContractorMessage',
   Bid: 'Bid',
   BidLineItem: 'BidLineItem',
   ProjectPhoto: 'ProjectPhoto',
@@ -153,6 +154,7 @@ export const ProjectScalarFieldEnum = {
   homeownerId: 'homeownerId',
   title: 'title',
   description: 'description',
+  adminNotes: 'adminNotes',
   zipCode: 'zipCode',
   addressLine1: 'addressLine1',
   city: 'city',
@@ -176,6 +178,19 @@ export const ProjectItemScalarFieldEnum = {
 } as const
 
 export type ProjectItemScalarFieldEnum = (typeof ProjectItemScalarFieldEnum)[keyof typeof ProjectItemScalarFieldEnum]
+
+
+export const ProjectContractorMessageScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  contractorId: 'contractorId',
+  projectItemId: 'projectItemId',
+  body: 'body',
+  createdAt: 'createdAt',
+  readAt: 'readAt'
+} as const
+
+export type ProjectContractorMessageScalarFieldEnum = (typeof ProjectContractorMessageScalarFieldEnum)[keyof typeof ProjectContractorMessageScalarFieldEnum]
 
 
 export const BidScalarFieldEnum = {

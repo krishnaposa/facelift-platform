@@ -20,7 +20,10 @@ const pool =
     connectionString,
   });
 
-const adapter = new PrismaPg(pool);
+// Prisma adapter bundles its own @types/pg; runtime Pool is compatible.
+const adapter = new PrismaPg(
+  pool as unknown as ConstructorParameters<typeof PrismaPg>[0]
+);
 
 export const prisma =
   globalForPrisma.prisma ??

@@ -3,9 +3,11 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { dashboardPathForRole, type SessionRole } from '@/lib/auth-routing';
 
 export default function LoginPage() {
   const router = useRouter();
+  const [accountType, setAccountType] = useState<'homeowner' | 'contractor' | 'admin'>('homeowner');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -17,10 +19,16 @@ export default function LoginPage() {
     setError('');
 
     try {
+      const expectedRole =
+        accountType === 'contractor'
+          ? 'CONTRACTOR'
+          : accountType === 'admin'
+            ? 'ADMIN'
+            : 'HOMEOWNER';
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, expectedRole }),
       });
 
       const data = await res.json().catch(() => null);
@@ -29,7 +37,8 @@ export default function LoginPage() {
         throw new Error(data?.error || 'Failed to log in.');
       }
 
-      router.push('/dashboard/homeowner');
+      const role = (data?.user?.role as SessionRole | undefined) ?? 'HOMEOWNER';
+      router.push(dashboardPathForRole(role));
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong.');
@@ -49,8 +58,44 @@ export default function LoginPage() {
             Welcome back
           </h1>
           <p className="mt-2 text-slate-600">
-            Log in to manage your facelift projects.
+            Choose your account type so we send you to the right dashboard.
           </p>
+
+          <div className="mt-6 grid grid-cols-3 gap-1 rounded-2xl bg-slate-100 p-1">
+            <button
+              type="button"
+              onClick={() => setAccountType('homeowner')}
+              className={`rounded-xl px-2 py-2 text-xs font-semibold sm:px-3 sm:text-sm ${
+                accountType === 'homeowner'
+                  ? 'bg-white text-slate-900 shadow-sm'
+                  : 'text-slate-600'
+              }`}
+            >
+              Homeowner
+            </button>
+            <button
+              type="button"
+              onClick={() => setAccountType('contractor')}
+              className={`rounded-xl px-2 py-2 text-xs font-semibold sm:px-3 sm:text-sm ${
+                accountType === 'contractor'
+                  ? 'bg-white text-slate-900 shadow-sm'
+                  : 'text-slate-600'
+              }`}
+            >
+              Contractor
+            </button>
+            <button
+              type="button"
+              onClick={() => setAccountType('admin')}
+              className={`rounded-xl px-2 py-2 text-xs font-semibold sm:px-3 sm:text-sm ${
+                accountType === 'admin'
+                  ? 'bg-white text-slate-900 shadow-sm'
+                  : 'text-slate-600'
+              }`}
+            >
+              Admin
+            </button>
+          </div>
 
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
             <div>

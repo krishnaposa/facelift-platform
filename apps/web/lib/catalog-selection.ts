@@ -5,6 +5,8 @@ export type CatalogSelectionRow = {
   catalogItemId: string;
   quantity?: number;
   selectedOptions?: Record<string, unknown>;
+  /** Homeowner notes for contractors on this specific line item (optional). */
+  notes?: string;
 };
 
 /** True when optionsSchema uses `count: 'number'` (e.g. bidets). */

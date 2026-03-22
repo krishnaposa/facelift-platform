@@ -33,6 +33,21 @@ export type UserGalleryPickRow = {
   aiReason: string | null;
 };
 
+/** One block of text for AI: only lines where the homeowner left per-item notes. */
+function perLineHomeownerNotesForAI(
+  items: Array<{ notes: string | null; catalogItem: { name: string } }>
+): string | null {
+  const lines = items
+    .map((i) => {
+      const n = typeof i.notes === 'string' ? i.notes.trim() : '';
+      if (!n) return null;
+      return `${i.catalogItem.name}: ${n.slice(0, 500)}`;
+    })
+    .filter((x): x is string => x !== null);
+  if (lines.length === 0) return null;
+  return lines.join('\n');
+}
+
 /**
  * Derive style tags from project context using Azure OpenAI (if configured).
  * Returns a short list of lowercase tags, e.g. ["modern", "minimalist", "bright"].
@@ -40,12 +55,22 @@ export type UserGalleryPickRow = {
 async function getStyleTagsFromAI(
   title: string,
   description: string | null,
-  catalogItemNames: string[]
+  catalogItemNames: string[],
+  perLineHomeownerNotes: string | null = null
 ): Promise<string[]> {
   const client = getAzureOpenAI();
   if (!client || !isAzureOpenAIConfigured()) return [];
 
-  const text = [title, description, catalogItemNames.join(', ')].filter(Boolean).join('\n');
+  const text = [
+    title,
+    description,
+    catalogItemNames.join(', '),
+    perLineHomeownerNotes
+      ? `Homeowner notes per upgrade (use for style and intent):\n${perLineHomeownerNotes}`
+      : '',
+  ]
+    .filter(Boolean)
+    .join('\n');
   if (!text.trim()) return [];
 
   try {
@@ -55,7 +80,7 @@ async function getStyleTagsFromAI(
         {
           role: 'system',
           content:
-            'You are a home design assistant. Given a project title, description, and upgrade types, output 3 to 5 single-word style or aesthetic tags that describe the likely look (e.g. modern, traditional, minimalist, cozy, bright, industrial). Output only a comma-separated list of lowercase tags, nothing else.',
+            'You are a home design assistant. Given a project title, description, upgrade types, and optional per-upgrade homeowner notes, output 3 to 5 single-word style or aesthetic tags that describe the likely look (e.g. modern, traditional, minimalist, cozy, bright, industrial). Output only a comma-separated list of lowercase tags, nothing else.',
         },
         {
           role: 'user',
@@ -94,6 +119,8 @@ async function pickAndKeywordGalleryWithAI(args: {
   projectTitle: string;
   projectDescription: string | null;
   catalogItemNames: string[];
+  /** Homeowner notes keyed by upgrade name; omitted when empty. */
+  perLineHomeownerNotes?: string | null;
   candidates: Array<{
     id: string;
     title: string | null;
@@ -111,6 +138,9 @@ async function pickAndKeywordGalleryWithAI(args: {
       title: args.projectTitle,
       description: args.projectDescription,
       upgradeTypes: args.catalogItemNames,
+      ...(args.perLineHomeownerNotes
+        ? { homeownerNotesPerUpgrade: args.perLineHomeownerNotes }
+        : {}),
     },
     candidates: args.candidates.map((c) => ({
       id: c.id,
@@ -129,7 +159,7 @@ async function pickAndKeywordGalleryWithAI(args: {
         {
           role: 'system',
           content:
-            'You help curate home renovation inspiration. Choose the best gallery images for the project from the provided candidates, then generate searchable keywords per chosen image. Output ONLY valid JSON: { "picks": [ { "id": "<candidate id>", "rank": 1, "keywords": ["..."], "reason": "..." } ] }. Keywords should be short (1-2 words each), lowercase, and useful for search (style, colors, finishes, vibe). Return at most maxPicks picks.',
+            'You help curate home renovation inspiration. Choose the best gallery images for the project from the provided candidates (use project title, description, upgrade types, and any homeownerNotesPerUpgrade when present), then generate searchable keywords per chosen image. Output ONLY valid JSON: { "picks": [ { "id": "<candidate id>", "rank": 1, "keywords": ["..."], "reason": "..." } ] }. Keywords should be short (1-2 words each), lowercase, and useful for search (style, colors, finishes, vibe). Return at most maxPicks picks.',
         },
         {
           role: 'user',
@@ -185,10 +215,12 @@ export async function getGalleryForProject(projectId: string): Promise<GalleryIm
   if (catalogItemIds.length === 0) return [];
 
   const catalogNames = [...new Set(project.items.map((i) => i.catalogItem.name))];
+  const lineNotesForAi = perLineHomeownerNotesForAI(project.items);
   const styleTags = await getStyleTagsFromAI(
     project.title,
     project.description ?? null,
-    catalogNames
+    catalogNames,
+    lineNotesForAi
   );
 
   const galleryImages = await prisma.galleryImage.findMany({
@@ -234,6 +266,48 @@ export async function getGalleryForProject(projectId: string): Promise<GalleryIm
 }
 
 /**
+ * How long to keep persisted AI gallery picks before refreshing on a dashboard visit.
+ * Keeps contractor/bid aggregates fresh via `force-dynamic` while limiting Azure calls.
+ */
+export const DEFAULT_GALLERY_PICKS_MAX_AGE_MS = 15 * 60 * 1000;
+
+/** True if we should re-run AI ranking (or no picks exist yet). */
+export async function shouldRefreshProjectGalleryPicks(
+  projectId: string,
+  maxAgeMs: number = DEFAULT_GALLERY_PICKS_MAX_AGE_MS
+): Promise<boolean> {
+  try {
+    const latest = await prisma.projectGalleryPick.findFirst({
+      where: { projectId },
+      orderBy: { updatedAt: 'desc' },
+      select: { updatedAt: true },
+    });
+    if (!latest) return true;
+    return Date.now() - latest.updatedAt.getTime() > maxAgeMs;
+  } catch {
+    return true;
+  }
+}
+
+/** True if the user-level inspiration feed should be refreshed. */
+export async function shouldRefreshUserGalleryPicks(
+  userId: string,
+  maxAgeMs: number = DEFAULT_GALLERY_PICKS_MAX_AGE_MS
+): Promise<boolean> {
+  try {
+    const latest = await prisma.userGalleryPick.findFirst({
+      where: { userId },
+      orderBy: { updatedAt: 'desc' },
+      select: { updatedAt: true },
+    });
+    if (!latest) return true;
+    return Date.now() - latest.updatedAt.getTime() > maxAgeMs;
+  } catch {
+    return true;
+  }
+}
+
+/**
  * Generate (or refresh) persisted AI gallery picks for a project.
  * Saves into ProjectGalleryPick with keywords for search.
  *
@@ -263,6 +337,7 @@ export async function refreshProjectGalleryPicks(projectId: string): Promise<Pro
   if (galleryImages.length === 0) return [];
 
   const catalogNames = [...new Set(project.items.map((i) => i.catalogItem.name))];
+  const lineNotesForAi = perLineHomeownerNotesForAI(project.items);
   const candidates = galleryImages.map((img) => ({
     id: img.id,
     title: img.title,
@@ -277,6 +352,7 @@ export async function refreshProjectGalleryPicks(projectId: string): Promise<Pro
     projectTitle: project.title,
     projectDescription: project.description ?? null,
     catalogItemNames: catalogNames,
+    perLineHomeownerNotes: lineNotesForAi,
     candidates,
     maxPicks,
   });
@@ -548,7 +624,7 @@ export async function seedGalleryFromAI(): Promise<number> {
 }
 
 /**
- * Landing-page gallery: AI-ranked (or fallback) public gallery images.
+ * Landing-page gallery: newest public images from the DB (deterministic order).
  * When the DB has no GalleryImage rows, tries to seed via AI + Unsplash, then returns DB images or placeholders.
  *
  * If Prisma fails (e.g. `GalleryImage` table missing — run migrations), returns static fallback images.
@@ -578,31 +654,13 @@ export async function getLandingGallery(limit = 6): Promise<GalleryImageForProje
 
     if (galleryImages.length === 0) return LANDING_FALLBACK_GALLERY.slice(0, limit);
 
-    const candidates = galleryImages.map((img) => ({
-      id: img.id,
-      title: img.title,
-      caption: img.caption,
-      styleTag: img.styleTag,
-      catalogItemName: img.catalogItem?.name ?? null,
-    }));
-
-    const maxPicks = Math.min(limit, 12);
-
-    const aiPicks = await pickAndKeywordGalleryWithAI({
-      projectTitle: 'Landing inspiration',
-      projectDescription: 'Show a balanced set of popular home facelift gallery images.',
-      catalogItemNames: [],
-      candidates,
-      maxPicks,
-    });
-
-    const chosenIds = new Set(aiPicks.map((p) => p.galleryImageId));
-    const ordered =
-      aiPicks.length > 0
-        ? galleryImages.filter((img) => chosenIds.has(img.id))
-        : galleryImages.slice(0, maxPicks);
-
-    return ordered.slice(0, maxPicks).map((img) => ({
+    /**
+     * Landing must be deterministic across SSR passes. AI picks can differ between calls
+     * (and React Strict Mode / dev can render twice), which causes hydration mismatches
+     * deeper in the page tree.
+     */
+    const maxPicks = Math.min(limit, galleryImages.length);
+    return galleryImages.slice(0, maxPicks).map((img) => ({
       id: img.id,
       imageUrl: img.imageUrl,
       title: img.title,

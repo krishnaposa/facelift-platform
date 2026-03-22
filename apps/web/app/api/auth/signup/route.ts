@@ -9,6 +9,10 @@ export async function POST(req: NextRequest) {
 
     const email = String(body?.email || '').trim().toLowerCase();
     const password = String(body?.password || '');
+    const roleRaw = body?.role;
+    const role =
+      roleRaw === 'CONTRACTOR' || roleRaw === 'HOMEOWNER' ? roleRaw : 'HOMEOWNER';
+    const companyName = String(body?.companyName || '').trim();
 
     if (!email) {
       return NextResponse.json({ error: 'Email is required.' }, { status: 400 });
@@ -17,6 +21,13 @@ export async function POST(req: NextRequest) {
     if (password.length < 8) {
       return NextResponse.json(
         { error: 'Password must be at least 8 characters.' },
+        { status: 400 }
+      );
+    }
+
+    if (role === 'CONTRACTOR' && !companyName) {
+      return NextResponse.json(
+        { error: 'Company name is required for contractor accounts.' },
         { status: 400 }
       );
     }
@@ -34,12 +45,26 @@ export async function POST(req: NextRequest) {
 
     const passwordHash = await bcrypt.hash(password, 10);
 
-    const user = await prisma.user.create({
-      data: {
-        email,
-        passwordHash,
-        role: 'HOMEOWNER',
-      },
+    const user = await prisma.$transaction(async (tx) => {
+      const u = await tx.user.create({
+        data: {
+          email,
+          passwordHash,
+          role,
+        },
+      });
+
+      if (role === 'CONTRACTOR') {
+        await tx.contractorProfile.create({
+          data: {
+            userId: u.id,
+            companyName,
+            serviceZipCodes: [],
+          },
+        });
+      }
+
+      return u;
     });
 
     const response = NextResponse.json({

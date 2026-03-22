@@ -47,6 +47,10 @@ export async function POST(req: NextRequest) {
               row.selectedOptions && typeof row.selectedOptions === 'object' && !Array.isArray(row.selectedOptions)
                 ? (row.selectedOptions as Record<string, unknown>)
                 : undefined,
+            notes:
+              typeof row.notes === 'string' && row.notes.trim()
+                ? row.notes.trim().slice(0, 2000)
+                : undefined,
           }))
       : [];
 
@@ -146,7 +150,7 @@ export async function POST(req: NextRequest) {
     });
 
     await prisma.projectItem.createMany({
-      data: catalogRowsToProjectItemCreateMany(project.id, rows, notes),
+      data: catalogRowsToProjectItemCreateMany(project.id, rows),
     });
 
     if (photos.length > 0) {

@@ -36,6 +36,10 @@ function parseCatalogItemsBody(body: unknown): CatalogSelectionRow[] {
         !Array.isArray(row.selectedOptions)
           ? (row.selectedOptions as Record<string, unknown>)
           : undefined,
+      notes:
+        typeof row.notes === 'string' && row.notes.trim()
+          ? row.notes.trim().slice(0, 2000)
+          : undefined,
     }));
 }
 
@@ -178,7 +182,7 @@ export async function PATCH(
       });
 
       await tx.projectItem.createMany({
-        data: catalogRowsToProjectItemCreateMany(id, rows, notes),
+        data: catalogRowsToProjectItemCreateMany(id, rows),
       });
 
       if (photos.length > 0) {

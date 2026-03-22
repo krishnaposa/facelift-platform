@@ -231,6 +231,7 @@ export type ProjectItemWhereInput = {
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
   catalogItem?: Prisma.XOR<Prisma.CatalogItemScalarRelationFilter, Prisma.CatalogItemWhereInput>
   bidLineItems?: Prisma.BidLineItemListRelationFilter
+  contractorMessages?: Prisma.ProjectContractorMessageListRelationFilter
 }
 
 export type ProjectItemOrderByWithRelationInput = {
@@ -244,6 +245,7 @@ export type ProjectItemOrderByWithRelationInput = {
   project?: Prisma.ProjectOrderByWithRelationInput
   catalogItem?: Prisma.CatalogItemOrderByWithRelationInput
   bidLineItems?: Prisma.BidLineItemOrderByRelationAggregateInput
+  contractorMessages?: Prisma.ProjectContractorMessageOrderByRelationAggregateInput
 }
 
 export type ProjectItemWhereUniqueInput = Prisma.AtLeast<{
@@ -260,6 +262,7 @@ export type ProjectItemWhereUniqueInput = Prisma.AtLeast<{
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
   catalogItem?: Prisma.XOR<Prisma.CatalogItemScalarRelationFilter, Prisma.CatalogItemWhereInput>
   bidLineItems?: Prisma.BidLineItemListRelationFilter
+  contractorMessages?: Prisma.ProjectContractorMessageListRelationFilter
 }, "id">
 
 export type ProjectItemOrderByWithAggregationInput = {
@@ -299,6 +302,7 @@ export type ProjectItemCreateInput = {
   project: Prisma.ProjectCreateNestedOneWithoutItemsInput
   catalogItem: Prisma.CatalogItemCreateNestedOneWithoutProjectItemsInput
   bidLineItems?: Prisma.BidLineItemCreateNestedManyWithoutProjectItemInput
+  contractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutProjectItemInput
 }
 
 export type ProjectItemUncheckedCreateInput = {
@@ -310,6 +314,7 @@ export type ProjectItemUncheckedCreateInput = {
   notes?: string | null
   createdAt?: Date | string
   bidLineItems?: Prisma.BidLineItemUncheckedCreateNestedManyWithoutProjectItemInput
+  contractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutProjectItemInput
 }
 
 export type ProjectItemUpdateInput = {
@@ -321,6 +326,7 @@ export type ProjectItemUpdateInput = {
   project?: Prisma.ProjectUpdateOneRequiredWithoutItemsNestedInput
   catalogItem?: Prisma.CatalogItemUpdateOneRequiredWithoutProjectItemsNestedInput
   bidLineItems?: Prisma.BidLineItemUpdateManyWithoutProjectItemNestedInput
+  contractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutProjectItemNestedInput
 }
 
 export type ProjectItemUncheckedUpdateInput = {
@@ -332,6 +338,7 @@ export type ProjectItemUncheckedUpdateInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bidLineItems?: Prisma.BidLineItemUncheckedUpdateManyWithoutProjectItemNestedInput
+  contractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutProjectItemNestedInput
 }
 
 export type ProjectItemCreateManyInput = {
@@ -406,6 +413,11 @@ export type ProjectItemMinOrderByAggregateInput = {
 
 export type ProjectItemSumOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
+}
+
+export type ProjectItemNullableScalarRelationFilter = {
+  is?: Prisma.ProjectItemWhereInput | null
+  isNot?: Prisma.ProjectItemWhereInput | null
 }
 
 export type ProjectItemScalarRelationFilter = {
@@ -505,6 +517,22 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type ProjectItemCreateNestedOneWithoutContractorMessagesInput = {
+  create?: Prisma.XOR<Prisma.ProjectItemCreateWithoutContractorMessagesInput, Prisma.ProjectItemUncheckedCreateWithoutContractorMessagesInput>
+  connectOrCreate?: Prisma.ProjectItemCreateOrConnectWithoutContractorMessagesInput
+  connect?: Prisma.ProjectItemWhereUniqueInput
+}
+
+export type ProjectItemUpdateOneWithoutContractorMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectItemCreateWithoutContractorMessagesInput, Prisma.ProjectItemUncheckedCreateWithoutContractorMessagesInput>
+  connectOrCreate?: Prisma.ProjectItemCreateOrConnectWithoutContractorMessagesInput
+  upsert?: Prisma.ProjectItemUpsertWithoutContractorMessagesInput
+  disconnect?: Prisma.ProjectItemWhereInput | boolean
+  delete?: Prisma.ProjectItemWhereInput | boolean
+  connect?: Prisma.ProjectItemWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectItemUpdateToOneWithWhereWithoutContractorMessagesInput, Prisma.ProjectItemUpdateWithoutContractorMessagesInput>, Prisma.ProjectItemUncheckedUpdateWithoutContractorMessagesInput>
+}
+
 export type ProjectItemCreateNestedOneWithoutBidLineItemsInput = {
   create?: Prisma.XOR<Prisma.ProjectItemCreateWithoutBidLineItemsInput, Prisma.ProjectItemUncheckedCreateWithoutBidLineItemsInput>
   connectOrCreate?: Prisma.ProjectItemCreateOrConnectWithoutBidLineItemsInput
@@ -527,6 +555,7 @@ export type ProjectItemCreateWithoutCatalogItemInput = {
   createdAt?: Date | string
   project: Prisma.ProjectCreateNestedOneWithoutItemsInput
   bidLineItems?: Prisma.BidLineItemCreateNestedManyWithoutProjectItemInput
+  contractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutProjectItemInput
 }
 
 export type ProjectItemUncheckedCreateWithoutCatalogItemInput = {
@@ -537,6 +566,7 @@ export type ProjectItemUncheckedCreateWithoutCatalogItemInput = {
   notes?: string | null
   createdAt?: Date | string
   bidLineItems?: Prisma.BidLineItemUncheckedCreateNestedManyWithoutProjectItemInput
+  contractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutProjectItemInput
 }
 
 export type ProjectItemCreateOrConnectWithoutCatalogItemInput = {
@@ -586,6 +616,7 @@ export type ProjectItemCreateWithoutProjectInput = {
   createdAt?: Date | string
   catalogItem: Prisma.CatalogItemCreateNestedOneWithoutProjectItemsInput
   bidLineItems?: Prisma.BidLineItemCreateNestedManyWithoutProjectItemInput
+  contractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutProjectItemInput
 }
 
 export type ProjectItemUncheckedCreateWithoutProjectInput = {
@@ -596,6 +627,7 @@ export type ProjectItemUncheckedCreateWithoutProjectInput = {
   notes?: string | null
   createdAt?: Date | string
   bidLineItems?: Prisma.BidLineItemUncheckedCreateNestedManyWithoutProjectItemInput
+  contractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutProjectItemInput
 }
 
 export type ProjectItemCreateOrConnectWithoutProjectInput = {
@@ -624,6 +656,66 @@ export type ProjectItemUpdateManyWithWhereWithoutProjectInput = {
   data: Prisma.XOR<Prisma.ProjectItemUpdateManyMutationInput, Prisma.ProjectItemUncheckedUpdateManyWithoutProjectInput>
 }
 
+export type ProjectItemCreateWithoutContractorMessagesInput = {
+  id?: string
+  quantity?: number
+  selectedOptions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: string | null
+  createdAt?: Date | string
+  project: Prisma.ProjectCreateNestedOneWithoutItemsInput
+  catalogItem: Prisma.CatalogItemCreateNestedOneWithoutProjectItemsInput
+  bidLineItems?: Prisma.BidLineItemCreateNestedManyWithoutProjectItemInput
+}
+
+export type ProjectItemUncheckedCreateWithoutContractorMessagesInput = {
+  id?: string
+  projectId: string
+  catalogItemId: string
+  quantity?: number
+  selectedOptions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: string | null
+  createdAt?: Date | string
+  bidLineItems?: Prisma.BidLineItemUncheckedCreateNestedManyWithoutProjectItemInput
+}
+
+export type ProjectItemCreateOrConnectWithoutContractorMessagesInput = {
+  where: Prisma.ProjectItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectItemCreateWithoutContractorMessagesInput, Prisma.ProjectItemUncheckedCreateWithoutContractorMessagesInput>
+}
+
+export type ProjectItemUpsertWithoutContractorMessagesInput = {
+  update: Prisma.XOR<Prisma.ProjectItemUpdateWithoutContractorMessagesInput, Prisma.ProjectItemUncheckedUpdateWithoutContractorMessagesInput>
+  create: Prisma.XOR<Prisma.ProjectItemCreateWithoutContractorMessagesInput, Prisma.ProjectItemUncheckedCreateWithoutContractorMessagesInput>
+  where?: Prisma.ProjectItemWhereInput
+}
+
+export type ProjectItemUpdateToOneWithWhereWithoutContractorMessagesInput = {
+  where?: Prisma.ProjectItemWhereInput
+  data: Prisma.XOR<Prisma.ProjectItemUpdateWithoutContractorMessagesInput, Prisma.ProjectItemUncheckedUpdateWithoutContractorMessagesInput>
+}
+
+export type ProjectItemUpdateWithoutContractorMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  selectedOptions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  project?: Prisma.ProjectUpdateOneRequiredWithoutItemsNestedInput
+  catalogItem?: Prisma.CatalogItemUpdateOneRequiredWithoutProjectItemsNestedInput
+  bidLineItems?: Prisma.BidLineItemUpdateManyWithoutProjectItemNestedInput
+}
+
+export type ProjectItemUncheckedUpdateWithoutContractorMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  catalogItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  selectedOptions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bidLineItems?: Prisma.BidLineItemUncheckedUpdateManyWithoutProjectItemNestedInput
+}
+
 export type ProjectItemCreateWithoutBidLineItemsInput = {
   id?: string
   quantity?: number
@@ -632,6 +724,7 @@ export type ProjectItemCreateWithoutBidLineItemsInput = {
   createdAt?: Date | string
   project: Prisma.ProjectCreateNestedOneWithoutItemsInput
   catalogItem: Prisma.CatalogItemCreateNestedOneWithoutProjectItemsInput
+  contractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutProjectItemInput
 }
 
 export type ProjectItemUncheckedCreateWithoutBidLineItemsInput = {
@@ -642,6 +735,7 @@ export type ProjectItemUncheckedCreateWithoutBidLineItemsInput = {
   selectedOptions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   notes?: string | null
   createdAt?: Date | string
+  contractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutProjectItemInput
 }
 
 export type ProjectItemCreateOrConnectWithoutBidLineItemsInput = {
@@ -668,6 +762,7 @@ export type ProjectItemUpdateWithoutBidLineItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutItemsNestedInput
   catalogItem?: Prisma.CatalogItemUpdateOneRequiredWithoutProjectItemsNestedInput
+  contractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutProjectItemNestedInput
 }
 
 export type ProjectItemUncheckedUpdateWithoutBidLineItemsInput = {
@@ -678,6 +773,7 @@ export type ProjectItemUncheckedUpdateWithoutBidLineItemsInput = {
   selectedOptions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutProjectItemNestedInput
 }
 
 export type ProjectItemCreateManyCatalogItemInput = {
@@ -697,6 +793,7 @@ export type ProjectItemUpdateWithoutCatalogItemInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutItemsNestedInput
   bidLineItems?: Prisma.BidLineItemUpdateManyWithoutProjectItemNestedInput
+  contractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutProjectItemNestedInput
 }
 
 export type ProjectItemUncheckedUpdateWithoutCatalogItemInput = {
@@ -707,6 +804,7 @@ export type ProjectItemUncheckedUpdateWithoutCatalogItemInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bidLineItems?: Prisma.BidLineItemUncheckedUpdateManyWithoutProjectItemNestedInput
+  contractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutProjectItemNestedInput
 }
 
 export type ProjectItemUncheckedUpdateManyWithoutCatalogItemInput = {
@@ -735,6 +833,7 @@ export type ProjectItemUpdateWithoutProjectInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   catalogItem?: Prisma.CatalogItemUpdateOneRequiredWithoutProjectItemsNestedInput
   bidLineItems?: Prisma.BidLineItemUpdateManyWithoutProjectItemNestedInput
+  contractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutProjectItemNestedInput
 }
 
 export type ProjectItemUncheckedUpdateWithoutProjectInput = {
@@ -745,6 +844,7 @@ export type ProjectItemUncheckedUpdateWithoutProjectInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bidLineItems?: Prisma.BidLineItemUncheckedUpdateManyWithoutProjectItemNestedInput
+  contractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutProjectItemNestedInput
 }
 
 export type ProjectItemUncheckedUpdateManyWithoutProjectInput = {
@@ -763,10 +863,12 @@ export type ProjectItemUncheckedUpdateManyWithoutProjectInput = {
 
 export type ProjectItemCountOutputType = {
   bidLineItems: number
+  contractorMessages: number
 }
 
 export type ProjectItemCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bidLineItems?: boolean | ProjectItemCountOutputTypeCountBidLineItemsArgs
+  contractorMessages?: boolean | ProjectItemCountOutputTypeCountContractorMessagesArgs
 }
 
 /**
@@ -786,6 +888,13 @@ export type ProjectItemCountOutputTypeCountBidLineItemsArgs<ExtArgs extends runt
   where?: Prisma.BidLineItemWhereInput
 }
 
+/**
+ * ProjectItemCountOutputType without action
+ */
+export type ProjectItemCountOutputTypeCountContractorMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProjectContractorMessageWhereInput
+}
+
 
 export type ProjectItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -798,6 +907,7 @@ export type ProjectItemSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   catalogItem?: boolean | Prisma.CatalogItemDefaultArgs<ExtArgs>
   bidLineItems?: boolean | Prisma.ProjectItem$bidLineItemsArgs<ExtArgs>
+  contractorMessages?: boolean | Prisma.ProjectItem$contractorMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectItemCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["projectItem"]>
 
@@ -840,6 +950,7 @@ export type ProjectItemInclude<ExtArgs extends runtime.Types.Extensions.Internal
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   catalogItem?: boolean | Prisma.CatalogItemDefaultArgs<ExtArgs>
   bidLineItems?: boolean | Prisma.ProjectItem$bidLineItemsArgs<ExtArgs>
+  contractorMessages?: boolean | Prisma.ProjectItem$contractorMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectItemCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProjectItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -857,6 +968,7 @@ export type $ProjectItemPayload<ExtArgs extends runtime.Types.Extensions.Interna
     project: Prisma.$ProjectPayload<ExtArgs>
     catalogItem: Prisma.$CatalogItemPayload<ExtArgs>
     bidLineItems: Prisma.$BidLineItemPayload<ExtArgs>[]
+    contractorMessages: Prisma.$ProjectContractorMessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1263,6 +1375,7 @@ export interface Prisma__ProjectItemClient<T, Null = never, ExtArgs extends runt
   project<T extends Prisma.ProjectDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectDefaultArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   catalogItem<T extends Prisma.CatalogItemDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CatalogItemDefaultArgs<ExtArgs>>): Prisma.Prisma__CatalogItemClient<runtime.Types.Result.GetResult<Prisma.$CatalogItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   bidLineItems<T extends Prisma.ProjectItem$bidLineItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectItem$bidLineItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BidLineItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  contractorMessages<T extends Prisma.ProjectItem$contractorMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectItem$contractorMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectContractorMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1495,11 +1608,6 @@ export type ProjectItemFindManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Skip the first `n` ProjectItems.
    */
   skip?: number
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-   * 
-   * Filter by unique combinations of ProjectItems.
-   */
   distinct?: Prisma.ProjectItemScalarFieldEnum | Prisma.ProjectItemScalarFieldEnum[]
 }
 
@@ -1721,6 +1829,30 @@ export type ProjectItem$bidLineItemsArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.BidLineItemScalarFieldEnum | Prisma.BidLineItemScalarFieldEnum[]
+}
+
+/**
+ * ProjectItem.contractorMessages
+ */
+export type ProjectItem$contractorMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProjectContractorMessage
+   */
+  select?: Prisma.ProjectContractorMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProjectContractorMessage
+   */
+  omit?: Prisma.ProjectContractorMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProjectContractorMessageInclude<ExtArgs> | null
+  where?: Prisma.ProjectContractorMessageWhereInput
+  orderBy?: Prisma.ProjectContractorMessageOrderByWithRelationInput | Prisma.ProjectContractorMessageOrderByWithRelationInput[]
+  cursor?: Prisma.ProjectContractorMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProjectContractorMessageScalarFieldEnum | Prisma.ProjectContractorMessageScalarFieldEnum[]
 }
 
 /**

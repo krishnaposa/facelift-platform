@@ -18,6 +18,8 @@ import { getSession } from '@/lib/auth';
 import { getGalleryForProject } from '@/lib/project-gallery';
 import { getProjectCostEstimate } from '@/lib/project-cost';
 
+export const dynamic = 'force-dynamic';
+
 export default async function ProjectDetailPage({
   params,
 }: {
@@ -64,10 +66,10 @@ export default async function ProjectDetailPage({
     notFound();
   }
 
-  const [gallery, costEstimate, avgMap, allCatalogRows] = await Promise.all([
+  const [gallery, costEstimate, avgMap, allCatalogRows, contractorInquiries] = await Promise.all([
     getGalleryForProject(project.id),
     getProjectCostEstimate(project.id),
-    getAverageBidLineAmountByCatalogItem(),
+    getAverageBidLineAmountByCatalogItem({ zipCode: project.zipCode }),
     prisma.catalogItem.findMany({
       where: { active: true },
       include: {
@@ -80,6 +82,23 @@ export default async function ProjectDetailPage({
         },
       },
       orderBy: [{ category: { name: 'asc' } }, { name: 'asc' }],
+    }),
+    prisma.projectContractorMessage.findMany({
+      where: { projectId: project.id },
+      orderBy: { createdAt: 'desc' },
+      include: {
+        contractor: {
+          select: {
+            email: true,
+            contractorProfile: { select: { companyName: true } },
+          },
+        },
+        projectItem: {
+          select: {
+            catalogItem: { select: { name: true } },
+          },
+        },
+      },
     }),
   ]);
 
@@ -195,8 +214,8 @@ export default async function ProjectDetailPage({
                           <p className="mt-2 text-sm text-slate-500">Using catalog defaults.</p>
                         )}
                         {item.notes ? (
-                          <p className="mt-2 text-sm text-slate-600">
-                            <span className="font-medium">Note: </span>
+                          <p className="mt-2 rounded-xl bg-amber-50/90 px-3 py-2 text-sm text-amber-950 ring-1 ring-amber-100">
+                            <span className="font-semibold">Note for contractors: </span>
                             {item.notes}
                           </p>
                         ) : null}
@@ -263,6 +282,45 @@ export default async function ProjectDetailPage({
             </div>
           </div>
         </div>
+
+        {contractorInquiries.length > 0 ? (
+          <div className="mt-6 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200">
+            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+              Contractor questions
+            </div>
+            <p className="mt-2 text-sm text-slate-600">
+              Clarifications contractors sent while reviewing your scope.
+            </p>
+            <ul className="mt-4 space-y-4">
+              {contractorInquiries.map((m) => (
+                <li
+                  key={m.id}
+                  className="rounded-2xl border border-slate-200 bg-slate-50/90 px-4 py-3"
+                >
+                  <div className="flex flex-wrap items-baseline justify-between gap-2 text-xs text-slate-500">
+                    <span className="font-semibold text-slate-800">
+                      {m.contractor.contractorProfile?.companyName ?? m.contractor.email}
+                    </span>
+                    <time dateTime={m.createdAt.toISOString()}>
+                      {new Intl.DateTimeFormat('en-US', {
+                        dateStyle: 'medium',
+                        timeStyle: 'short',
+                      }).format(m.createdAt)}
+                    </time>
+                  </div>
+                  {m.projectItem ? (
+                    <div className="mt-1 text-xs font-semibold text-slate-600">
+                      Re: {m.projectItem.catalogItem.name}
+                    </div>
+                  ) : (
+                    <div className="mt-1 text-xs font-semibold text-slate-600">Whole project</div>
+                  )}
+                  <p className="mt-2 whitespace-pre-wrap text-sm text-slate-800">{m.body}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
 
         <div className="mt-6 rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200">
           <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">

@@ -33,6 +33,29 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid credentials.' }, { status: 401 });
     }
 
+    const expectedRole = body?.expectedRole;
+    if (
+      expectedRole === 'HOMEOWNER' ||
+      expectedRole === 'CONTRACTOR' ||
+      expectedRole === 'ADMIN'
+    ) {
+      if (existingUser.role !== expectedRole) {
+        const as =
+          existingUser.role === 'CONTRACTOR'
+            ? 'Contractor'
+            : existingUser.role === 'ADMIN'
+              ? 'Admin'
+              : 'Homeowner';
+        const article = as === 'Admin' ? 'an' : 'a';
+        return NextResponse.json(
+          {
+            error: `This email is ${article} ${as.toLowerCase()} account. Select ${as} above to sign in.`,
+          },
+          { status: 403 }
+        );
+      }
+    }
+
     const response = NextResponse.json({
       user: {
         id: existingUser.id,
@@ -47,10 +70,10 @@ export async function POST(req: NextRequest) {
       role: existingUser.role,
     });
   } catch (error) {
-    console.error('Signup error:', error);
+    console.error('Login error:', error);
 
     return NextResponse.json(
-      { error: 'Failed to create account.' },
+      { error: 'Failed to log in.' },
       { status: 500 }
     );
   }

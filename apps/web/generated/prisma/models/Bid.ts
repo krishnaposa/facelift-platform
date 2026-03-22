@@ -1607,11 +1607,6 @@ export type BidFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * Skip the first `n` Bids.
    */
   skip?: number
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-   * 
-   * Filter by unique combinations of Bids.
-   */
   distinct?: Prisma.BidScalarFieldEnum | Prisma.BidScalarFieldEnum[]
 }
 

@@ -13,6 +13,7 @@ type Props = {
 type SelectionState = {
   quantity: number;
   options: Record<string, string | number>;
+  lineNotes: string;
 };
 
 function defaultOptionsFromSchema(schema: unknown): Record<string, string | number> {
@@ -96,6 +97,7 @@ export default function NewProjectWizard({ catalog }: Props) {
         next[item.id] = {
           quantity: 1,
           options: defaultOptionsFromSchema(item.optionsSchema),
+          lineNotes: '',
         };
       }
       return next;
@@ -180,10 +182,13 @@ export default function NewProjectWizard({ catalog }: Props) {
         if (typeof opts.count === 'number') {
           delete opts.count;
         }
+        const lineNotesTrim = (sel.lineNotes ?? '').trim();
+        const rowNotes = lineNotesTrim ? lineNotesTrim.slice(0, 2000) : undefined;
         return {
           catalogItemId: id,
           quantity: qty,
           selectedOptions: Object.keys(opts).length > 0 ? opts : undefined,
+          ...(rowNotes ? { notes: rowNotes } : {}),
         };
       });
 
@@ -551,7 +556,8 @@ function StepConfigureOptions({
     <div>
       <h2 className="text-2xl font-semibold text-slate-900">Configure options</h2>
       <p className="mt-2 text-slate-600">
-        Set preferences for each upgrade. Quantities apply to units like toilets when shown.
+        Set preferences for each upgrade. Add notes so contractors know what you want—this also
+        helps tailor inspiration and estimates.
       </p>
 
       <div className="mt-8 space-y-8">
@@ -662,9 +668,24 @@ function StepConfigureOptions({
                   </div>
                 ) : null}
               </div>
-            </div>
-          );
-        })}
+
+                  <div className="mt-6 sm:col-span-2">
+                    <label className="mb-2 block text-sm font-semibold text-slate-700">
+                      Notes for contractors (this upgrade)
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={sel.lineNotes ?? ''}
+                      onChange={(e) =>
+                        updateSelection(id, { lineNotes: e.target.value })
+                      }
+                      placeholder="Optional: finishes, access, what you’re trying to match, etc."
+                      className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-slate-900"
+                    />
+                  </div>
+                </div>
+              );
+            })}
       </div>
     </div>
   );
@@ -718,7 +739,12 @@ function StepProjectDetails({
           />
         </div>
         <div>
-          <label className="mb-2 block text-sm font-semibold text-slate-700">Notes</label>
+          <label className="mb-2 block text-sm font-semibold text-slate-700">
+            Overall project notes
+          </label>
+          <p className="mb-2 text-xs text-slate-500">
+            Whole-project context (timing, budget, access). Per-upgrade details go in step 2.
+          </p>
           <textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}

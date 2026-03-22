@@ -1104,11 +1104,6 @@ export type HomeownerProfileFindManyArgs<ExtArgs extends runtime.Types.Extension
    * Skip the first `n` HomeownerProfiles.
    */
   skip?: number
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-   * 
-   * Filter by unique combinations of HomeownerProfiles.
-   */
   distinct?: Prisma.HomeownerProfileScalarFieldEnum | Prisma.HomeownerProfileScalarFieldEnum[]
 }
 

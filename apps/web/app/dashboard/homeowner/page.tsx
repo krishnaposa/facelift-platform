@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import SafeImage from '@/app/components/ui/SafeImage';
 import HomeownerProjectCard from '@/app/dashboard/homeowner/HomeownerProjectCard';
+import HomeownerProjectsLayout from '@/app/dashboard/homeowner/HomeownerProjectsLayout';
 import { redirect } from 'next/navigation';
 import {
   emptyAvgInstallCost,
-  getAverageBidLineAmountByCatalogItem,
+  getAverageBidLineMapsForZips,
 } from '@/lib/catalog-install-cost';
 import {
   enrichCatalogForDashboard,
@@ -15,7 +16,14 @@ import {
 import { resolveCatalogThumbnail } from '@/lib/catalog-landing';
 import { prisma } from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
-import { refreshProjectGalleryPicks, refreshUserGalleryPicks } from '@/lib/project-gallery';
+import {
+  refreshProjectGalleryPicks,
+  refreshUserGalleryPicks,
+  shouldRefreshProjectGalleryPicks,
+  shouldRefreshUserGalleryPicks,
+} from '@/lib/project-gallery';
+
+export const dynamic = 'force-dynamic';
 
 export default async function HomeownerDashboardPage() {
   const session = await getSession();
@@ -24,39 +32,48 @@ export default async function HomeownerDashboardPage() {
     redirect('/login');
   }
 
+  if (session.role === 'ADMIN') {
+    redirect('/dashboard/admin');
+  }
+
+  if (session.role === 'CONTRACTOR') {
+    redirect('/dashboard/contractor');
+  }
+
   if (session.role !== 'HOMEOWNER') {
     redirect('/login');
   }
 
-  const [projects, allCatalogRows, avgMap] = await Promise.all([
-    prisma.project.findMany({
-      where: {
-        homeownerId: session.userId,
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-      include: {
-        items: {
-          include: {
-            catalogItem: {
-              include: {
-                category: true,
-                galleryImages: {
-                  where: { isPublic: true },
-                  orderBy: { createdAt: 'desc' },
-                  take: 1,
-                  select: { imageUrl: true },
-                },
+  const projects = await prisma.project.findMany({
+    where: {
+      homeownerId: session.userId,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    include: {
+      items: {
+        include: {
+          catalogItem: {
+            include: {
+              category: true,
+              galleryImages: {
+                where: { isPublic: true },
+                orderBy: { createdAt: 'desc' },
+                take: 1,
+                select: { imageUrl: true },
               },
             },
           },
         },
-        photos: {
-          orderBy: { sortOrder: 'asc' },
-        },
       },
-    }),
+      photos: {
+        orderBy: { sortOrder: 'asc' },
+      },
+    },
+  });
+
+  const [allCatalogRows, bidMaps] = await Promise.all([
     prisma.catalogItem.findMany({
       where: { active: true },
       include: {
@@ -70,18 +87,25 @@ export default async function HomeownerDashboardPage() {
       },
       orderBy: [{ category: { name: 'asc' } }, { name: 'asc' }],
     }),
-    getAverageBidLineAmountByCatalogItem(),
+    getAverageBidLineMapsForZips(
+      projects.length > 0 ? projects.map((p) => p.zipCode) : []
+    ),
   ]);
 
-  const catalogEnriched = enrichCatalogForDashboard(allCatalogRows, avgMap);
-
-  // If the user has projects, ensure each has persisted picks (best-effort).
+  // If the user has projects, refresh AI gallery picks when stale (best-effort).
   if (projects.length > 0) {
-    await Promise.allSettled(projects.slice(0, 12).map((p) => refreshProjectGalleryPicks(p.id)));
+    await Promise.allSettled(
+      projects.slice(0, 12).map(async (p) => {
+        if (await shouldRefreshProjectGalleryPicks(p.id)) {
+          return refreshProjectGalleryPicks(p.id);
+        }
+      })
+    );
   } else {
-    // If there are no projects yet, create a user-level AI gallery feed and persist it.
     try {
-      await refreshUserGalleryPicks(session.userId);
+      if (await shouldRefreshUserGalleryPicks(session.userId)) {
+        await refreshUserGalleryPicks(session.userId);
+      }
     } catch {
       // ignore until DB is migrated / client generated
     }
@@ -207,8 +231,11 @@ export default async function HomeownerDashboardPage() {
             )}
           </div>
         ) : (
-          <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <HomeownerProjectsLayout>
             {projects.map((project) => {
+              const avgMap =
+                bidMaps.mergedByZip.get(project.zipCode.trim()) ?? bidMaps.global;
+              const catalogEnriched = enrichCatalogForDashboard(allCatalogRows, avgMap);
               const selectedIds = new Set(project.items.map((i) => i.catalogItemId));
               const suggested = pickSuggestedCatalogItems(selectedIds, catalogEnriched, 5);
               const estimate = estimateProjectFromLineItemAverages(
@@ -223,6 +250,7 @@ export default async function HomeownerDashboardPage() {
                 id: item.id,
                 quantity: item.quantity,
                 optionsLabel: formatSelectedOptions(item.selectedOptions),
+                contractorNotes: item.notes,
                 catalogItem: {
                   name: item.catalogItem.name,
                   slug: item.catalogItem.slug,
@@ -256,7 +284,7 @@ export default async function HomeownerDashboardPage() {
                 />
               );
             })}
-          </div>
+          </HomeownerProjectsLayout>
         )}
       </div>
     </div>

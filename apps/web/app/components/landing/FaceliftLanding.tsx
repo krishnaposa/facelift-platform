@@ -29,20 +29,14 @@ export default function FaceliftLanding({ gallery, usaCost, catalogItems }: Prop
             <div className="text-2xl font-bold tracking-tight">Facelift</div>
             <div className="text-sm text-slate-500">Home upgrades, visualized and bid online</div>
           </div>
-          <nav className="hidden items-center gap-4 md:flex text-sm font-medium">
+          <nav className="hidden items-center gap-3 md:flex text-sm font-medium">
             <a href="#inspiration" className="hover:text-slate-600">Gallery</a>
-            <Link href="/login" className="hover:text-slate-600">Login</Link>
+            <Link href="/signup" className="hover:text-slate-600">Sign up</Link>
             <Link
               href="/login"
               className="rounded-2xl bg-slate-900 px-4 py-2 text-white shadow-sm"
             >
-              Homeowner Login
-            </Link>
-            <Link
-              href="/login"
-              className="rounded-2xl border border-slate-300 bg-white px-4 py-2 text-slate-900 shadow-sm"
-            >
-              Contractor Login
+              Log in
             </Link>
           </nav>
         </div>
@@ -63,16 +57,16 @@ export default function FaceliftLanding({ gallery, usaCost, catalogItems }: Prop
           </div>
           <div className="flex flex-wrap gap-3">
             <Link
-              href="/login"
+              href="/signup"
               className="rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-sm"
             >
-              Homeowner Login
+              Sign up
             </Link>
             <Link
               href="/login"
               className="rounded-2xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-900"
             >
-              Contractor Login
+              Log in
             </Link>
           </div>
           <div className="grid gap-4 pt-4 sm:grid-cols-3">
@@ -260,7 +254,12 @@ export default function FaceliftLanding({ gallery, usaCost, catalogItems }: Prop
               <li>Get bids from qualified contractors</li>
               <li>Compare price, timing, and scope side by side</li>
             </ul>
-            <button className="mt-6 rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white">Homeowner Sign Up</button>
+            <Link
+              href="/signup"
+              className="mt-6 inline-block rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white"
+            >
+              Sign up
+            </Link>
           </div>
           <div id="contractors" className="rounded-[28px] bg-slate-900 p-8 text-white shadow-sm">
             <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">For contractors</div>
@@ -271,7 +270,12 @@ export default function FaceliftLanding({ gallery, usaCost, catalogItems }: Prop
               <li>Showcase past work in your profile</li>
               <li>Grow with repeat homeowner demand</li>
             </ul>
-            <button className="mt-6 rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-slate-900">Contractor Apply</button>
+            <Link
+              href="/signup"
+              className="mt-6 inline-block rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-slate-900"
+            >
+              Get started
+            </Link>
           </div>
         </div>
       </section>

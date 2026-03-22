@@ -3,11 +3,14 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { dashboardPathForRole, type SessionRole } from '@/lib/auth-routing';
 
 export default function SignupPage() {
   const router = useRouter();
+  const [accountType, setAccountType] = useState<'homeowner' | 'contractor'>('homeowner');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [companyName, setCompanyName] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
 
@@ -20,7 +23,12 @@ export default function SignupPage() {
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({
+          email,
+          password,
+          role: accountType === 'contractor' ? 'CONTRACTOR' : 'HOMEOWNER',
+          companyName: accountType === 'contractor' ? companyName.trim() : undefined,
+        }),
       });
 
       const data = await res.json().catch(() => null);
@@ -29,7 +37,8 @@ export default function SignupPage() {
         throw new Error(data?.error || 'Failed to sign up.');
       }
 
-      router.push('/dashboard/homeowner');
+      const role = (data?.user?.role as SessionRole | undefined) ?? 'HOMEOWNER';
+      router.push(dashboardPathForRole(role));
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong.');
@@ -49,10 +58,51 @@ export default function SignupPage() {
             Create your account
           </h1>
           <p className="mt-2 text-slate-600">
-            Sign up as a homeowner and start saving projects.
+            Homeowners plan projects; contractors browse and bid on open work.
           </p>
 
+          <div className="mt-6 grid grid-cols-2 gap-2 rounded-2xl bg-slate-100 p-1">
+            <button
+              type="button"
+              onClick={() => setAccountType('homeowner')}
+              className={`rounded-xl px-3 py-2 text-sm font-semibold ${
+                accountType === 'homeowner'
+                  ? 'bg-white text-slate-900 shadow-sm'
+                  : 'text-slate-600'
+              }`}
+            >
+              Homeowner
+            </button>
+            <button
+              type="button"
+              onClick={() => setAccountType('contractor')}
+              className={`rounded-xl px-3 py-2 text-sm font-semibold ${
+                accountType === 'contractor'
+                  ? 'bg-white text-slate-900 shadow-sm'
+                  : 'text-slate-600'
+              }`}
+            >
+              Contractor
+            </button>
+          </div>
+
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+            {accountType === 'contractor' ? (
+              <div>
+                <label className="mb-2 block text-sm font-semibold text-slate-700">
+                  Company name
+                </label>
+                <input
+                  type="text"
+                  value={companyName}
+                  onChange={(e) => setCompanyName(e.target.value)}
+                  className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-slate-900"
+                  placeholder="Your business name"
+                  required={accountType === 'contractor'}
+                />
+              </div>
+            ) : null}
+
             <div>
               <label className="mb-2 block text-sm font-semibold text-slate-700">
                 Email

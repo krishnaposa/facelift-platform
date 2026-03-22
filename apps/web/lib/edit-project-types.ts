@@ -6,6 +6,8 @@ export type EditFormLine = {
   catalogItemId: string;
   quantity: number;
   options: Record<string, string | number>;
+  /** Notes visible to contractors for this line item only. */
+  lineNotes: string;
   catalogItem: {
     name: string;
     slug: string;

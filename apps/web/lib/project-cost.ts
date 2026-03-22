@@ -1,3 +1,4 @@
+import { unstable_noStore as noStore } from 'next/cache';
 import { prisma } from '@/lib/prisma';
 import { getAzureOpenAI, isAzureOpenAIConfigured } from '@/lib/azure-openai';
 
@@ -11,6 +12,7 @@ export type ProjectCostEstimate = {
 };
 
 export async function getProjectCostEstimate(projectId: string): Promise<ProjectCostEstimate> {
+  noStore();
   const project = await prisma.project.findUnique({
     where: { id: projectId },
     select: {
@@ -71,15 +73,25 @@ export async function getProjectCostEstimate(projectId: string): Promise<Project
       const client = getAzureOpenAI();
       if (client) {
         const upgrades = project.items.map((i) => i.catalogItem.name).join(', ');
+        const lineDetail = project.items
+          .map((i) => {
+            const n = typeof i.notes === 'string' ? i.notes.trim() : '';
+            return n ? `${i.catalogItem.name}: ${n.slice(0, 400)}` : null;
+          })
+          .filter(Boolean)
+          .join('\n');
         const prompt = [
           `Project: ${project.title}`,
           `Zip code: ${project.zipCode}`,
           `Upgrades: ${upgrades}`,
+          lineDetail
+            ? `Homeowner notes per upgrade (context only; averages are still from past bids):\n${lineDetail}`
+            : '',
           `Based on ${count} bids in this zip:`,
           `Average total bid: $${avg.toFixed(0)}`,
           min && max ? `Range: $${min.toFixed(0)} - $${max.toFixed(0)}` : '',
           '',
-          'Explain this estimate to a homeowner in one short sentence.',
+          'Explain this estimate to a homeowner in one short sentence. If notes mention premium or complex scope, mention that bids may run higher without changing the numeric average.',
         ]
           .filter(Boolean)
           .join('\n');
