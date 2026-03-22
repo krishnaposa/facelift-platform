@@ -58,6 +58,14 @@ export default async function EditProjectPage({
     notFound();
   }
 
+  if (
+    project.status === 'AWARDED' ||
+    project.status === 'COMPLETED' ||
+    project.status === 'CANCELLED'
+  ) {
+    redirect(`/projects/${id}`);
+  }
+
   const lines = projectItemsToEditLines(project.items);
 
   const addableCatalog = addableCatalogRaw.map((c) => ({

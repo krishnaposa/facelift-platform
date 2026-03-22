@@ -80,7 +80,12 @@ export default async function CompareBidsPage({
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="mx-auto min-w-0 max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
-        <BidComparisonView projectTitle={project.title} projectId={project.id} snapshot={snapshot} />
+        <BidComparisonView
+          projectTitle={project.title}
+          projectId={project.id}
+          projectStatus={project.status}
+          snapshot={snapshot}
+        />
       </div>
     </div>
   );

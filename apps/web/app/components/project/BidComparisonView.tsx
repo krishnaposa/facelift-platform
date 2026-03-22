@@ -1,10 +1,13 @@
 import Link from 'next/link';
+import AcceptBidButton from '@/app/components/project/AcceptBidButton';
 import type { BidComparisonSnapshot } from '@/lib/bid-comparison';
 import { formatUsdWhole } from '@/lib/format-currency';
 
 type Props = {
   projectTitle: string;
   projectId: string;
+  /** Project workflow status (e.g. OPEN, AWARDED). */
+  projectStatus: string;
   snapshot: BidComparisonSnapshot;
 };
 
@@ -12,8 +15,14 @@ function fmtMoney(n: number) {
   return formatUsdWhole(n);
 }
 
-export default function BidComparisonView({ projectTitle, projectId, snapshot }: Props) {
+export default function BidComparisonView({
+  projectTitle,
+  projectId,
+  projectStatus,
+  snapshot,
+}: Props) {
   const { bids, rows, gaps, cheapestBidId, fastestBidId } = snapshot;
+  const canAccept = projectStatus === 'OPEN';
 
   return (
     <div className="min-w-0 space-y-8">
@@ -31,6 +40,13 @@ export default function BidComparisonView({ projectTitle, projectId, snapshot }:
           {projectTitle} — line-by-line prices, schedule, and gaps to resolve before you award work.
         </p>
       </div>
+
+      {projectStatus === 'AWARDED' ? (
+        <div className="rounded-2xl border border-emerald-200 bg-emerald-50/90 px-4 py-3 text-sm text-emerald-950">
+          <span className="font-semibold">Project awarded.</span> This job is no longer accepting new
+          bids. The selected contractor was notified by email to sign in and follow up with you.
+        </div>
+      ) : null}
 
       {bids.length === 0 ? (
         <div className="rounded-[28px] bg-white p-8 shadow-sm ring-1 ring-slate-200">
@@ -115,6 +131,13 @@ export default function BidComparisonView({ projectTitle, projectId, snapshot }:
                   )}
                 </div>
                 <div className="mt-2 text-xs text-slate-500">Status: {b.status}</div>
+                {canAccept && (b.status === 'SUBMITTED' || b.status === 'SHORTLISTED') ? (
+                  <AcceptBidButton
+                    projectId={projectId}
+                    bidId={b.id}
+                    label={b.contractorLabel}
+                  />
+                ) : null}
               </div>
             ))}
           </div>

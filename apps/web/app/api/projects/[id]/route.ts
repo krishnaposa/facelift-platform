@@ -158,6 +158,17 @@ export async function PATCH(
       return NextResponse.json({ error: 'Project not found.' }, { status: 404 });
     }
 
+    if (
+      existingProject.status === 'AWARDED' ||
+      existingProject.status === 'COMPLETED' ||
+      existingProject.status === 'CANCELLED'
+    ) {
+      return NextResponse.json(
+        { error: 'This project can no longer be edited.' },
+        { status: 409 }
+      );
+    }
+
     const ids = [...new Set(rows.map((r) => r.catalogItemId).filter(Boolean))];
     const catalogRows = await prisma.catalogItem.findMany({
       where: { id: { in: ids }, active: true },

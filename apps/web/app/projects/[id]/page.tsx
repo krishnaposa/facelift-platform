@@ -69,8 +69,15 @@ export default async function ProjectDetailPage({
     notFound();
   }
 
-  const [gallery, costEstimate, avgMap, allCatalogRows, contractorInquiries, comparableBidCount] =
-    await Promise.all([
+  const [
+    gallery,
+    costEstimate,
+    avgMap,
+    allCatalogRows,
+    contractorInquiries,
+    comparableBidCount,
+    acceptedBid,
+  ] = await Promise.all([
     getGalleryForProject(project.id),
     getProjectCostEstimate(project.id),
     getAverageBidLineAmountByCatalogItem({ zipCode: project.zipCode }),
@@ -110,11 +117,27 @@ export default async function ProjectDetailPage({
         status: { in: ['SUBMITTED', 'SHORTLISTED', 'ACCEPTED'] },
       },
     }),
+    prisma.bid.findFirst({
+      where: { projectId: project.id, status: 'ACCEPTED' },
+      include: {
+        contractor: {
+          select: {
+            email: true,
+            contractorProfile: { select: { companyName: true, companyNameEncrypted: true } },
+          },
+        },
+      },
+    }),
   ]);
 
   const catalogEnriched = enrichCatalogForDashboard(allCatalogRows, avgMap);
   const selectedCatalogIds = new Set(project.items.map((i) => i.catalogItemId));
   const suggested = pickSuggestedCatalogItems(selectedCatalogIds, catalogEnriched, 8);
+
+  const canEditProject =
+    project.status !== 'AWARDED' &&
+    project.status !== 'COMPLETED' &&
+    project.status !== 'CANCELLED';
 
   function optionsLineForDisplay(selectedOptions: unknown): string {
     if (!selectedOptions || typeof selectedOptions !== 'object') return '';
@@ -147,12 +170,14 @@ export default async function ProjectDetailPage({
               Back
             </Link>
 
-            <Link
-              href={`/projects/${project.id}/edit`}
-              className="rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white"
-            >
-              Edit Project
-            </Link>
+            {canEditProject ? (
+              <Link
+                href={`/projects/${project.id}/edit`}
+                className="rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white"
+              >
+                Edit Project
+              </Link>
+            ) : null}
 
             {comparableBidCount > 0 ? (
               <Link
@@ -164,6 +189,22 @@ export default async function ProjectDetailPage({
             ) : null}
           </div>
         </div>
+
+        {project.status === 'AWARDED' && acceptedBid ? (
+          <div className="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50/90 px-5 py-4 text-sm text-emerald-950 ring-1 ring-emerald-100">
+            <div className="font-semibold text-emerald-900">You awarded this project</div>
+            <p className="mt-1">
+              Winning contractor:{' '}
+              <span className="font-medium">
+                {contractorCompanyDisplayName(acceptedBid.contractor.contractorProfile) ||
+                  acceptedBid.contractor.email}
+              </span>
+              . They were emailed with your bid total ({formatUsdWhole(Number(acceptedBid.amount))}) and
+              timeline ({acceptedBid.daysToComplete} day
+              {acceptedBid.daysToComplete === 1 ? '' : 's'}).
+            </p>
+          </div>
+        ) : null}
 
         {comparableBidCount >= 2 ? (
           <div className="mt-6 rounded-2xl border border-emerald-200 bg-gradient-to-r from-emerald-50 to-white px-5 py-4 ring-1 ring-emerald-100">
