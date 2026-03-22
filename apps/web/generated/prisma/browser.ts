@@ -48,6 +48,11 @@ export type CatalogItem = Prisma.CatalogItemModel
  */
 export type Project = Prisma.ProjectModel
 /**
+ * Model PlatformFeedback
+ * Homeowner / contractor → admin: bugs, requests, account issues (not bid chat).
+ */
+export type PlatformFeedback = Prisma.PlatformFeedbackModel
+/**
  * Model ProjectItem
  * 
  */

@@ -51,3 +51,23 @@ export const ContractorApprovalStatus = {
 } as const
 
 export type ContractorApprovalStatus = (typeof ContractorApprovalStatus)[keyof typeof ContractorApprovalStatus]
+
+
+export const PlatformFeedbackCategory = {
+  BUG: 'BUG',
+  FEATURE_REQUEST: 'FEATURE_REQUEST',
+  ACCOUNT: 'ACCOUNT',
+  BILLING: 'BILLING',
+  PROJECT_ISSUE: 'PROJECT_ISSUE',
+  OTHER: 'OTHER'
+} as const
+
+export type PlatformFeedbackCategory = (typeof PlatformFeedbackCategory)[keyof typeof PlatformFeedbackCategory]
+
+
+export const PlatformFeedbackStatus = {
+  OPEN: 'OPEN',
+  REVIEWED: 'REVIEWED'
+} as const
+
+export type PlatformFeedbackStatus = (typeof PlatformFeedbackStatus)[keyof typeof PlatformFeedbackStatus]

@@ -491,10 +491,6 @@ export type ProjectContractorMessageUncheckedUpdateManyWithoutProjectItemNestedI
   deleteMany?: Prisma.ProjectContractorMessageScalarWhereInput | Prisma.ProjectContractorMessageScalarWhereInput[]
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type ProjectContractorMessageCreateWithoutContractorInput = {
   id?: string
   body: string

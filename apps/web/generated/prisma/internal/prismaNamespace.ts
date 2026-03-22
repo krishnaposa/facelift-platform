@@ -390,6 +390,7 @@ export const ModelName = {
   CatalogCategory: 'CatalogCategory',
   CatalogItem: 'CatalogItem',
   Project: 'Project',
+  PlatformFeedback: 'PlatformFeedback',
   ProjectItem: 'ProjectItem',
   ProjectContractorMessage: 'ProjectContractorMessage',
   Bid: 'Bid',
@@ -413,7 +414,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "homeownerProfile" | "contractorProfile" | "catalogCategory" | "catalogItem" | "project" | "projectItem" | "projectContractorMessage" | "bid" | "bidLineItem" | "projectPhoto" | "galleryImage" | "projectGalleryPick" | "userGalleryPick"
+    modelProps: "user" | "homeownerProfile" | "contractorProfile" | "catalogCategory" | "catalogItem" | "project" | "platformFeedback" | "projectItem" | "projectContractorMessage" | "bid" | "bidLineItem" | "projectPhoto" | "galleryImage" | "projectGalleryPick" | "userGalleryPick"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -858,6 +859,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ProjectCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ProjectCountAggregateOutputType> | number
+        }
+      }
+    }
+    PlatformFeedback: {
+      payload: Prisma.$PlatformFeedbackPayload<ExtArgs>
+      fields: Prisma.PlatformFeedbackFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PlatformFeedbackFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformFeedbackPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PlatformFeedbackFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformFeedbackPayload>
+        }
+        findFirst: {
+          args: Prisma.PlatformFeedbackFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformFeedbackPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PlatformFeedbackFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformFeedbackPayload>
+        }
+        findMany: {
+          args: Prisma.PlatformFeedbackFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformFeedbackPayload>[]
+        }
+        create: {
+          args: Prisma.PlatformFeedbackCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformFeedbackPayload>
+        }
+        createMany: {
+          args: Prisma.PlatformFeedbackCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PlatformFeedbackCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformFeedbackPayload>[]
+        }
+        delete: {
+          args: Prisma.PlatformFeedbackDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformFeedbackPayload>
+        }
+        update: {
+          args: Prisma.PlatformFeedbackUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformFeedbackPayload>
+        }
+        deleteMany: {
+          args: Prisma.PlatformFeedbackDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PlatformFeedbackUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PlatformFeedbackUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformFeedbackPayload>[]
+        }
+        upsert: {
+          args: Prisma.PlatformFeedbackUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlatformFeedbackPayload>
+        }
+        aggregate: {
+          args: Prisma.PlatformFeedbackAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePlatformFeedback>
+        }
+        groupBy: {
+          args: Prisma.PlatformFeedbackGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlatformFeedbackGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PlatformFeedbackCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlatformFeedbackCountAggregateOutputType> | number
         }
       }
     }
@@ -1577,6 +1652,21 @@ export const ProjectScalarFieldEnum = {
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
 
 
+export const PlatformFeedbackScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  category: 'category',
+  subject: 'subject',
+  body: 'body',
+  projectId: 'projectId',
+  status: 'status',
+  createdAt: 'createdAt',
+  reviewedAt: 'reviewedAt'
+} as const
+
+export type PlatformFeedbackScalarFieldEnum = (typeof PlatformFeedbackScalarFieldEnum)[keyof typeof PlatformFeedbackScalarFieldEnum]
+
+
 export const ProjectItemScalarFieldEnum = {
   id: 'id',
   projectId: 'projectId',
@@ -1829,6 +1919,34 @@ export type ListEnumProjectStatusFieldRefInput<$PrismaModel> = FieldRefInputType
 
 
 /**
+ * Reference to a field of type 'PlatformFeedbackCategory'
+ */
+export type EnumPlatformFeedbackCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlatformFeedbackCategory'>
+    
+
+
+/**
+ * Reference to a field of type 'PlatformFeedbackCategory[]'
+ */
+export type ListEnumPlatformFeedbackCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlatformFeedbackCategory[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PlatformFeedbackStatus'
+ */
+export type EnumPlatformFeedbackStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlatformFeedbackStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'PlatformFeedbackStatus[]'
+ */
+export type ListEnumPlatformFeedbackStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlatformFeedbackStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -1984,6 +2102,7 @@ export type GlobalOmitConfig = {
   catalogCategory?: Prisma.CatalogCategoryOmit
   catalogItem?: Prisma.CatalogItemOmit
   project?: Prisma.ProjectOmit
+  platformFeedback?: Prisma.PlatformFeedbackOmit
   projectItem?: Prisma.ProjectItemOmit
   projectContractorMessage?: Prisma.ProjectContractorMessageOmit
   bid?: Prisma.BidOmit

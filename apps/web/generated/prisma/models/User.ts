@@ -196,6 +196,7 @@ export type UserWhereInput = {
   bids?: Prisma.BidListRelationFilter
   galleryUserPicks?: Prisma.UserGalleryPickListRelationFilter
   projectContractorMessages?: Prisma.ProjectContractorMessageListRelationFilter
+  platformFeedback?: Prisma.PlatformFeedbackListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -211,6 +212,7 @@ export type UserOrderByWithRelationInput = {
   bids?: Prisma.BidOrderByRelationAggregateInput
   galleryUserPicks?: Prisma.UserGalleryPickOrderByRelationAggregateInput
   projectContractorMessages?: Prisma.ProjectContractorMessageOrderByRelationAggregateInput
+  platformFeedback?: Prisma.PlatformFeedbackOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -229,6 +231,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   bids?: Prisma.BidListRelationFilter
   galleryUserPicks?: Prisma.UserGalleryPickListRelationFilter
   projectContractorMessages?: Prisma.ProjectContractorMessageListRelationFilter
+  platformFeedback?: Prisma.PlatformFeedbackListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -268,6 +271,7 @@ export type UserCreateInput = {
   bids?: Prisma.BidCreateNestedManyWithoutContractorInput
   galleryUserPicks?: Prisma.UserGalleryPickCreateNestedManyWithoutUserInput
   projectContractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutContractorInput
+  platformFeedback?: Prisma.PlatformFeedbackCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -283,6 +287,7 @@ export type UserUncheckedCreateInput = {
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutContractorInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedCreateNestedManyWithoutUserInput
   projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutContractorInput
+  platformFeedback?: Prisma.PlatformFeedbackUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -298,6 +303,7 @@ export type UserUpdateInput = {
   bids?: Prisma.BidUpdateManyWithoutContractorNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUpdateManyWithoutUserNestedInput
   projectContractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutContractorNestedInput
+  platformFeedback?: Prisma.PlatformFeedbackUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -313,6 +319,7 @@ export type UserUncheckedUpdateInput = {
   bids?: Prisma.BidUncheckedUpdateManyWithoutContractorNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedUpdateManyWithoutUserNestedInput
   projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutContractorNestedInput
+  platformFeedback?: Prisma.PlatformFeedbackUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -432,6 +439,20 @@ export type UserUpdateOneRequiredWithoutProjectsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProjectsInput, Prisma.UserUpdateWithoutProjectsInput>, Prisma.UserUncheckedUpdateWithoutProjectsInput>
 }
 
+export type UserCreateNestedOneWithoutPlatformFeedbackInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPlatformFeedbackInput, Prisma.UserUncheckedCreateWithoutPlatformFeedbackInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPlatformFeedbackInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPlatformFeedbackNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPlatformFeedbackInput, Prisma.UserUncheckedCreateWithoutPlatformFeedbackInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPlatformFeedbackInput
+  upsert?: Prisma.UserUpsertWithoutPlatformFeedbackInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPlatformFeedbackInput, Prisma.UserUpdateWithoutPlatformFeedbackInput>, Prisma.UserUncheckedUpdateWithoutPlatformFeedbackInput>
+}
+
 export type UserCreateNestedOneWithoutProjectContractorMessagesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutProjectContractorMessagesInput, Prisma.UserUncheckedCreateWithoutProjectContractorMessagesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutProjectContractorMessagesInput
@@ -486,6 +507,7 @@ export type UserCreateWithoutHomeownerProfileInput = {
   bids?: Prisma.BidCreateNestedManyWithoutContractorInput
   galleryUserPicks?: Prisma.UserGalleryPickCreateNestedManyWithoutUserInput
   projectContractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutContractorInput
+  platformFeedback?: Prisma.PlatformFeedbackCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutHomeownerProfileInput = {
@@ -500,6 +522,7 @@ export type UserUncheckedCreateWithoutHomeownerProfileInput = {
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutContractorInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedCreateNestedManyWithoutUserInput
   projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutContractorInput
+  platformFeedback?: Prisma.PlatformFeedbackUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutHomeownerProfileInput = {
@@ -530,6 +553,7 @@ export type UserUpdateWithoutHomeownerProfileInput = {
   bids?: Prisma.BidUpdateManyWithoutContractorNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUpdateManyWithoutUserNestedInput
   projectContractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutContractorNestedInput
+  platformFeedback?: Prisma.PlatformFeedbackUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutHomeownerProfileInput = {
@@ -544,6 +568,7 @@ export type UserUncheckedUpdateWithoutHomeownerProfileInput = {
   bids?: Prisma.BidUncheckedUpdateManyWithoutContractorNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedUpdateManyWithoutUserNestedInput
   projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutContractorNestedInput
+  platformFeedback?: Prisma.PlatformFeedbackUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutContractorProfileInput = {
@@ -558,6 +583,7 @@ export type UserCreateWithoutContractorProfileInput = {
   bids?: Prisma.BidCreateNestedManyWithoutContractorInput
   galleryUserPicks?: Prisma.UserGalleryPickCreateNestedManyWithoutUserInput
   projectContractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutContractorInput
+  platformFeedback?: Prisma.PlatformFeedbackCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutContractorProfileInput = {
@@ -572,6 +598,7 @@ export type UserUncheckedCreateWithoutContractorProfileInput = {
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutContractorInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedCreateNestedManyWithoutUserInput
   projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutContractorInput
+  platformFeedback?: Prisma.PlatformFeedbackUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutContractorProfileInput = {
@@ -602,6 +629,7 @@ export type UserUpdateWithoutContractorProfileInput = {
   bids?: Prisma.BidUpdateManyWithoutContractorNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUpdateManyWithoutUserNestedInput
   projectContractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutContractorNestedInput
+  platformFeedback?: Prisma.PlatformFeedbackUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutContractorProfileInput = {
@@ -616,6 +644,7 @@ export type UserUncheckedUpdateWithoutContractorProfileInput = {
   bids?: Prisma.BidUncheckedUpdateManyWithoutContractorNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedUpdateManyWithoutUserNestedInput
   projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutContractorNestedInput
+  platformFeedback?: Prisma.PlatformFeedbackUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutProjectsInput = {
@@ -630,6 +659,7 @@ export type UserCreateWithoutProjectsInput = {
   bids?: Prisma.BidCreateNestedManyWithoutContractorInput
   galleryUserPicks?: Prisma.UserGalleryPickCreateNestedManyWithoutUserInput
   projectContractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutContractorInput
+  platformFeedback?: Prisma.PlatformFeedbackCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProjectsInput = {
@@ -644,6 +674,7 @@ export type UserUncheckedCreateWithoutProjectsInput = {
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutContractorInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedCreateNestedManyWithoutUserInput
   projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutContractorInput
+  platformFeedback?: Prisma.PlatformFeedbackUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProjectsInput = {
@@ -674,6 +705,7 @@ export type UserUpdateWithoutProjectsInput = {
   bids?: Prisma.BidUpdateManyWithoutContractorNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUpdateManyWithoutUserNestedInput
   projectContractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutContractorNestedInput
+  platformFeedback?: Prisma.PlatformFeedbackUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProjectsInput = {
@@ -685,6 +717,83 @@ export type UserUncheckedUpdateWithoutProjectsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   homeownerProfile?: Prisma.HomeownerProfileUncheckedUpdateOneWithoutUserNestedInput
   contractorProfile?: Prisma.ContractorProfileUncheckedUpdateOneWithoutUserNestedInput
+  bids?: Prisma.BidUncheckedUpdateManyWithoutContractorNestedInput
+  galleryUserPicks?: Prisma.UserGalleryPickUncheckedUpdateManyWithoutUserNestedInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutContractorNestedInput
+  platformFeedback?: Prisma.PlatformFeedbackUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutPlatformFeedbackInput = {
+  id?: string
+  email: string
+  passwordHash?: string | null
+  role: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  homeownerProfile?: Prisma.HomeownerProfileCreateNestedOneWithoutUserInput
+  contractorProfile?: Prisma.ContractorProfileCreateNestedOneWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutHomeownerInput
+  bids?: Prisma.BidCreateNestedManyWithoutContractorInput
+  galleryUserPicks?: Prisma.UserGalleryPickCreateNestedManyWithoutUserInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutContractorInput
+}
+
+export type UserUncheckedCreateWithoutPlatformFeedbackInput = {
+  id?: string
+  email: string
+  passwordHash?: string | null
+  role: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  homeownerProfile?: Prisma.HomeownerProfileUncheckedCreateNestedOneWithoutUserInput
+  contractorProfile?: Prisma.ContractorProfileUncheckedCreateNestedOneWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutHomeownerInput
+  bids?: Prisma.BidUncheckedCreateNestedManyWithoutContractorInput
+  galleryUserPicks?: Prisma.UserGalleryPickUncheckedCreateNestedManyWithoutUserInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutContractorInput
+}
+
+export type UserCreateOrConnectWithoutPlatformFeedbackInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPlatformFeedbackInput, Prisma.UserUncheckedCreateWithoutPlatformFeedbackInput>
+}
+
+export type UserUpsertWithoutPlatformFeedbackInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPlatformFeedbackInput, Prisma.UserUncheckedUpdateWithoutPlatformFeedbackInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPlatformFeedbackInput, Prisma.UserUncheckedCreateWithoutPlatformFeedbackInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPlatformFeedbackInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPlatformFeedbackInput, Prisma.UserUncheckedUpdateWithoutPlatformFeedbackInput>
+}
+
+export type UserUpdateWithoutPlatformFeedbackInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeownerProfile?: Prisma.HomeownerProfileUpdateOneWithoutUserNestedInput
+  contractorProfile?: Prisma.ContractorProfileUpdateOneWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutHomeownerNestedInput
+  bids?: Prisma.BidUpdateManyWithoutContractorNestedInput
+  galleryUserPicks?: Prisma.UserGalleryPickUpdateManyWithoutUserNestedInput
+  projectContractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutContractorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPlatformFeedbackInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeownerProfile?: Prisma.HomeownerProfileUncheckedUpdateOneWithoutUserNestedInput
+  contractorProfile?: Prisma.ContractorProfileUncheckedUpdateOneWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutHomeownerNestedInput
   bids?: Prisma.BidUncheckedUpdateManyWithoutContractorNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedUpdateManyWithoutUserNestedInput
   projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutContractorNestedInput
@@ -702,6 +811,7 @@ export type UserCreateWithoutProjectContractorMessagesInput = {
   projects?: Prisma.ProjectCreateNestedManyWithoutHomeownerInput
   bids?: Prisma.BidCreateNestedManyWithoutContractorInput
   galleryUserPicks?: Prisma.UserGalleryPickCreateNestedManyWithoutUserInput
+  platformFeedback?: Prisma.PlatformFeedbackCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProjectContractorMessagesInput = {
@@ -716,6 +826,7 @@ export type UserUncheckedCreateWithoutProjectContractorMessagesInput = {
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutHomeownerInput
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutContractorInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedCreateNestedManyWithoutUserInput
+  platformFeedback?: Prisma.PlatformFeedbackUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProjectContractorMessagesInput = {
@@ -746,6 +857,7 @@ export type UserUpdateWithoutProjectContractorMessagesInput = {
   projects?: Prisma.ProjectUpdateManyWithoutHomeownerNestedInput
   bids?: Prisma.BidUpdateManyWithoutContractorNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUpdateManyWithoutUserNestedInput
+  platformFeedback?: Prisma.PlatformFeedbackUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProjectContractorMessagesInput = {
@@ -760,6 +872,7 @@ export type UserUncheckedUpdateWithoutProjectContractorMessagesInput = {
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutHomeownerNestedInput
   bids?: Prisma.BidUncheckedUpdateManyWithoutContractorNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedUpdateManyWithoutUserNestedInput
+  platformFeedback?: Prisma.PlatformFeedbackUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutBidsInput = {
@@ -774,6 +887,7 @@ export type UserCreateWithoutBidsInput = {
   projects?: Prisma.ProjectCreateNestedManyWithoutHomeownerInput
   galleryUserPicks?: Prisma.UserGalleryPickCreateNestedManyWithoutUserInput
   projectContractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutContractorInput
+  platformFeedback?: Prisma.PlatformFeedbackCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutBidsInput = {
@@ -788,6 +902,7 @@ export type UserUncheckedCreateWithoutBidsInput = {
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutHomeownerInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedCreateNestedManyWithoutUserInput
   projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutContractorInput
+  platformFeedback?: Prisma.PlatformFeedbackUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutBidsInput = {
@@ -818,6 +933,7 @@ export type UserUpdateWithoutBidsInput = {
   projects?: Prisma.ProjectUpdateManyWithoutHomeownerNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUpdateManyWithoutUserNestedInput
   projectContractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutContractorNestedInput
+  platformFeedback?: Prisma.PlatformFeedbackUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBidsInput = {
@@ -832,6 +948,7 @@ export type UserUncheckedUpdateWithoutBidsInput = {
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutHomeownerNestedInput
   galleryUserPicks?: Prisma.UserGalleryPickUncheckedUpdateManyWithoutUserNestedInput
   projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutContractorNestedInput
+  platformFeedback?: Prisma.PlatformFeedbackUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutGalleryUserPicksInput = {
@@ -846,6 +963,7 @@ export type UserCreateWithoutGalleryUserPicksInput = {
   projects?: Prisma.ProjectCreateNestedManyWithoutHomeownerInput
   bids?: Prisma.BidCreateNestedManyWithoutContractorInput
   projectContractorMessages?: Prisma.ProjectContractorMessageCreateNestedManyWithoutContractorInput
+  platformFeedback?: Prisma.PlatformFeedbackCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutGalleryUserPicksInput = {
@@ -860,6 +978,7 @@ export type UserUncheckedCreateWithoutGalleryUserPicksInput = {
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutHomeownerInput
   bids?: Prisma.BidUncheckedCreateNestedManyWithoutContractorInput
   projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedCreateNestedManyWithoutContractorInput
+  platformFeedback?: Prisma.PlatformFeedbackUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutGalleryUserPicksInput = {
@@ -890,6 +1009,7 @@ export type UserUpdateWithoutGalleryUserPicksInput = {
   projects?: Prisma.ProjectUpdateManyWithoutHomeownerNestedInput
   bids?: Prisma.BidUpdateManyWithoutContractorNestedInput
   projectContractorMessages?: Prisma.ProjectContractorMessageUpdateManyWithoutContractorNestedInput
+  platformFeedback?: Prisma.PlatformFeedbackUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutGalleryUserPicksInput = {
@@ -904,6 +1024,7 @@ export type UserUncheckedUpdateWithoutGalleryUserPicksInput = {
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutHomeownerNestedInput
   bids?: Prisma.BidUncheckedUpdateManyWithoutContractorNestedInput
   projectContractorMessages?: Prisma.ProjectContractorMessageUncheckedUpdateManyWithoutContractorNestedInput
+  platformFeedback?: Prisma.PlatformFeedbackUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -916,6 +1037,7 @@ export type UserCountOutputType = {
   bids: number
   galleryUserPicks: number
   projectContractorMessages: number
+  platformFeedback: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -923,6 +1045,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   bids?: boolean | UserCountOutputTypeCountBidsArgs
   galleryUserPicks?: boolean | UserCountOutputTypeCountGalleryUserPicksArgs
   projectContractorMessages?: boolean | UserCountOutputTypeCountProjectContractorMessagesArgs
+  platformFeedback?: boolean | UserCountOutputTypeCountPlatformFeedbackArgs
 }
 
 /**
@@ -963,6 +1086,13 @@ export type UserCountOutputTypeCountProjectContractorMessagesArgs<ExtArgs extend
   where?: Prisma.ProjectContractorMessageWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPlatformFeedbackArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PlatformFeedbackWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -977,6 +1107,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   bids?: boolean | Prisma.User$bidsArgs<ExtArgs>
   galleryUserPicks?: boolean | Prisma.User$galleryUserPicksArgs<ExtArgs>
   projectContractorMessages?: boolean | Prisma.User$projectContractorMessagesArgs<ExtArgs>
+  platformFeedback?: boolean | Prisma.User$platformFeedbackArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1015,6 +1146,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   bids?: boolean | Prisma.User$bidsArgs<ExtArgs>
   galleryUserPicks?: boolean | Prisma.User$galleryUserPicksArgs<ExtArgs>
   projectContractorMessages?: boolean | Prisma.User$projectContractorMessagesArgs<ExtArgs>
+  platformFeedback?: boolean | Prisma.User$platformFeedbackArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1029,6 +1161,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     bids: Prisma.$BidPayload<ExtArgs>[]
     galleryUserPicks: Prisma.$UserGalleryPickPayload<ExtArgs>[]
     projectContractorMessages: Prisma.$ProjectContractorMessagePayload<ExtArgs>[]
+    platformFeedback: Prisma.$PlatformFeedbackPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1437,6 +1570,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   bids<T extends Prisma.User$bidsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$bidsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BidPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   galleryUserPicks<T extends Prisma.User$galleryUserPicksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$galleryUserPicksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserGalleryPickPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   projectContractorMessages<T extends Prisma.User$projectContractorMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$projectContractorMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectContractorMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  platformFeedback<T extends Prisma.User$platformFeedbackArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$platformFeedbackArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlatformFeedbackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1991,6 +2125,30 @@ export type User$projectContractorMessagesArgs<ExtArgs extends runtime.Types.Ext
   take?: number
   skip?: number
   distinct?: Prisma.ProjectContractorMessageScalarFieldEnum | Prisma.ProjectContractorMessageScalarFieldEnum[]
+}
+
+/**
+ * User.platformFeedback
+ */
+export type User$platformFeedbackArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PlatformFeedback
+   */
+  select?: Prisma.PlatformFeedbackSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PlatformFeedback
+   */
+  omit?: Prisma.PlatformFeedbackOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlatformFeedbackInclude<ExtArgs> | null
+  where?: Prisma.PlatformFeedbackWhereInput
+  orderBy?: Prisma.PlatformFeedbackOrderByWithRelationInput | Prisma.PlatformFeedbackOrderByWithRelationInput[]
+  cursor?: Prisma.PlatformFeedbackWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PlatformFeedbackScalarFieldEnum | Prisma.PlatformFeedbackScalarFieldEnum[]
 }
 
 /**

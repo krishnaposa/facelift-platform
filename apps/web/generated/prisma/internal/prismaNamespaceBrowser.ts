@@ -57,6 +57,7 @@ export const ModelName = {
   CatalogCategory: 'CatalogCategory',
   CatalogItem: 'CatalogItem',
   Project: 'Project',
+  PlatformFeedback: 'PlatformFeedback',
   ProjectItem: 'ProjectItem',
   ProjectContractorMessage: 'ProjectContractorMessage',
   Bid: 'Bid',
@@ -166,6 +167,21 @@ export const ProjectScalarFieldEnum = {
 } as const
 
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
+
+
+export const PlatformFeedbackScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  category: 'category',
+  subject: 'subject',
+  body: 'body',
+  projectId: 'projectId',
+  status: 'status',
+  createdAt: 'createdAt',
+  reviewedAt: 'reviewedAt'
+} as const
+
+export type PlatformFeedbackScalarFieldEnum = (typeof PlatformFeedbackScalarFieldEnum)[keyof typeof PlatformFeedbackScalarFieldEnum]
 
 
 export const ProjectItemScalarFieldEnum = {

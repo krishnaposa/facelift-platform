@@ -39,6 +39,20 @@ enum ContractorApprovalStatus {
   SUSPENDED
 }
 
+enum PlatformFeedbackCategory {
+  BUG
+  FEATURE_REQUEST
+  ACCOUNT
+  BILLING
+  PROJECT_ISSUE
+  OTHER
+}
+
+enum PlatformFeedbackStatus {
+  OPEN
+  REVIEWED
+}
+
 model User {
   id                String             @id @default(uuid())
   email             String             @unique
@@ -54,6 +68,7 @@ model User {
   bids              Bid[]
   galleryUserPicks  UserGalleryPick[]
   projectContractorMessages ProjectContractorMessage[] @relation("ContractorAuthoredMessages")
+  platformFeedback        PlatformFeedback[]
 }
 
 model HomeownerProfile {
@@ -131,10 +146,31 @@ model Project {
   photos        ProjectPhoto[]
   galleryPicks  ProjectGalleryPick[]
   contractorMessages ProjectContractorMessage[]
+  platformFeedback   PlatformFeedback[]
 
   @@index([homeownerId])
   @@index([zipCode])
   @@index([status])
+}
+
+/// Homeowner / contractor → admin: bugs, requests, account issues (not bid chat).
+model PlatformFeedback {
+  id         String                   @id @default(uuid())
+  userId     String
+  category   PlatformFeedbackCategory   @default(OTHER)
+  subject    String?
+  body       String                     @db.Text
+  projectId  String?
+  status     PlatformFeedbackStatus     @default(OPEN)
+  createdAt  DateTime                   @default(now())
+  reviewedAt DateTime?
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
 }
 
 model ProjectItem {
