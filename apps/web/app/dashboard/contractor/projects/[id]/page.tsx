@@ -105,8 +105,7 @@ export default async function ContractorProjectDetailPage({
   });
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <div className="mx-auto max-w-5xl px-6 py-10">
+    <div className="mx-auto max-w-5xl px-6 py-10">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
@@ -330,7 +329,6 @@ export default async function ContractorProjectDetailPage({
             </div>
           )}
         </div>
-      </div>
     </div>
   );
 }

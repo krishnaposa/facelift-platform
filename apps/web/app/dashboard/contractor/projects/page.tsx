@@ -38,27 +38,16 @@ export default async function ContractorOpenProjectsPage() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <div className="mx-auto max-w-4xl px-6 py-10">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
-              Open projects
-            </div>
-            <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">
-              Browse work
-            </h1>
-            <p className="mt-2 text-slate-600">
-              Homeowner projects accepting bids. Open a project to review scope and line items.
-            </p>
-          </div>
-          <Link
-            href="/dashboard/contractor"
-            className="rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-900"
-          >
-            Dashboard
-          </Link>
+    <div className="mx-auto max-w-4xl px-6 py-10">
+      <div>
+        <div className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+          Open projects
         </div>
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">Browse work</h1>
+        <p className="mt-2 text-slate-600">
+          Homeowner projects accepting bids. Open a project to review scope and line items.
+        </p>
+      </div>
 
         {approvalLock ? (
           <div className="mt-6 rounded-2xl bg-amber-50 px-4 py-3 text-sm text-amber-950 ring-1 ring-amber-100">
@@ -99,7 +88,6 @@ export default async function ContractorOpenProjectsPage() {
             ))}
           </ul>
         )}
-      </div>
     </div>
   );
 }
