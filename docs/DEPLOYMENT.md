@@ -63,6 +63,7 @@ Configure these in your hosting provider’s **application settings** (or secret
 | Variable | Required | Purpose |
 |----------|----------|---------|
 | `DATABASE_URL` | Yes | PostgreSQL connection string (include SSL parameters for managed clouds). |
+| `APP_URL` | Recommended (Azure, some proxies) | Canonical public origin, e.g. `https://housefacelift.azurewebsites.net`. Used for logout redirects and email links when `x-forwarded-host` is missing or `req.url` shows `localhost`. `NEXT_PUBLIC_APP_URL` is accepted as an alias. |
 | `SESSION_SECRET` | Yes (production) | Secret for signing session JWT cookies (`apps/web/lib/auth.ts`). Use a long random string. |
 | `RESEND_API_KEY` | No | Send transactional email (e.g. bid accepted) via Resend (`apps/web/lib/email.ts`). |
 | `EMAIL_FROM` | No | Verified sender address for Resend (e.g. `Facelift <noreply@yourdomain.com>`). |

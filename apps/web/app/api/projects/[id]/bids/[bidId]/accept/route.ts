@@ -3,6 +3,7 @@ import { Prisma } from '@/generated/prisma/client';
 import { prisma } from '@/lib/prisma';
 import { getSessionFromRequest } from '@/lib/auth';
 import { sendBidAcceptedEmailToContractor } from '@/lib/email';
+import { getPublicOrigin } from '@/lib/public-url';
 
 export async function POST(
   req: NextRequest,
@@ -15,7 +16,7 @@ export async function POST(
     }
 
     const { id: projectId, bidId } = await context.params;
-    const origin = new URL(req.url).origin;
+    const origin = getPublicOrigin(req);
 
     const result = await prisma.$transaction(
       async (tx) => {
